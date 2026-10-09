@@ -1,0 +1,18 @@
+{
+    "sourceFile": "tests/Feature/UserProvisioningTest.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1791128101866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1791128101866,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Tests\\Feature;\n\nuse App\\Models\\User;\nuse Illuminate\\Foundation\\Testing\\RefreshDatabase;\nuse Tests\\TestCase;\n\nclass UserProvisioningTest extends TestCase\n{\n    use RefreshDatabase;\n\n    public function test_only_an_admin_can_create_a_maintenance_account(): void\n    {\n        $citizen = User::create([\n            'full_name' => 'Regular Citizen',\n            'email' => 'regular@example.com',\n            'password' => bcrypt('secret123'),\n            'role' => 'citizen',\n            'points' => 0,\n        ]);\n        $data = [\n            'full_name' => 'Team Member',\n            'email' => 'member@example.com',\n            'password' => 'temporary-pass-123',\n            'password_confirmation' => 'temporary-pass-123',\n            'team_name' => 'Team North',\n        ];\n\n        $this->actingAs($citizen)->postJson('/api/users/maintenance', $data)\n            ->assertOk()\n            ->assertJsonPath('success', false);\n        $this->assertDatabaseMissing('users', ['email' => 'member@example.com']);\n\n        $admin = User::create([\n            'full_name' => 'System Admin',\n            'email' => 'system-admin@example.com',\n            'password' => bcrypt('secret123'),\n            'role' => 'admin',\n            'points' => 0,\n        ]);\n\n        $this->actingAs($admin)->postJson('/api/users/maintenance', $data)\n            ->assertOk()\n            ->assertJsonPath('success', true);\n        $this->assertDatabaseHas('users', [\n            'email' => 'member@example.com',\n            'role' => 'maintenance',\n            'team_name' => 'Team North',\n        ]);\n    }\n}"
+        }
+    ]
+}

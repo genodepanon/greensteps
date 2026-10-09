@@ -1,0 +1,18 @@
+{
+    "sourceFile": "app/Http/Controllers/Api/UserController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1791127997531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1791127997531,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\nnamespace App\\Http\\Controllers\\Api;\r\n\r\nuse App\\Http\\Controllers\\Controller;\r\nuse App\\Models\\PointsLog;\r\nuse App\\Models\\User;\r\nuse App\\Services\\ActivityLogger;\r\nuse Illuminate\\Http\\Request;\r\nuse Illuminate\\Support\\Facades\\Auth;\r\nuse Illuminate\\Support\\Facades\\Hash;\r\n\r\nclass UserController extends Controller\r\n{\r\n    public function index()\r\n    {\r\n        $u = Auth::user();\r\n        if ($u->role !== 'admin') {\r\n            return response()->json(['success' => false, 'message' => 'Not authorized.']);\r\n        }\r\n        $users = User::orderBy('role')->orderBy('full_name')\r\n            ->get(['id', 'full_name', 'email', 'role', 'team_name', 'points']);\r\n        return response()->json(['success' => true, 'users' => $users]);\r\n    }\r\n\r\n    public function createMaintenance(Request $request)\r\n    {\r\n        $admin = Auth::user();\r\n        if ($admin->role !== 'admin') {\r\n            return response()->json(['success' => false, 'message' => 'Not authorized.']);\r\n        }\r\n\r\n        $data = $request->validate([\r\n            'full_name' => 'required|string|max:150',\r\n            'email' => 'required|email|unique:users,email',\r\n            'password' => 'required|string|min:8|confirmed',\r\n            'team_name' => 'required|string|max:150',\r\n        ]);\r\n\r\n        $user = User::create([\r\n            'full_name' => $data['full_name'],\r\n            'email' => $data['email'],\r\n            'password' => Hash::make($data['password']),\r\n            'role' => 'maintenance',\r\n            'team_name' => $data['team_name'],\r\n            'points' => 0,\r\n        ]);\r\n\r\n        ActivityLogger::log('CREATE_MAINTENANCE_USER', $user->email . ' (' . $user->team_name . ')');\r\n\r\n        return response()->json(['success' => true, 'message' => 'Maintenance account created.']);\r\n    }\r\n\r\n    public function givePoints(Request $request)\r\n    {\r\n        $u = Auth::user();\r\n        if ($u->role !== 'admin') {\r\n            return response()->json(['success' => false, 'message' => 'Not authorized.']);\r\n        }\r\n        $data = $request->validate([\r\n            'user_id' => 'required|integer|exists:users,id',\r\n            'points'  => 'required|integer|min:1',\r\n        ]);\r\n        $target = User::find($data['user_id']);\r\n        $target->increment('points', $data['points']);\r\n        PointsLog::create([\r\n            'user_id'    => $target->id,\r\n            'points'     => $data['points'],\r\n            'reason'     => 'Admin award',\r\n            'awarded_by' => $u->id,\r\n        ]);\r\n        return response()->json(['success' => true, 'message' => 'Points awarded!']);\r\n    }\r\n}"
+        }
+    ]
+}

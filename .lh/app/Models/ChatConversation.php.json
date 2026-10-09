@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/Models/ChatConversation.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1791124917765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1791127677262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n     }\n \n     public function messages(): HasMany\n     {\n-        return $this->hasMany(ChatMessage::class)->orderBy('created_at');\n+        return $this->hasMany(ChatMessage::class, 'conversation_id')->orderBy('created_at');\n     }\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1791124917765,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Model;\nuse Illuminate\\Database\\Eloquent\\Relations\\BelongsTo;\nuse Illuminate\\Database\\Eloquent\\Relations\\HasMany;\n\nclass ChatConversation extends Model\n{\n    protected $fillable = [\n        'user_one_id',\n        'user_two_id',\n        'last_message_at',\n    ];\n\n    protected $casts = [\n        'last_message_at' => 'datetime',\n    ];\n\n    public function userOne(): BelongsTo\n    {\n        return $this->belongsTo(User::class, 'user_one_id');\n    }\n\n    public function userTwo(): BelongsTo\n    {\n        return $this->belongsTo(User::class, 'user_two_id');\n    }\n\n    public function messages(): HasMany\n    {\n        return $this->hasMany(ChatMessage::class)->orderBy('created_at');\n    }\n}"
+        }
+    ]
+}

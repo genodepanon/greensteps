@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/Models/Report.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1791127592932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1791128905354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,7 +42,7 @@\n     }\r\n \r\n     public function statusHistory()\r\n     {\r\n-        return $this->hasMany(ReportStatusHistory::class)->orderBy('created_at');\r\n+        return $this->hasMany(ReportStatusHistory::class)->orderBy('created_at')->orderBy('id');\r\n     }\r\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1791127592932,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\nnamespace App\\Models;\r\n\r\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\r\nuse Illuminate\\Database\\Eloquent\\Model;\r\n\r\nclass Report extends Model\r\n{\r\n    use HasFactory;\r\n\r\n    protected $fillable = [\r\n        'citizen_id', 'category', 'description', 'location', 'latitude', 'longitude',\r\n        'photo_url', 'status', 'priority', 'assigned_team', 'rejection_reason',\r\n        'rejected_by', 'rejected_at',\r\n    ];\r\n\r\n    protected $casts = [\r\n        'latitude' => 'float',\r\n        'longitude' => 'float',\r\n        'rejected_at' => 'datetime',\r\n    ];\r\n\r\n    public function citizen()\r\n    {\r\n        return $this->belongsTo(User::class, 'citizen_id');\r\n    }\r\n\r\n    public function tasks()\r\n    {\r\n        return $this->hasMany(Task::class);\r\n    }\r\n\r\n    public function latestTask()\r\n    {\r\n        return $this->hasOne(Task::class)->latestOfMany();\r\n    }\r\n\r\n    public function comments()\r\n    {\r\n        return $this->hasMany(ReportComment::class);\r\n    }\r\n\r\n    public function statusHistory()\r\n    {\r\n        return $this->hasMany(ReportStatusHistory::class)->orderBy('created_at');\r\n    }\r\n}"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "database/migrations/2026_10_04_130100_create_chat_messages_table.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1791124917769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1791124917769,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    public function up(): void\n    {\n        Schema::create('chat_messages', function (Blueprint $table) {\n            $table->id();\n            $table->unsignedBigInteger('conversation_id');\n            $table->unsignedBigInteger('sender_id');\n            $table->unsignedBigInteger('recipient_id');\n            $table->text('message')->nullable();\n            $table->string('image_path')->nullable();\n            $table->boolean('is_read')->default(false);\n            $table->timestamps();\n\n            $table->foreign('conversation_id')->references('id')->on('chat_conversations')->cascadeOnDelete();\n            $table->foreign('sender_id')->references('id')->on('users')->cascadeOnDelete();\n            $table->foreign('recipient_id')->references('id')->on('users')->cascadeOnDelete();\n            $table->index('conversation_id');\n            $table->index('recipient_id');\n        });\n    }\n\n    public function down(): void\n    {\n        Schema::dropIfExists('chat_messages');\n    }\n};\n"
+        }
+    ]
+}

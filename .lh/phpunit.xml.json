@@ -1,0 +1,18 @@
+{
+    "sourceFile": "phpunit.xml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1791128865555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1791128865555,
+            "name": "Commit-0",
+            "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<phpunit xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:noNamespaceSchemaLocation=\"./vendor/phpunit/phpunit/phpunit.xsd\"\n         bootstrap=\"vendor/autoload.php\"\n         colors=\"true\"\n>\n    <testsuites>\n        <testsuite name=\"Unit\">\n            <directory suffix=\"Test.php\">./tests/Unit</directory>\n        </testsuite>\n        <testsuite name=\"Feature\">\n            <directory suffix=\"Test.php\">./tests/Feature</directory>\n        </testsuite>\n    </testsuites>\n    <coverage processUncoveredFiles=\"true\">\n        <include>\n            <directory suffix=\".php\">./app</directory>\n        </include>\n    </coverage>\n    <php>\n        <env name=\"APP_ENV\" value=\"testing\"/>\n        <env name=\"BCRYPT_ROUNDS\" value=\"4\"/>\n        <env name=\"CACHE_DRIVER\" value=\"array\"/>\n        <env name=\"DB_CONNECTION\" value=\"sqlite\" force=\"true\"/>\n        <env name=\"DB_DATABASE\" value=\":memory:\" force=\"true\"/>\n        <env name=\"MAIL_MAILER\" value=\"array\"/>\n        <env name=\"QUEUE_CONNECTION\" value=\"sync\"/>\n        <env name=\"SESSION_DRIVER\" value=\"array\"/>\n        <env name=\"TELESCOPE_ENABLED\" value=\"false\"/>\n    </php>\n</phpunit>\n"
+        }
+    ]
+}

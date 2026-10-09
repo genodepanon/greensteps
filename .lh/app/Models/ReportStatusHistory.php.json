@@ -1,0 +1,18 @@
+{
+    "sourceFile": "app/Models/ReportStatusHistory.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1791127592937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1791127592937,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass ReportStatusHistory extends Model\n{\n    protected $fillable = ['report_id', 'user_id', 'status', 'note'];\n\n    public function report()\n    {\n        return $this->belongsTo(Report::class);\n    }\n\n    public function user()\n    {\n        return $this->belongsTo(User::class);\n    }\n}"
+        }
+    ]
+}
