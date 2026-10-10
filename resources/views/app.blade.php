@@ -394,6 +394,14 @@
             body.dark-mode .chat-attach {
                 color: #2d7a4f !important;
             }
+            body.dark-mode .chat-image-preview {
+                background: #334155;
+                border-color: #475569;
+            }
+            body.dark-mode .chat-image-preview-remove {
+                background: #1e293b;
+                color: #e2e8f0;
+            }
             body.dark-mode .chat-attach:hover {
                 color: #3d9a67 !important;
             }
@@ -1219,6 +1227,9 @@
             .badge-rated { background: #fef3c7; color: #92400e; }
 
             .report-time, .task-time { font-size: 0.75rem; color: #94a3b8; }
+            .report-send-pending { opacity: 0.78; }
+            .report-send-state { display: inline-flex; align-items: center; gap: 5px; color: #64748b; font-size: 0.72rem; }
+            body.dark-mode .report-send-state { color: #cbd5e1; }
 
             .btn-sm {
                 padding: 0.35rem 0.85rem; font-size: 0.75rem; border-radius: 40px;
@@ -1475,6 +1486,8 @@
             .comment-role.admin { background: #fef3c7; color: #92400e; }
             .comment-role.maintenance { background: #e0e7ff; color: #3730a3; }
             .comment-time { font-size: 0.65rem; color: #94a3b8; }
+            .comment-bubble.pending { opacity: 0.72; }
+            .comment-bubble.pending .comment-time { font-style: italic; }
             .comment-text {
                 font-size: 0.84rem; color: #334155; line-height: 1.45;
                 white-space: pre-wrap; word-break: break-word;
@@ -2443,6 +2456,7 @@
                 margin-bottom: 14px;
                 width: 100%;
             }
+            .chat-message-row.pending { opacity: 0.72; }
             .chat-message-row.mine {
                 justify-content: flex-end;
             }
@@ -2533,6 +2547,47 @@
                 gap: 12px;
                 margin-bottom: 10px;
             }
+            .chat-image-preview {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #dbe5ef;
+                border-radius: 12px;
+                background: #f8fafc;
+            }
+            .chat-image-preview[hidden] { display: none; }
+            .chat-image-preview img {
+                display: block;
+                width: 64px;
+                height: 52px;
+                flex: 0 0 auto;
+                border-radius: 8px;
+                object-fit: cover;
+                background: #e2e8f0;
+            }
+            .chat-image-preview-meta { flex: 1; min-width: 0; }
+            .chat-image-preview-title { color: #334155; font-size: 0.78rem; font-weight: 700; }
+            .chat-image-preview-name {
+                overflow: hidden;
+                color: #64748b;
+                font-size: 0.72rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .chat-image-preview-remove {
+                width: 32px;
+                height: 32px;
+                flex: 0 0 auto;
+                border: 0;
+                border-radius: 50%;
+                background: #e2e8f0;
+                color: #334155;
+                cursor: pointer;
+            }
+            body.dark-mode .chat-image-preview-title { color: #f3f4f6; }
+            body.dark-mode .chat-image-preview-name { color: #cbd5e1; }
             .chat-attach {
                 display: inline-flex;
                 align-items: center;
@@ -2611,6 +2666,7 @@
                 .chat-thread { padding: 14px 12px 8px; }
                 .chat-bubble { max-width: 88%; font-size: 0.9rem; }
                 .chat-composer { padding: 12px 12px calc(12px + env(safe-area-inset-bottom)); }
+                .chat-image-preview img { width: 56px; height: 48px; }
                 .chat-photo-picker { margin-bottom: 8px; }
                 .chat-input-row { gap: 8px; }
                 .chat-input-row input { min-width: 0; padding: 0.75rem 0.9rem; }
@@ -2914,6 +2970,7 @@
                 <div class="card-header">
                     <h3><i class="fas fa-list-ul"></i> Recent Reports</h3>
                 </div>
+                <div id="pendingReportList" aria-live="polite"></div>
                 <div id="citizenReportsList">
                     <div class="data-loading-state" role="status">
                         <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
@@ -3331,11 +3388,19 @@
                 </div>
 
                 <div class="chat-composer">
+                    <div id="chatImagePreview" class="chat-image-preview" hidden>
+                        <img id="chatImagePreviewImage" src="" alt="Selected chat photo preview" />
+                        <div class="chat-image-preview-meta">
+                            <div class="chat-image-preview-title">Photo attached</div>
+                            <div id="chatImagePreviewName" class="chat-image-preview-name"></div>
+                        </div>
+                        <button class="chat-image-preview-remove" type="button" onclick="removeChatPhoto()" aria-label="Remove attached photo" title="Remove photo"><i class="fas fa-times" aria-hidden="true"></i></button>
+                    </div>
                     <div class="chat-photo-picker">
                         <label class="chat-attach" for="chatImageInput">
                             <i class="fas fa-image"></i>
                             <span>Add photo</span>
-                            <input id="chatImageInput" type="file" accept="image/*" />
+                            <input id="chatImageInput" type="file" accept="image/jpeg,image/png,image/gif,image/webp" onchange="previewChatPhoto(this)" />
                         </label>
                     </div>
                     <div class="chat-input-row">
@@ -4227,6 +4292,35 @@
             } catch (e) {
                 console.error('API POST error:', action, e);
                 return { success: false, message: e.name === 'AbortError' ? 'The server took too long to respond. Check your connection and try again.' : 'Server request failed.' };
+            }
+        }
+
+        async function apiDelete(action) {
+            const url = `${API_BASE_URL}${action}`;
+            let csrf = getCsrfTokenValue();
+            if (!csrf) csrf = await refreshCsrfToken();
+
+            const sendRequest = token => fetchWithTimeout(url, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': token,
+                    'X-XSRF-TOKEN': getXsrfTokenValue()
+                },
+                credentials: 'same-origin'
+            }, 30000);
+
+            try {
+                let response = await sendRequest(csrf);
+                if (response.status === 419) {
+                    csrf = await refreshCsrfToken();
+                    response = await sendRequest(csrf);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API DELETE error:', action, error);
+                return { success: false, message: error.name === 'AbortError' ? 'The server took too long to respond. Please try again.' : 'Server request failed.' };
             }
         }
 
@@ -5734,6 +5828,7 @@
             }
             const myId = currentUser?.id;
             return comments.map(c => {
+                const pending = Boolean(c.pending);
                 const isMine = myId && Number(c.user_id) === Number(myId);
                 const roleClass = c.role || 'citizen';
                 const roleLabel = c.role === 'maintenance'
@@ -5747,14 +5842,14 @@
                     : `<span class="comment-avatar ${roleClass}"><i class="fas ${roleIcon}"></i></span>`;
 
                 return `
-                    <div class="comment-bubble ${isMine ? 'mine' : ''}">
+                    <div class="comment-bubble ${isMine ? 'mine' : ''} ${pending ? 'pending' : ''}">
                         <div class="comment-meta">
                             <span class="comment-author">
                                 ${avatarHtml}
                                 <span>${escapeHtml(c.full_name || 'User')}</span>
                                 <span class="comment-role ${roleClass}">${escapeHtml(roleLabel)}</span>
                             </span>
-                            <span class="comment-time">${getTimeAgo(c.created_at)}</span>
+                            <span class="comment-time">${pending ? '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…' : getTimeAgo(c.created_at)}</span>
                         </div>
                         <div class="comment-text">${escapeHtml(c.message)}</div>
                     </div>
@@ -5803,25 +5898,60 @@
             if (!id) return;
 
             const input = document.getElementById(inputId);
-
             const message = (input?.value || '').trim();
             if (!message) {
                 alert('⚠️ Please write a comment first.');
                 return;
             }
 
+            const thread = document.getElementById(threadId);
+            const hadComments = Boolean(thread?.querySelector('.comment-bubble'));
+            thread?.querySelector('.comments-empty')?.remove();
+            const optimisticComment = {
+                user_id: currentUser?.id,
+                role: currentUser?.role,
+                full_name: currentUser?.full_name,
+                team_name: currentUser?.team_name,
+                photo_url: currentUser?.photo_url,
+                message,
+                created_at: new Date().toISOString(),
+                pending: true
+            };
+            const pendingWrapper = document.createElement('div');
+            pendingWrapper.innerHTML = renderCommentsHtml([optimisticComment]);
+            const pendingComment = pendingWrapper.firstElementChild;
+            thread?.append(pendingComment);
+            if (thread) thread.scrollTop = thread.scrollHeight;
+            if (input) input.value = '';
+
             try {
                 const result = await apiPost('reports/' + id + '/comments', { report_id: id, message });
 
                 if (result.success) {
-                    if (input) input.value = '';
-                    await loadReportComments(id, threadId);
+                    if (pendingComment?.isConnected && result.comment) {
+                        const confirmedWrapper = document.createElement('div');
+                        confirmedWrapper.innerHTML = renderCommentsHtml([result.comment]);
+                        pendingComment.replaceWith(confirmedWrapper.firstElementChild);
+                    } else {
+                        pendingComment?.classList.remove('pending');
+                    }
+                    if (result.comment?.id > lastKnownCommentId) lastKnownCommentId = result.comment.id;
                     showToast('💬 Comment sent', 'The other party has been notified.');
                 } else {
-                    alert('⚠️ ' + (result.message || 'Could not post comment.'));
+                    pendingComment?.remove();
+                    if (!hadComments && thread && !thread.children.length) {
+                        thread.innerHTML = renderCommentsHtml([]);
+                    }
+                    if (input && !input.value) input.value = message;
+                    showToast('Comment not sent', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Comment submission failed:', error);
+                pendingComment?.remove();
+                if (!hadComments && thread && !thread.children.length) {
+                    thread.innerHTML = renderCommentsHtml([]);
+                }
+                if (input && !input.value) input.value = message;
                 showToast('Comment not sent', 'Check your connection and try again.');
             }
         }
@@ -6753,6 +6883,36 @@
             document.getElementById('photoUploadArea').style.display = '';
         }
 
+        function addOptimisticReport(category, location) {
+            const container = document.getElementById('pendingReportList');
+            const emptyState = document.querySelector('#citizenReportsList .empty-state');
+            if (emptyState) emptyState.hidden = true;
+
+            const item = document.createElement('div');
+            item.className = 'report-item-wrap report-send-pending';
+            item.innerHTML = `
+                <div class="report-item">
+                    <div class="report-info">
+                        <i class="fas fa-flag" style="color:#2563eb;"></i>
+                        <div>
+                            <div class="report-title">${escapeHtml(category)}</div>
+                            <div class="report-time" style="margin-top:2px;">${escapeHtml(location)}</div>
+                        </div>
+                    </div>
+                    <div class="report-meta">
+                        <span class="badge badge-review">Sending</span>
+                        <span class="report-send-state"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…</span>
+                    </div>
+                </div>`;
+            container?.prepend(item);
+            return { item, emptyState };
+        }
+
+        function removeOptimisticReport(pendingReport) {
+            pendingReport?.item?.remove();
+            if (pendingReport?.emptyState && !cachedReports.length) pendingReport.emptyState.hidden = false;
+        }
+
         async function submitReport(event) {
             event.preventDefault();
             const cat = document.getElementById('category');
@@ -6767,6 +6927,9 @@
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             btn.disabled = true;
+            const pendingReport = addOptimisticReport(categoryText, location);
+            closeReportModal();
+            showToast('Sending report', 'Your report is appearing while we finish saving it.');
             try {
                 const result = await apiPost('reports', {
                     category: categoryText,
@@ -6778,26 +6941,45 @@
                 });
 
                 if (!result.success) {
-                    alert('⚠️ ' + (result.message || 'Could not submit the report.'));
+                    removeOptimisticReport(pendingReport);
+                    document.getElementById('reportModal').classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    showToast('Report not submitted', result.message || 'Please check the report and try again.');
                     return;
                 }
 
-                closeReportModal();
                 document.getElementById('reportForm').reset();
                 selectedFileDataUrl = null;
+                removePhoto();
                 const nearbyPanel = document.getElementById('nearbyPanel');
                 if (nearbyPanel) nearbyPanel.classList.remove('show');
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
                 btn.disabled = false;
-                showToast('✅ Report Submitted!', `${categoryText} — Pending review. +5 points!${result.share_url ? ' Share link ready in report details.' : ''}`);
+                const status = result.assigned_team ? 'Assigned' : 'Pending';
+                const statusBadge = pendingReport.item.querySelector('.badge');
+                const sendingState = pendingReport.item.querySelector('.report-send-state');
+                if (statusBadge) {
+                    statusBadge.className = `badge badge-${status === 'Assigned' ? 'assigned' : 'pending'}`;
+                    statusBadge.textContent = status;
+                }
+                if (sendingState) sendingState.textContent = 'Submitted just now';
+                pendingReport.item.classList.remove('report-send-pending');
+                showToast('Report submitted', `${categoryText} — ${status === 'Assigned' ? `assigned to ${result.assigned_team}` : 'pending review'}.`);
 
-                loadCitizenData().catch(refreshError => {
+                loadCitizenData().then(() => {
+                    if (cachedReports.some(report => Number(report.id) === Number(result.report_id))) {
+                        pendingReport.item.remove();
+                    }
+                }).catch(refreshError => {
                     console.error('Report submitted but dashboard refresh failed:', refreshError);
                     showToast('Report submitted', 'Your report was saved. The dashboard could not refresh; reload it to see the update.');
                 });
             } catch (error) {
                 console.error('Report submission failed:', error);
-                alert('⚠️ ' + (error.message || 'Could not submit the report. Please try again.'));
+                removeOptimisticReport(pendingReport);
+                document.getElementById('reportModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+                showToast('Report not submitted', error.message || 'Check your connection and try again.');
             } finally {
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
                 btn.disabled = false;
@@ -8259,6 +8441,7 @@
         let chatPeople = [];
         let selectedChatUserId = null;
         let chatPollTimer = null;
+        let chatPhotoPreviewUrl = null;
 
         function escapeHtml(value = '') {
             return String(value)
@@ -8498,6 +8681,26 @@
             if (result.success) updateChatUnreadBadge(Number(result.unread_count || 0));
         }
 
+        function renderChatMessageRow(message, pending = false) {
+            const isMine = Number(message.sender_id) === Number(currentUser?.id);
+            const text = message.message ? escapeHtml(message.message) : '';
+            const imageHtml = message.image_url
+                ? `<img class="chat-message-photo" src="${escapeHtml(message.image_url)}" alt="Chat attachment" />`
+                : '';
+            const time = pending
+                ? '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…'
+                : escapeHtml(formatChatTime(message.created_at));
+
+            return `
+                <div class="chat-message-row ${isMine ? 'mine' : 'theirs'} ${pending ? 'pending' : ''}">
+                    <div class="chat-bubble">
+                        ${text ? `<div>${text}</div>` : ''}
+                        ${imageHtml}
+                        <span class="chat-message-time">${time}</span>
+                    </div>
+                </div>`;
+        }
+
         function renderChatThread(messages, animate = true) {
             const thread = document.getElementById('chatThread');
             if (!thread) return;
@@ -8508,23 +8711,44 @@
                 return;
             }
 
-            thread.innerHTML = messages.map(message => {
-                const isMine = Number(message.sender_id) === Number(currentUser?.id);
-                const text = message.message ? escapeHtml(message.message) : '';
-                const imageHtml = message.image_url ? `<img class="chat-message-photo" src="${message.image_url}" alt="Chat attachment" />` : '';
-                return `
-                    <div class="chat-message-row ${isMine ? 'mine' : 'theirs'}">
-                        <div class="chat-bubble">
-                            ${text ? `<div>${text}</div>` : ''}
-                            ${imageHtml}
-                            <span class="chat-message-time">${formatChatTime(message.created_at)}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            thread.innerHTML = messages.map(message => renderChatMessageRow(message)).join('');
 
             thread.scrollTop = thread.scrollHeight;
             markDataLoaded(thread, animate);
+        }
+
+        function previewChatPhoto(input) {
+            const file = input.files?.[0];
+            if (!file) {
+                removeChatPhoto();
+                return;
+            }
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type) || file.size > 5 * 1024 * 1024) {
+                removeChatPhoto();
+                showToast('Photo not attached', 'Choose a JPG, PNG, GIF, or WebP image no larger than 5 MB.');
+                return;
+            }
+
+            if (chatPhotoPreviewUrl) URL.revokeObjectURL(chatPhotoPreviewUrl);
+            chatPhotoPreviewUrl = URL.createObjectURL(file);
+            document.getElementById('chatImagePreviewImage').src = chatPhotoPreviewUrl;
+            document.getElementById('chatImagePreviewName').textContent = file.name;
+            document.getElementById('chatImagePreview').hidden = false;
+        }
+
+        function removeChatPhoto() {
+            if (chatPhotoPreviewUrl) URL.revokeObjectURL(chatPhotoPreviewUrl);
+            chatPhotoPreviewUrl = null;
+            const input = document.getElementById('chatImageInput');
+            const image = document.getElementById('chatImagePreviewImage');
+            const name = document.getElementById('chatImagePreviewName');
+            const preview = document.getElementById('chatImagePreview');
+            if (input) input.value = '';
+            if (image) image.removeAttribute('src');
+            if (name) name.textContent = '';
+            if (preview) preview.hidden = true;
         }
 
         async function sendChatMessage() {
@@ -8535,8 +8759,11 @@
 
             const input = document.getElementById('chatMessageInput');
             const fileInput = document.getElementById('chatImageInput');
+            const sendButton = document.querySelector('.chat-send-btn');
+            if (sendButton?.disabled) return;
             const message = input ? input.value.trim() : '';
             const file = fileInput?.files?.[0] || null;
+            const recipientId = selectedChatUserId;
 
             if (!message && !file) {
                 showToast('⚠️ Message empty', 'Type a message or choose a photo first.');
@@ -8550,20 +8777,83 @@
                 formData.append('photo', file);
             }
 
-            const result = await apiPostFormData('chat/send', formData);
-            if (!result.success) {
-                showToast('⚠️ Chat not sent', result.message || 'Please try again.');
-                return;
+            const thread = document.getElementById('chatThread');
+            const contact = chatPeople.find(person => Number(person.id) === Number(recipientId));
+            const hadMessages = Boolean(thread?.querySelector('.chat-message-row'));
+            thread?.querySelector('.chat-system')?.remove();
+            const optimisticMessage = {
+                sender_id: currentUser?.id,
+                message,
+                image_url: chatPhotoPreviewUrl,
+                created_at: new Date().toISOString()
+            };
+            const optimisticWrapper = document.createElement('div');
+            optimisticWrapper.innerHTML = renderChatMessageRow(optimisticMessage, true);
+            const optimisticRow = optimisticWrapper.firstElementChild;
+            optimisticRow.dataset.optimisticId = `pending-${Date.now()}`;
+            thread?.append(optimisticRow);
+            if (thread) {
+                thread.scrollTop = thread.scrollHeight;
             }
 
+            const photoPreview = document.getElementById('chatImagePreview');
             if (input) input.value = '';
-            if (fileInput) {
-                fileInput.value = '';
-            }
+            if (fileInput) fileInput.disabled = true;
+            const removePhotoButton = document.querySelector('.chat-image-preview-remove');
+            if (removePhotoButton) removePhotoButton.disabled = true;
+            if (photoPreview) photoPreview.hidden = true;
+            if (sendButton) sendButton.disabled = true;
 
-            await loadChatContacts();
-            await selectChatUser(selectedChatUserId);
-            showToast('💬 Sent', 'Message delivered successfully.');
+            try {
+                const result = await apiPostFormData('chat/send', formData);
+                if (!result.success) {
+                    optimisticRow.remove();
+                    if (!hadMessages && thread && !thread.querySelector('.chat-message-row')) {
+                        thread.innerHTML = contact?.conversation_id
+                            ? '<div class="chat-system">No messages yet. Say hello.</div>'
+                            : '<div class="chat-system">No conversation yet. Start the chat by sending a message.</div>';
+                    }
+                    if (input && !input.value) input.value = message;
+                    if (photoPreview) photoPreview.hidden = !file;
+                    showToast('Chat not sent', result.message || 'Please try again.');
+                    return;
+                }
+
+                if (result.chat_message && optimisticRow.isConnected) {
+                    const confirmedWrapper = document.createElement('div');
+                    confirmedWrapper.innerHTML = renderChatMessageRow(result.chat_message);
+                    optimisticRow.replaceWith(confirmedWrapper.firstElementChild);
+                } else if (optimisticRow.isConnected) {
+                    optimisticRow.classList.remove('pending');
+                    const pendingTime = optimisticRow.querySelector('.chat-message-time');
+                    if (pendingTime) pendingTime.textContent = 'Sent';
+                }
+
+                if (contact) {
+                    contact.conversation_id = result.conversation_id || contact.conversation_id;
+                    contact.last_message = message;
+                    contact.last_message_image = Boolean(file) && !message;
+                    contact.last_message_time = result.chat_message?.created_at || new Date().toISOString();
+                    renderChatContacts();
+                }
+
+                removeChatPhoto();
+                showToast('Sent', 'Message delivered successfully.');
+            } catch (error) {
+                optimisticRow.remove();
+                if (!hadMessages && thread && !thread.querySelector('.chat-message-row')) {
+                    thread.innerHTML = contact?.conversation_id
+                        ? '<div class="chat-system">No messages yet. Say hello.</div>'
+                        : '<div class="chat-system">No conversation yet. Start the chat by sending a message.</div>';
+                }
+                if (input && !input.value) input.value = message;
+                if (photoPreview) photoPreview.hidden = !file;
+                showToast('Chat not sent', 'Check your connection and try again.');
+            } finally {
+                if (fileInput) fileInput.disabled = false;
+                if (removePhotoButton) removePhotoButton.disabled = false;
+                if (sendButton) sendButton.disabled = false;
+            }
         }
 
         document.getElementById('chatModal')?.addEventListener('click', e => {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PointsLog;
 use App\Models\Rating;
 use App\Models\Report;
+use App\Models\AutoAssignRule;
 use App\Models\ReportStatusHistory;
 use App\Models\Task;
 use App\Models\UserNotification;
@@ -105,12 +106,62 @@ class ReportController extends Controller
             'note' => 'Report submitted',
         ]);
 
-        UserNotification::create([
-            'user_id'   => $u->id,
-            'report_id' => $report->id,
-            'title'     => 'Report submitted',
-            'message'   => "{$report->category} — Waiting for review",
-        ]);
+        $normalizedCategory = mb_strtolower($report->category);
+        $matchingRule = AutoAssignRule::where('is_active', true)
+            ->orderBy('id')
+            ->get()
+            ->first(fn (AutoAssignRule $rule) => str_contains($normalizedCategory, mb_strtolower($rule->category_pattern)));
+
+        if ($matchingRule) {
+            $report->update([
+                'status' => 'Assigned',
+                'assigned_team' => $matchingRule->team_name,
+            ]);
+
+            $task = Task::create([
+                'report_id' => $report->id,
+                'team_name' => $matchingRule->team_name,
+                'title' => $report->category,
+                'location' => $report->location,
+                'latitude' => $report->latitude,
+                'longitude' => $report->longitude,
+                'priority' => $report->priority ?: 'Medium',
+                'reporter' => $u->full_name,
+            ]);
+
+            ReportStatusHistory::create([
+                'report_id' => $report->id,
+                'user_id' => null,
+                'status' => $report->status,
+                'note' => 'Automatically assigned to ' . $matchingRule->team_name,
+            ]);
+
+            UserNotification::create([
+                'user_id' => $u->id,
+                'report_id' => $report->id,
+                'title' => 'Team assigned',
+                'message' => "{$report->category} — {$matchingRule->team_name} will handle your report",
+            ]);
+
+            \App\Models\User::where('role', 'maintenance')
+                ->where('team_name', $matchingRule->team_name)
+                ->get()
+                ->each(fn ($member) => UserNotification::create([
+                    'user_id' => $member->id,
+                    'report_id' => $report->id,
+                    'title' => 'New task assigned',
+                    'message' => "{$report->category} — {$report->location}",
+                ]));
+
+            ActivityLogger::log('AUTO_ASSIGN_REPORT', "#{$report->id} {$report->category} → {$matchingRule->team_name} (task #{$task->id})");
+        } else {
+            UserNotification::create([
+                'user_id' => $u->id,
+                'report_id' => $report->id,
+                'title' => 'Report submitted',
+                'message' => "{$report->category} — Waiting for review",
+            ]);
+        }
 
         $u->increment('points', 5);
         PointsLog::create([
@@ -123,8 +174,11 @@ class ReportController extends Controller
 
         return response()->json([
             'success'   => true,
-            'message'   => 'Report submitted! +5 points.',
+            'message'   => $matchingRule
+                ? "Report submitted and assigned to {$matchingRule->team_name}! +5 points."
+                : 'Report submitted! +5 points.',
             'report_id' => $report->id,
+            'assigned_team' => $matchingRule?->team_name,
         ]);
     }
 

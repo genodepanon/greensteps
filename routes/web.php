@@ -75,6 +75,12 @@ Route::prefix('api')->group(function () {
         Route::get('leaderboard', [StatsController::class, 'leaderboard']);
         Route::get('poll',        [StatsController::class, 'poll']);
 
+        // Admin auto-assignment rules
+        Route::get('auto-assign-rules', [\App\Http\Controllers\Api\AutoAssignRuleController::class, 'index']);
+        Route::post('auto-assign-rules', [\App\Http\Controllers\Api\AutoAssignRuleController::class, 'store']);
+        Route::post('auto-assign-rules/{id}', [\App\Http\Controllers\Api\AutoAssignRuleController::class, 'update']);
+        Route::delete('auto-assign-rules/{id}', [\App\Http\Controllers\Api\AutoAssignRuleController::class, 'destroy']);
+
         // Teams
         Route::get('teams',           [TeamController::class, 'index']);
         Route::get('team-locations',  [TeamController::class, 'locations']);
