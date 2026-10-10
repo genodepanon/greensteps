@@ -11,12 +11,15 @@ class User extends Authenticatable
 
     protected $fillable = [
         'full_name', 'email', 'password', 'role', 'team_name', 'points', 'phone', 'photo_url', 'is_approved', 'is_rejected',
+        'email_on_notifications', 'email_on_status',
     ];
 
     protected $hidden = ['password', 'remember_token'];
 
     protected $casts = [
         'points' => 'integer',
+        'email_on_notifications' => 'boolean',
+        'email_on_status' => 'boolean',
     ];
 
     public function reports()

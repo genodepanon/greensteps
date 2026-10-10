@@ -86,9 +86,23 @@
             body.dark-mode select option {
                 color: #d1d5db;
             }
+            body.dark-mode .logo h1,
+            body.dark-mode .login-title { color: #f3f4f6; }
+            body.dark-mode .logo .subtitle,
+            body.dark-mode .login-subtitle,
+            body.dark-mode .form-options label,
+            body.dark-mode .register-link { color: #cbd5e1; }
+            body.dark-mode .form-options a,
+            body.dark-mode .register-link a { color: #86efac; }
+            body.dark-mode #selectedRoleBadge { background: #1e3a5f !important; color: #bfdbfe !important; }
+            body.dark-mode #loginFormWrapper > div:first-child > button { color: #d1d5db !important; }
             body.dark-mode .user-badge {
                 background: rgba(255,255,255,0.05);
                 color: #f3f4f6;
+            }
+            body.dark-mode .list-expansion-control {
+                color: #86efac;
+                border-top-color: #2d3135;
             }
             body.dark-mode .badge {
                 filter: grayscale(1) brightness(1.05);
@@ -219,6 +233,8 @@
             body.dark-mode .badge-review i {
                 color: #e5e7eb !important;
             }
+            body.dark-mode .task-location-legend .badge { filter: none; }
+            body.dark-mode .task-location-legend i.task-location-dot { color: var(--task-location-color) !important; }
             body.dark-mode .btn-primary {
                 background: #e5e7eb;
                 color: #111827;
@@ -523,6 +539,11 @@
             body.dark-mode .modal-details .detail-value {
                 color: #f3f4f6 !important;
             }
+            body.dark-mode .report-details-map-fallback {
+                background: #24282c;
+                border-color: #3d4248;
+                color: #d1d5db;
+            }
             body.dark-mode .tracking-timeline,
             body.dark-mode .track-step,
             body.dark-mode .report-track-expand,
@@ -756,6 +777,125 @@
             }
             .btn-sm-admin:hover { background: #e2e8f0; }
 
+            .home-page {
+                width: calc(100% + 40px);
+                color: #183b3a;
+                background: #ffffff;
+            }
+            .home-hero {
+                position: relative;
+                min-height: 540px;
+                height: min(740px, 72svh);
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                isolation: isolate;
+                background: #183b32;
+                color: #ffffff;
+            }
+            .home-hero-image {
+                position: absolute;
+                inset: 0;
+                z-index: -2;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 48%;
+            }
+            .home-hero-shade { position: absolute; inset: 0; z-index: -1; background: rgba(8, 27, 22, 0.52); }
+            .home-nav {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 2;
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 22px 40px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .home-brand { display: inline-flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none; font-size: 1.15rem; font-weight: 700; }
+            .home-brand i { color: #a7d8a0; font-size: 1.25rem; }
+            .home-nav-links { display: flex; align-items: center; gap: 26px; }
+            .home-nav-links a { color: #f0f5f0; text-decoration: none; font-size: 0.86rem; font-weight: 500; }
+            .home-nav-links a:hover { color: #c2e6ba; }
+            .home-nav-login { padding: 10px 16px; border: 1px solid rgba(255,255,255,0.72); border-radius: 7px; background: rgba(8,27,22,0.16); color: #ffffff; font: inherit; font-size: 0.84rem; font-weight: 600; cursor: pointer; }
+            .home-nav-login:hover { background: rgba(255,255,255,0.14); }
+            .home-hero-content { width: min(1120px, 100%); margin: 0 auto; padding: 105px 40px 40px; }
+            .home-eyebrow { margin-bottom: 18px; color: #c2e6ba; font-size: 0.82rem; font-weight: 700; }
+            .home-hero h1 { max-width: 680px; margin: 0; color: #ffffff; font-size: 3.5rem; line-height: 1.08; font-weight: 700; }
+            .home-hero-copy { max-width: 560px; margin: 20px 0 28px; color: #eef4ef; font-size: 1.08rem; line-height: 1.65; }
+            .home-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+            .home-cta { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 19px; border-radius: 7px; text-decoration: none; font: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+            .home-cta-primary { border: 1px solid #a9d8a0; background: #a9d8a0; color: #183b32; }
+            .home-cta-primary:hover { background: #c2e6ba; border-color: #c2e6ba; }
+            .home-cta-secondary { border: 1px solid rgba(255,255,255,0.72); background: rgba(8,27,22,0.16); color: #ffffff; }
+            .home-cta-secondary:hover { background: rgba(255,255,255,0.14); }
+            .home-hero-note { margin-top: 36px; color: #e1ebe3; font-size: 0.8rem; }
+            .home-section { max-width: 1200px; margin: 0 auto; padding: 74px 40px; }
+            .home-section-heading { max-width: 680px; margin-bottom: 38px; }
+            .home-kicker { margin-bottom: 10px; color: #2d7a4f; font-size: 0.78rem; font-weight: 700; }
+            .home-section h2 { margin: 0; color: #183b3a; font-size: 2rem; line-height: 1.2; }
+            .home-section-intro { margin: 13px 0 0; color: #60736f; font-size: 0.98rem; line-height: 1.65; }
+            .home-feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #dce7e0; }
+            .home-feature { padding: 25px 26px 10px 0; border-bottom: 1px solid #dce7e0; }
+            .home-feature + .home-feature { padding-left: 25px; border-left: 1px solid #dce7e0; }
+            .home-feature-icon { width: 40px; height: 40px; display: grid; place-items: center; margin-bottom: 18px; border-radius: 10px; background: #edf6ef; color: #2d7a4f; font-size: 1rem; }
+            .home-feature h3 { margin: 0 0 8px; color: #183b3a; font-size: 1.08rem; }
+            .home-feature p { margin: 0; color: #60736f; font-size: 0.88rem; line-height: 1.6; }
+            .home-benefits { background: #edf4ef; }
+            .home-benefits-inner { max-width: 1200px; margin: 0 auto; padding: 66px 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.72fr); gap: 64px; align-items: center; }
+            .home-benefits h2 { max-width: 580px; margin: 0; color: #183b3a; font-size: 2rem; line-height: 1.22; }
+            .home-benefits-copy { margin: 16px 0 0; color: #536b62; font-size: 0.94rem; line-height: 1.7; }
+            .home-benefit-list { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+            .home-benefit-list li { display: grid; grid-template-columns: 25px minmax(0, 1fr); gap: 11px; align-items: start; color: #345249; font-size: 0.9rem; line-height: 1.55; }
+            .home-benefit-list i { padding-top: 3px; color: #2d7a4f; }
+            .home-final-cta { max-width: 1200px; margin: 0 auto; padding: 58px 40px 66px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+            .home-final-cta h2 { margin: 0; color: #183b3a; font-size: 1.65rem; }
+            .home-final-cta p { margin: 8px 0 0; color: #60736f; font-size: 0.9rem; }
+            .home-final-cta .home-cta { flex: 0 0 auto; background: #2d7a4f; border-color: #2d7a4f; color: #ffffff; }
+            .home-final-cta .home-cta:hover { background: #23673f; }
+            .home-footer { padding: 22px 40px; border-top: 1px solid #e0e9e4; color: #748780; text-align: center; font-size: 0.75rem; }
+            body.dark-mode .home-page { background: #111817; color: #e7efea; }
+            body.dark-mode .home-section { background: #111817; }
+            body.dark-mode .home-kicker { color: #a7d8a0; }
+            body.dark-mode .home-section h2,
+            body.dark-mode .home-benefits h2,
+            body.dark-mode .home-feature h3,
+            body.dark-mode .home-final-cta h2 { color: #f3f4f6 !important; }
+            body.dark-mode .home-section-intro,
+            body.dark-mode .home-feature p,
+            body.dark-mode .home-benefits-copy,
+            body.dark-mode .home-final-cta p { color: #c1cec7; }
+            body.dark-mode .home-feature-grid,
+            body.dark-mode .home-feature { border-color: #34443b; }
+            body.dark-mode .home-feature-icon { background: #20342b; color: #a7d8a0; }
+            body.dark-mode .home-benefits { background: #1a2720; }
+            body.dark-mode .home-benefit-list li { color: #d3ddd7; }
+            body.dark-mode .home-benefit-list i { color: #a7d8a0; }
+            body.dark-mode .home-final-cta { background: #111817; }
+            body.dark-mode .home-footer { border-top-color: #34443b; color: #aab8b1; }
+            @media (max-width: 700px) {
+                .home-hero { min-height: 420px; height: min(660px, 72svh); }
+                .home-nav { padding: 18px 20px; }
+                .home-nav-links { gap: 14px; }
+                .home-nav-links a:not(.home-nav-login) { display: none; }
+                .home-hero-content { padding: 78px 24px 20px; }
+                .home-hero h1 { font-size: 2.45rem; }
+                .home-hero-copy { font-size: 0.96rem; }
+                .home-hero-note { display: none; }
+                .home-section { padding: 54px 24px; }
+                .home-section h2, .home-benefits h2 { font-size: 1.65rem; }
+                .home-feature-grid { grid-template-columns: 1fr; }
+                .home-feature, .home-feature + .home-feature { padding: 21px 0; border-left: 0; }
+                .home-benefits-inner { grid-template-columns: 1fr; gap: 28px; padding: 52px 24px; }
+                .home-final-cta { align-items: flex-start; flex-direction: column; padding: 48px 24px; }
+                .home-footer { padding: 20px 24px; }
+            }
+
             .login-container {
                 max-width: 440px; width: 100%;
                 background: white; border-radius: 40px;
@@ -788,11 +928,16 @@
                 background: #2d3e52;
                 border-color: #4a5a72;
                 color: #e2e8f0;
+                transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             }
             .role-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
             .role-btn.citizen-role:hover { border-color: #2d7a4f; background: #f0fdf4; }
             .role-btn.maintenance-role:hover { border-color: #2563eb; background: #eff6ff; }
             .role-btn.admin-role:hover { border-color: #7c3aed; background: #f5f3ff; }
+            body.dark-mode .role-btn.citizen-role:hover { border-color: #4b9b64; background: #1d3428; }
+            body.dark-mode .role-btn.maintenance-role:hover { border-color: #5790cf; background: #1d3045; }
+            body.dark-mode .role-btn.admin-role:hover { border-color: #9874d3; background: #302741; }
+            body.dark-mode .role-btn:hover .role-arrow { color: #f3f4f6 !important; }
             .role-icon {
                 width: 48px; height: 48px; border-radius: 16px;
                 display: flex; align-items: center; justify-content: center;
@@ -947,7 +1092,7 @@
 
             .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
             .card { background: white; border-radius: 24px; padding: 1.5rem 1.8rem; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-            .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+            .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
             .card-header h3 { font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
             .card-header .action-link { color: #2563eb; font-size: 0.85rem; cursor: pointer; font-weight: 500; }
             .card-header .action-link:hover { text-decoration: underline; }
@@ -1018,6 +1163,13 @@
             .report-item .report-meta, .task-item .task-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
             .task-item .task-location { font-size: 0.8rem; color: #64748b; margin-top: 2px; }
             .task-item .task-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+            .list-expansion-control {
+                width: 100%; display: flex; align-items: center; justify-content: center; gap: 7px;
+                margin-top: 0.35rem; padding: 0.7rem 0.5rem; border: 0;
+                border-top: 1px solid #f0f4f9; background: transparent;
+                color: #2563eb; font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            }
+            .list-expansion-control:hover { background: #f8fafc; }
 
             .badge { display: inline-block; padding: 4px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
             .badge-pending { background: #fef9c3; color: #854d0e; }
@@ -1321,7 +1473,16 @@
                 .live-team-marker animate, .live-team-marker animateTransform { display: none; }
             }
             #reportLocationMap { width: 100%; height: 260px; background: #e9eef3; }
+            .report-details-map { width: 100%; height: 220px; margin-top: 0.6rem; border: 1px solid #cbd9e8; border-radius: 12px; background: #e9eef3; overflow: hidden; }
+            .report-details-map-fallback { display: none; margin-top: 0.6rem; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 10px; background: #f8fafc; color: #64748b; font-size: 0.82rem; }
             #maintMap { width: 100%; height: 240px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; }
+            .task-map-marker-icon { background: transparent; border: 0; }
+            .task-map-marker { position: relative; display: block; width: 24px; height: 24px; --task-marker-color: #3b82f6; }
+            .task-map-marker-pulse { position: absolute; inset: 2px; border-radius: 50%; background: var(--task-marker-color); animation: taskMapPulse 1.8s ease-out infinite; }
+            .task-map-marker-dot { position: absolute; inset: 6px; border: 2px solid white; border-radius: 50%; background: var(--task-marker-color); box-shadow: 0 1px 4px rgba(15,23,42,0.35); }
+            @keyframes taskMapPulse { from { opacity: 0.65; transform: scale(0.45); } to { opacity: 0; transform: scale(1.8); } }
+            @keyframes taskMapPulseReduced { 0%, 100% { opacity: 0.24; } 50% { opacity: 0.58; } }
+            @media (prefers-reduced-motion: reduce) { .task-map-marker-pulse { animation: taskMapPulseReduced 2.4s ease-in-out infinite; } }
             #navMap { width: 100%; height: 200px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; margin-bottom: 1rem; }
             .map-container { margin-top: 8px; border-radius: 16px; overflow: hidden; border: 1.5px solid #e2e8f0; position: relative; }
             .map-hint {
@@ -1399,6 +1560,8 @@
                 color: #166534; font-size: 0.85rem;
             }
             .photo-preview.show { display: flex; }
+            .complete-photo-change { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border: 0; border-radius: 6px; background: #e2e8f0; color: #334155; font: inherit; font-size: 0.75rem; cursor: pointer; }
+            .complete-photo-change:hover { background: #cbd5e1; }
             .photo-preview .remove-photo {
                 margin-left: auto; color: #dc2626;
                 cursor: pointer; font-weight: 600; font-size: 0.8rem;
@@ -1410,11 +1573,14 @@
                 border-top: 1px solid #f0f4f9;
             }
 
-            .other-category-wrapper {
-                max-height: 0; overflow: hidden;
-                transition: max-height 0.3s ease, margin-bottom 0.3s ease;
-            }
-            .other-category-wrapper.show { max-height: 130px; margin-bottom: 1.2rem; }
+            .category-input-row { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; align-items: center; }
+            .category-icon-preview { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid #bbd6c4; border-radius: 12px; background: #f0fdf4; color: #2d7a4f; font-size: 1.15rem; }
+            .category-input-row input { width: 100%; min-width: 0; min-height: 46px; padding: 0.7rem 0.85rem; border: 1px solid #cbd9e8; border-radius: 12px; background: #fff; color: #183b3a; font: inherit; }
+            .category-input-row input:focus { outline: none; border-color: #2d7a4f; box-shadow: 0 0 0 3px rgba(45,122,79,0.1); }
+            .category-detection { min-height: 1rem; margin-top: 0.4rem; color: #64748b; font-size: 0.75rem; }
+            body.dark-mode .category-icon-preview { border-color: #3e6650; background: #1b2b22; color: #86efac; }
+            body.dark-mode .category-input-row input { border-color: #3d4248; background: #24282c; color: #f3f4f6; }
+            body.dark-mode .category-detection { color: #aab7b2; }
 
             .profile-avatar {
                 width: 80px; height: 80px; border-radius: 50%;
@@ -1581,14 +1747,15 @@
             .task-search {
                 position: relative; display: flex; align-items: center;
                 background: #f8fafc; border: 1.5px solid #e2e8f0;
-                border-radius: 40px; padding: 4px 12px; min-width: 170px;
+                border-radius: 40px; padding: 4px 12px; width: 240px; min-width: 0;
             }
             .task-search i { color: #94a3b8; font-size: 0.8rem; }
             .task-search input {
                 border: none; background: transparent; outline: none;
                 font-family: inherit; font-size: 0.8rem; padding: 4px 6px;
-                color: #1e293b; width: 130px;
+                color: #1e293b; width: 100%; min-width: 0;
             }
+            .task-toolbar { display: flex; align-items: center; gap: 8px; min-width: 0; }
             .highlight-1s { animation: highlight1s 1s ease; }
             @keyframes highlight1s {
                 0% { background-color: rgba(37,99,235,0.30); box-shadow: 0 0 0 2px rgba(37,99,235,0.55); }
@@ -2286,6 +2453,10 @@
                 .report-item, .task-item { flex-direction: column; align-items: flex-start; gap: 8px; }
                 .modal-box { padding: 1.5rem; }
             }
+            @media (max-width: 600px) {
+                .task-toolbar { width: 100%; }
+                .task-search { flex: 1; width: auto; }
+            }
             @media (max-width: 480px) {
                 .stats-grid { grid-template-columns: 1fr; }
                 .header-left h1 { font-size: 1.2rem; }
@@ -2304,13 +2475,182 @@
                 .admin-header-nav { gap: 0.3rem; }
                 .admin-header-nav-item { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
             }
+
+            /* Shared GreenSteps finish for the existing sign-in and dashboard layouts */
+            body:not(.dark-mode) { background: #eef4ef; color: #183b3a; }
+            .login-container {
+                border: 1px solid #dce7e0;
+                border-radius: 16px;
+                box-shadow: 0 18px 48px rgba(24,59,50,0.09);
+            }
+            .logo h1 { color: #183b3a; letter-spacing: 0; }
+            .divider { height: 1px; background: #e2ebe5; }
+            .role-buttons { gap: 10px; }
+            .role-btn {
+                border: 1px solid #dce7e0;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(24,59,50,0.035);
+            }
+            .role-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(24,59,50,0.09); }
+            .role-icon { border-radius: 11px; }
+            .form-group input, .form-group select, .form-group textarea { border-radius: 10px; }
+            .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #5d9a70; }
+            .btn { border-radius: 8px; box-shadow: none; }
+            .btn:hover { transform: translateY(-1px); }
+            .btn-sm, .btn-sm-admin, .admin-header-nav-item { border-radius: 7px; }
+            .btn-map { border-radius: 8px; }
+            .dashboard-container .header {
+                background: #1d4e3c;
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 12px;
+                padding: 1.25rem 1.6rem;
+                box-shadow: 0 8px 22px rgba(24,59,50,0.12);
+            }
+            .dashboard-container .header-left h1 { color: #ffffff; }
+            .dashboard-container .card {
+                border: 1px solid #dce7e0;
+                border-radius: 12px;
+                box-shadow: 0 4px 16px rgba(24,59,50,0.045);
+            }
+            .dashboard-container .card-header {
+                padding-bottom: 12px;
+                border-bottom: 1px solid #edf2ee;
+            }
+            .dashboard-container .card-header h3 { color: #183b3a; font-size: 1.05rem; }
+            .dashboard-container .stats-grid { gap: 1rem; }
+            .dashboard-container .stat-card {
+                border: 1px solid #dce7e0;
+                border-radius: 12px;
+                box-shadow: 0 3px 12px rgba(24,59,50,0.035);
+            }
+            .dashboard-container .stat-card .number { color: #214c3d; }
+            .modal-box { border-radius: 16px; box-shadow: 0 22px 56px rgba(17,39,31,0.2); }
+            .modal-details { border: 1px solid #e0e9e3; border-radius: 10px; }
+            .report-item, .task-item { gap: 14px; }
+            .report-item:hover, .task-item:hover { background: #f5f9f6; }
+            .header-menu-panel { border-radius: 10px; }
+            .map-container { border-color: #dce7e0; }
+
+            body.dark-mode { background: #101714; color: #e7efea; }
+            body.dark-mode .login-container,
+            body.dark-mode .dashboard-container .card,
+            body.dark-mode .dashboard-container .stat-card,
+            body.dark-mode .modal-box {
+                background: #17211b;
+                border-color: #2e4035;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            }
+            body.dark-mode .dashboard-container .header { background: #173d32; border-color: #29483a; }
+            body.dark-mode .dashboard-container .card-header { background: transparent; border-bottom-color: #2e4035; }
+            body.dark-mode .dashboard-container .card-header h3,
+            body.dark-mode .dashboard-container .stat-card .number { color: #e7efea; }
+            body.dark-mode .dashboard-container .stat-card .label { color: #b9c9c0; }
+            body.dark-mode #pageMaintenance .maintenance-task-status { filter: none !important; border: 1px solid transparent; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-assigned { background: #17344d; color: #93c5fd; border-color: #315d7e; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-progress { background: #33244e; color: #d8b4fe; border-color: #5b427e; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-completed { background: #18372a; color: #86efac; border-color: #326347; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-rejected { background: #442426; color: #fca5a5; border-color: #704044; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-pending { background: #43351a; color: #fcd34d; border-color: #725a28; }
+            body.dark-mode .role-btn { background: #1b2922; border-color: #344b3d; }
+            body.dark-mode .role-name { color: #f3f7f4 !important; }
+            body.dark-mode .role-desc { color: #c1cec7 !important; }
+            body.dark-mode .role-btn.citizen-role:hover { background: #1d3428; border-color: #4b9b64; }
+            body.dark-mode .role-btn.maintenance-role:hover { background: #1d3045; border-color: #5790cf; }
+            body.dark-mode .role-btn.admin-role:hover { background: #302741; border-color: #9874d3; }
+            body.dark-mode .form-group label { color: #e1e9e4 !important; }
+            body.dark-mode .report-item:hover, body.dark-mode .task-item:hover { background: #1c2b23; }
+            body.dark-mode .modal-details { background: #1d2922 !important; border-color: #34483b; }
+            body.dark-mode .header-menu-panel { background: #17211b; border-color: #2e4035; }
+
+            @media (max-width: 768px) {
+                .dashboard-container .header { padding: 1.1rem 1.2rem; }
+                .dashboard-container .card { padding: 1.2rem; }
+                .dashboard-container .stat-card { padding: 1.1rem; }
+            }
         </style>
         <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
     <body>
 
+    <!-- PUBLIC HOMEPAGE -->
+    <div id="pageHome" class="home-page">
+        <main>
+            <section class="home-hero" aria-labelledby="homeHeroTitle">
+                <img class="home-hero-image" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=2200&amp;q=85" alt="Sunlight filtering through a healthy green forest" fetchpriority="high" />
+                <div class="home-hero-shade" aria-hidden="true"></div>
+                <nav class="home-nav" aria-label="Main navigation">
+                    <a class="home-brand" href="#pageHome"><i class="fas fa-leaf" aria-hidden="true"></i><span>GreenSteps</span></a>
+                    <div class="home-nav-links">
+                        <a href="#homeFeatures">How it works</a>
+                        <a href="#homeBenefits">Why GreenSteps</a>
+                        <button type="button" class="home-nav-login" onclick="openLoginPage()">Sign in</button>
+                    </div>
+                </nav>
+                <div class="home-hero-content">
+                    <p class="home-eyebrow">A better way to care for your community</p>
+                    <h1 id="homeHeroTitle">GreenSteps</h1>
+                    <p class="home-hero-copy">Spot a local issue? Report it, follow its progress, and help your neighborhood move toward a cleaner, safer place.</p>
+                    <div class="home-hero-actions">
+                        <button type="button" class="home-cta home-cta-primary" onclick="openLoginPage('citizen')"><i class="fas fa-plus" aria-hidden="true"></i> Report an issue</button>
+                        <a class="home-cta home-cta-secondary" href="#homeFeatures">Explore GreenSteps <i class="fas fa-arrow-down" aria-hidden="true"></i></a>
+                    </div>
+                    <p class="home-hero-note">Local reports. Clear updates. Shared progress.</p>
+                </div>
+            </section>
+
+            <section id="homeFeatures" class="home-section" aria-labelledby="homeFeaturesTitle">
+                <div class="home-section-heading">
+                    <p class="home-kicker">From report to resolution</p>
+                    <h2 id="homeFeaturesTitle">One clear path from noticing to improving.</h2>
+                    <p class="home-section-intro">GreenSteps brings residents, coordinators, and maintenance teams into one shared view of local environmental work.</p>
+                </div>
+                <div class="home-feature-grid">
+                    <article class="home-feature">
+                        <div class="home-feature-icon"><i class="fas fa-location-dot" aria-hidden="true"></i></div>
+                        <h3>Report what you see</h3>
+                        <p>Describe an issue, pin its location, and add a photo so the right people can understand it quickly.</p>
+                    </article>
+                    <article class="home-feature">
+                        <div class="home-feature-icon"><i class="fas fa-route" aria-hidden="true"></i></div>
+                        <h3>Follow every step</h3>
+                        <p>See when a report is reviewed, assigned to a team, underway, and completed.</p>
+                    </article>
+                    <article class="home-feature">
+                        <div class="home-feature-icon"><i class="fas fa-people-carry-box" aria-hidden="true"></i></div>
+                        <h3>Coordinate local work</h3>
+                        <p>Give maintenance teams clear task details, locations, and a direct way to share progress.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="homeBenefits" class="home-benefits" aria-labelledby="homeBenefitsTitle">
+                <div class="home-benefits-inner">
+                    <div>
+                        <p class="home-kicker">Better visibility for everyone</p>
+                        <h2 id="homeBenefitsTitle">Small actions add up to visible community care.</h2>
+                        <p class="home-benefits-copy">No wondering whether an issue reached the right team. GreenSteps keeps the report, location, conversation, and status together so everyone can stay informed.</p>
+                    </div>
+                    <ul class="home-benefit-list">
+                        <li><i class="fas fa-circle-check" aria-hidden="true"></i><span>Residents can see progress and receive updates on their reports.</span></li>
+                        <li><i class="fas fa-circle-check" aria-hidden="true"></i><span>Coordinators can prioritize, assign, and track local tasks.</span></li>
+                        <li><i class="fas fa-circle-check" aria-hidden="true"></i><span>Maintenance teams can navigate, document work, and close the loop.</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="home-final-cta" aria-label="Get started">
+                <div>
+                    <h2>Ready to take the next step?</h2>
+                    <p>Sign in to report an issue or manage community work.</p>
+                </div>
+                <button type="button" class="home-cta" onclick="openLoginPage()">Get started <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </section>
+        </main>
+        <footer class="home-footer">GreenSteps · Environmental Reporting System</footer>
+    </div>
+
     <!-- LOGIN -->
-    <div id="pageLogin" class="login-container">
+    <div id="pageLogin" class="login-container" style="display:none;">
         <div class="logo">
             <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
             <div class="subtitle">Environmental Reporting System</div>
@@ -2478,6 +2818,13 @@
                         <h3><i class="fas fa-map-marked-alt"></i> Reported Incidents</h3>
                     </div>
                     <div id="nearbyMap"></div>
+                    <div class="map-legend task-location-legend" aria-label="Incident status legend">
+                        <span class="badge badge-pending"><i class="fas fa-circle task-location-dot" style="--task-location-color:#fbbf24; color:#b45309; font-size:0.5rem;"></i> Pending</span>
+                        <span class="badge badge-assigned"><i class="fas fa-circle task-location-dot" style="--task-location-color:#60a5fa; color:#0369a1; font-size:0.5rem;"></i> Assigned</span>
+                        <span class="badge badge-progress"><i class="fas fa-circle task-location-dot" style="--task-location-color:#c084fc; color:#6b21a5; font-size:0.5rem;"></i> In Progress</span>
+                        <span class="badge badge-completed"><i class="fas fa-circle task-location-dot" style="--task-location-color:#4ade80; color:#166534; font-size:0.5rem;"></i> Completed</span>
+                        <span class="badge badge-rejected"><i class="fas fa-circle task-location-dot" style="--task-location-color:#f87171; color:#b91c1c; font-size:0.5rem;"></i> Rejected</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2536,7 +2883,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3><i class="fas fa-clipboard-list"></i> Assigned Tasks</h3>
-                    <div style="display:flex; gap:8px; align-items:center;">
+                    <div class="task-toolbar">
                         <div class="task-search">
                             <i class="fas fa-search"></i>
                             <input type="text" id="taskSearchInput" placeholder="Search tasks…" oninput="renderTasks()" />
@@ -2587,10 +2934,10 @@
                         <h3><i class="fas fa-map-marked-alt"></i> Task Locations</h3>
                     </div>
                     <div id="maintMap"></div>
-                    <div style="margin-top:0.8rem; display:flex; gap:8px; flex-wrap:wrap;">
-                        <span class="badge badge-assigned"><i class="fas fa-circle" style="color:#0369a1; font-size:0.5rem;"></i> Assigned</span>
-                        <span class="badge badge-progress"><i class="fas fa-circle" style="color:#6b21a5; font-size:0.5rem;"></i> In Progress</span>
-                        <span class="badge badge-completed"><i class="fas fa-circle" style="color:#166534; font-size:0.5rem;"></i> Completed</span>
+                    <div class="task-location-legend" style="margin-top:0.8rem; display:flex; gap:8px; flex-wrap:wrap;">
+                        <span class="badge badge-assigned"><i class="fas fa-circle task-location-dot" style="--task-location-color:#60a5fa; color:#0369a1; font-size:0.5rem;"></i> Assigned</span>
+                        <span class="badge badge-progress"><i class="fas fa-circle task-location-dot" style="--task-location-color:#c084fc; color:#6b21a5; font-size:0.5rem;"></i> In Progress</span>
+                        <span class="badge badge-completed"><i class="fas fa-circle task-location-dot" style="--task-location-color:#4ade80; color:#166534; font-size:0.5rem;"></i> Completed</span>
                     </div>
                 </div>
             </div>
@@ -2999,26 +3346,11 @@
             <form id="reportForm" onsubmit="submitReport(event)">
                 <div class="form-group">
                     <label for="category">Category <span class="required">*</span></label>
-                    <select id="category" required onchange="handleCategoryChange(this)">
-                        <option value="">Select a category</option>
-                        <option value="🕳️ Potholes">🕳️ Potholes</option>
-                        <option value="🌳 Fallen Trees">🌳 Fallen Trees</option>
-                        <option value="🚧 Road Obstruction">🚧 Road Obstruction</option>
-                        <option value="💡 Broken Streetlights">💡 Broken Streetlights</option>
-                        <option value="🌊 Flooding">🌊 Flooding</option>
-                        <option value="🗑️ Illegal Dumping">🗑️ Illegal Dumping</option>
-                        <option value="🚰 Clogged Drainage">🚰 Clogged Drainage</option>
-                        <option value="🪨 Landslide">🪨 Landslide</option>
-                        <option value="🚦 Damaged Traffic Signs">🚦 Damaged Traffic Signs</option>
-                        <option value="🐕 Stray Animal Concern">🐕 Stray Animal Concern</option>
-                        <option value="Others">📌 Others</option>
-                    </select>
-                </div>
-                <div class="other-category-wrapper" id="otherCategoryWrapper">
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label for="otherCategory">Specify category <span class="required">*</span></label>
-                        <input type="text" id="otherCategory" placeholder="e.g., Broken sidewalk" />
+                    <div class="category-input-row">
+                        <span class="category-icon-preview" aria-hidden="true"><i id="categoryPreviewIcon" class="fas fa-map-pin"></i></span>
+                        <input type="text" id="category" placeholder="Describe the issue, e.g. pothole or flooding" required maxlength="200" autocomplete="off" oninput="handleCategoryInput()" />
                     </div>
+                    <div id="categoryDetection" class="category-detection" aria-live="polite">The icon will match the words you enter.</div>
                 </div>
                 <div class="form-group">
                     <label for="location">Location <span class="required">*</span></label>
@@ -3099,30 +3431,16 @@
             <div class="pref-row">
                 <div>
                     <div class="pref-label">Status updates</div>
-                    <div class="pref-desc">Assigned, started, rejected, and other status changes</div>
+                    <div class="pref-desc">When a report is received, assigned, started, completed, or rejected</div>
                 </div>
                 <label class="pref-toggle"><input type="checkbox" id="prefEmailStatus" checked><span></span></label>
             </div>
             <div class="pref-row">
                 <div>
-                    <div class="pref-label">Rating requests</div>
-                    <div class="pref-desc">Ask me to rate when a report is completed</div>
+                    <div class="pref-label">Notification emails</div>
+                    <div class="pref-desc">Email copies of comments and other in-app notifications</div>
                 </div>
-                <label class="pref-toggle"><input type="checkbox" id="prefEmailRating" checked><span></span></label>
-            </div>
-            <div class="pref-row">
-                <div>
-                    <div class="pref-label">Followed reports</div>
-                    <div class="pref-desc">Updates for reports I follow</div>
-                </div>
-                <label class="pref-toggle"><input type="checkbox" id="prefEmailFollowed" checked><span></span></label>
-            </div>
-            <div class="pref-row" id="prefEscalationRow" style="display:none;">
-                <div>
-                    <div class="pref-label">Escalation alerts</div>
-                    <div class="pref-desc">Pending reports older than 7 days (admins)</div>
-                </div>
-                <label class="pref-toggle"><input type="checkbox" id="prefEmailEscalation" checked><span></span></label>
+                <label class="pref-toggle"><input type="checkbox" id="prefEmailNotifications" checked><span></span></label>
             </div>
             <div class="form-actions" style="margin-top:1rem;">
                 <button type="button" class="btn btn-secondary" onclick="closeNotifPrefsModal()"><i class="fas fa-times"></i> Cancel</button>
@@ -3221,25 +3539,27 @@
             <form id="completeForm" onsubmit="submitComplete(event)">
                 <div class="form-group">
                     <label>Before Photo</label>
-                    <div class="upload-area" onclick="document.getElementById('completeBeforePhoto').click()">
+                    <div class="upload-area" id="completeBeforeUploadArea" onclick="chooseCompletePhoto('completeBeforePhoto')">
                         <i class="fas fa-image"></i><div class="upload-text">Click to upload before photo</div>
-                        <input type="file" id="completeBeforePhoto" accept="image/*" style="display:none;" onchange="handleCompletePhoto(this, 'completeBeforePreview', 'completeBeforeName', 'completeBeforeThumb')" />
+                        <input type="file" id="completeBeforePhoto" accept="image/*" style="display:none;" onclick="event.stopPropagation()" onchange="handleCompletePhoto(this, 'completeBeforePreview', 'completeBeforeName', 'completeBeforeThumb')" />
                     </div>
                     <img id="completeBeforeThumb" style="display:none; margin-top:10px; border-radius:12px; width:100%; height:140px; object-fit:cover;" />
                     <div id="completeBeforePreview" class="photo-preview">
                         <i class="fas fa-check-circle"></i><span id="completeBeforeName">before.jpg</span>
+                        <button type="button" class="complete-photo-change" onclick="chooseCompletePhoto('completeBeforePhoto')" aria-label="Change before photo"><i class="fas fa-rotate"></i> Change</button>
                         <span class="remove-photo" onclick="removeCompletePhoto('completeBeforePhoto', 'completeBeforePreview', 'completeBeforeThumb')">Remove</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>After Photo <span class="required">*</span></label>
-                    <div class="upload-area" onclick="document.getElementById('completeAfterPhoto').click()">
+                    <div class="upload-area" id="completeAfterUploadArea" onclick="chooseCompletePhoto('completeAfterPhoto')">
                         <i class="fas fa-image"></i><div class="upload-text">Click to upload after photo</div>
-                        <input type="file" id="completeAfterPhoto" accept="image/*" style="display:none;" onchange="handleCompletePhoto(this, 'completeAfterPreview', 'completeAfterName', 'completeAfterThumb')" />
+                        <input type="file" id="completeAfterPhoto" accept="image/*" style="display:none;" onclick="event.stopPropagation()" onchange="handleCompletePhoto(this, 'completeAfterPreview', 'completeAfterName', 'completeAfterThumb')" />
                     </div>
                     <img id="completeAfterThumb" style="display:none; margin-top:10px; border-radius:12px; width:100%; height:140px; object-fit:cover;" />
                     <div id="completeAfterPreview" class="photo-preview">
                         <i class="fas fa-check-circle"></i><span id="completeAfterName">after.jpg</span>
+                        <button type="button" class="complete-photo-change" onclick="chooseCompletePhoto('completeAfterPhoto')" aria-label="Change after photo"><i class="fas fa-rotate"></i> Change</button>
                         <span class="remove-photo" onclick="removeCompletePhoto('completeAfterPhoto', 'completeAfterPreview', 'completeAfterThumb')">Remove</span>
                     </div>
                 </div>
@@ -3292,6 +3612,8 @@
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-envelope"></i> Email</span><span class="detail-value" id="reportDetailsEmail">—</span></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-phone"></i> Phone</span><span class="detail-value" id="reportDetailsPhone">—</span></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-map-pin"></i> Location</span><span class="detail-value" id="reportDetailsLocation">—</span></div>
+                    <div id="reportDetailsMap" class="report-details-map" role="img" aria-label="Map showing the report location"></div>
+                    <div id="reportDetailsMapFallback" class="report-details-map-fallback" role="status"></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-flag"></i> Status</span><span class="detail-value" id="reportDetailsStatus">—</span></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-clock"></i> Submitted</span><span class="detail-value" id="reportDetailsDate">—</span></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-align-left"></i> Description</span><span class="detail-value" id="reportDetailsDescription" style="text-align:left; overflow-wrap:anywhere;">—</span></div>
@@ -3584,9 +3906,11 @@
         let selectedRole = null;
         let selectedFileDataUrl = null;
         let selectedLocation = null;
+        let categoryLookupTimer = null;
         let map = null, marker = null;
         let nearbyMap = null, nearbyMarkers = [];
         let maintMap = null, maintMarkers = [];
+        let reportDetailsMap = null, reportDetailsMapMarker = null;
         let navMap = null, navMarkers = [];
         let liveTrackMaps = {};
         let liveTrackPollTimers = {};
@@ -4179,6 +4503,16 @@
         }
 
         // ============ ROLE SELECTION ============
+        function openLoginPage(role = null) {
+            document.getElementById('pageHome').style.display = 'none';
+            document.getElementById('pageLogin').style.display = 'block';
+            document.getElementById('roleButtons').style.display = 'flex';
+            document.getElementById('loginFormWrapper').style.display = 'none';
+            document.getElementById('errorMessage').classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (role) selectRole(role);
+        }
+
         function selectRole(role) {
             selectedRole = role;
             document.getElementById('roleButtons').style.display = 'none';
@@ -4302,6 +4636,7 @@
 
         // ============ PAGE NAV ============
         async function showDashboard(role) {
+            document.getElementById('pageHome').style.display = 'none';
             document.getElementById('pageLogin').style.display = 'none';
             document.getElementById('pageCitizen').classList.remove('active');
             document.getElementById('pageMaintenance').classList.remove('active');
@@ -4319,7 +4654,6 @@
                 await loadMaintenanceData();
                 setTimeout(() => {
                     initMaintMap();
-                    loadGoogleMaps();
                 }, 300);
             } else if (role === 'admin') {
                 document.getElementById('pageAdmin').classList.add('active');
@@ -4336,7 +4670,8 @@
             stopAllLiveTracking();
             stopGlobalPolling();
             closeChatPanel();
-            document.getElementById('pageLogin').style.display = 'block';
+            document.getElementById('pageHome').style.display = 'block';
+            document.getElementById('pageLogin').style.display = 'none';
             document.getElementById('pageCitizen').classList.remove('active');
             document.getElementById('pageMaintenance').classList.remove('active');
             document.getElementById('pageAdmin').classList.remove('active');
@@ -4367,7 +4702,7 @@
                     ? document.getElementById('track-panel-' + liveTrackActiveReportId)
                     : null;
                 const preserveActivePanel = reportsChanged && activePanel?.style.display === 'block' &&
-                    nextReports.slice(0, 8).some(report => Number(report.id) === Number(liveTrackActiveReportId));
+                    nextReports.some(report => Number(report.id) === Number(liveTrackActiveReportId));
                 cachedReports = nextReports;
                 // Track highest report ID for polling
                 cachedReports.forEach(r => {
@@ -4383,7 +4718,7 @@
                                 <div class="empty-desc">Your submitted reports will appear here</div>
                             </div>`;
                     } else {
-                        list.innerHTML = cachedReports.slice(0, 8).map(r => {
+                        list.innerHTML = cachedReports.map(r => {
                             const badge = r.status === 'Pending' ? 'pending' :
                                         r.status === 'Assigned' ? 'assigned' :
                                         r.status === 'In Progress' ? 'progress' :
@@ -4415,6 +4750,7 @@
                             `;
                         }).join('');
                     }
+                    updateListExpansion(list, '.report-item-wrap');
 
                     if (preserveActivePanel) {
                         const replacementPanel = document.getElementById('track-panel-' + liveTrackActiveReportId);
@@ -5143,6 +5479,54 @@
 
             document.getElementById('reportDetailsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => initReportDetailsMap(report));
+        }
+
+        async function initReportDetailsMap(report) {
+            const mapElement = document.getElementById('reportDetailsMap');
+            const fallback = document.getElementById('reportDetailsMapFallback');
+            const latitude = Number(report.latitude);
+            const longitude = Number(report.longitude);
+            const hasCoordinates = report.latitude !== null && report.latitude !== undefined && String(report.latitude).trim() !== '' &&
+                report.longitude !== null && report.longitude !== undefined && String(report.longitude).trim() !== '' &&
+                Number.isFinite(latitude) && Number.isFinite(longitude);
+
+            if (!hasCoordinates) {
+                mapElement.style.display = 'none';
+                fallback.textContent = 'No map coordinates were saved for this report.';
+                fallback.style.display = 'block';
+                return;
+            }
+
+            fallback.style.display = 'none';
+            mapElement.style.display = 'block';
+            try {
+                await loadLeaflet();
+            } catch (error) {
+                mapElement.style.display = 'none';
+                fallback.textContent = 'The location map is temporarily unavailable.';
+                fallback.style.display = 'block';
+                console.error('Report location map failed to load:', error);
+                return;
+            }
+
+            const position = [latitude, longitude];
+            if (!reportDetailsMap) {
+                mapElement.replaceChildren();
+                reportDetailsMap = L.map(mapElement, { scrollWheelZoom: false }).setView(position, 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                }).addTo(reportDetailsMap);
+                reportDetailsMapMarker = L.marker(position, {
+                    icon: getLeafletIncidentPin(report.priority || 'Medium')
+                }).addTo(reportDetailsMap);
+            } else {
+                reportDetailsMap.setView(position, 15);
+                reportDetailsMapMarker.setLatLng(position);
+                reportDetailsMapMarker.setIcon(getLeafletIncidentPin(report.priority || 'Medium'));
+                reportDetailsMap.invalidateSize();
+            }
         }
 
         function closeReportDetailsModal() {
@@ -5265,6 +5649,39 @@
             }
         }
 
+        function updateListExpansion(container, itemSelector, visibleCount = 5) {
+            if (!container) return;
+
+            container.querySelector(':scope > .list-expansion-control')?.remove();
+            const items = [...container.querySelectorAll(`:scope > ${itemSelector}`)];
+            if (items.length <= visibleCount) container.dataset.listExpanded = 'false';
+            const expanded = container.dataset.listExpanded === 'true';
+            items.forEach((item, index) => {
+                const hidden = !expanded && index >= visibleCount;
+                item.hidden = hidden;
+                item.style.display = hidden ? 'none' : '';
+            });
+
+            if (items.length <= visibleCount) return;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'list-expansion-control';
+            button.setAttribute('aria-controls', container.id);
+            button.setAttribute('aria-expanded', String(expanded));
+            const icon = document.createElement('i');
+            icon.className = `fas fa-chevron-${expanded ? 'up' : 'down'}`;
+            icon.setAttribute('aria-hidden', 'true');
+            const label = document.createElement('span');
+            label.textContent = expanded ? 'Show less' : `See more (${items.length - visibleCount})`;
+            button.append(icon, label);
+            button.addEventListener('click', () => {
+                container.dataset.listExpanded = String(!expanded);
+                updateListExpansion(container, itemSelector, visibleCount);
+            });
+            container.append(button);
+        }
+
         function renderNotificationsList(elId, notifications) {
             const el = document.getElementById(elId);
             if (!el) return;
@@ -5277,9 +5694,10 @@
                         <div class="empty-title">No notifications</div>
                         <div class="empty-desc">Comments and updates will appear here</div>
                     </div>`;
+                el.dataset.listExpanded = 'false';
                 return;
             }
-            el.innerHTML = notifications.slice(0, 6).map(n => {
+            el.innerHTML = notifications.map(n => {
                 const unread = !Number(n.is_read);
                 const icon = n.title && n.title.toLowerCase().includes('comment') ? 'comments' : 'bell';
                 return `
@@ -5289,6 +5707,7 @@
                     ${unread ? '<div class="notif-indicator" title="Unread"></div>' : ''}
                 </div>`;
             }).join('');
+            updateListExpansion(el, '.notification-item');
         }
 
         async function handleNotificationClick(el, notifId, reportId) {
@@ -5320,6 +5739,13 @@
             setTimeout(() => {
                 const wrap = document.getElementById('report-wrap-' + reportId);
                 const row = wrap || document.querySelector(`[data-report-id="${reportId}"]`) || document.querySelector(`.report-item[onclick*="${reportId}"]`);
+                if (row?.hidden) {
+                    const list = wrap ? document.getElementById('citizenReportsList') : document.getElementById('adminReportsList');
+                    if (list) {
+                        list.dataset.listExpanded = 'true';
+                        updateListExpansion(list, wrap ? '.report-item-wrap' : '.report-item');
+                    }
+                }
                 if (row) {
                     row.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     row.classList.remove('highlight-1s');
@@ -5762,17 +6188,12 @@
 
             const result = await apiGet('notification-preferences');
             const prefs = result.success ? result.preferences : {
+                email_on_notifications: currentUser.email_on_notifications !== false,
                 email_on_status: currentUser.email_on_status !== false,
-                email_on_rating: currentUser.email_on_rating !== false,
-                email_on_followed: currentUser.email_on_followed !== false,
-                email_on_escalation: currentUser.email_on_escalation !== false,
             };
 
+            document.getElementById('prefEmailNotifications').checked = !!prefs.email_on_notifications;
             document.getElementById('prefEmailStatus').checked = !!prefs.email_on_status;
-            document.getElementById('prefEmailRating').checked = !!prefs.email_on_rating;
-            document.getElementById('prefEmailFollowed').checked = !!prefs.email_on_followed;
-            document.getElementById('prefEmailEscalation').checked = !!prefs.email_on_escalation;
-            document.getElementById('prefEscalationRow').style.display = currentUser.role === 'admin' ? 'flex' : 'none';
 
             document.getElementById('notifPrefsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -5789,10 +6210,8 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
             try {
                 const payload = {
+                    email_on_notifications: document.getElementById('prefEmailNotifications').checked,
                     email_on_status: document.getElementById('prefEmailStatus').checked,
-                    email_on_rating: document.getElementById('prefEmailRating').checked,
-                    email_on_followed: document.getElementById('prefEmailFollowed').checked,
-                    email_on_escalation: document.getElementById('prefEmailEscalation').checked,
                 };
                 const result = await apiPost('notification-preferences', payload);
                 if (!result.success) {
@@ -6032,29 +6451,6 @@
             }
         }
 
-        // ============ GOOGLE MAPS LOADER ============
-        function loadGoogleMaps() {
-            if (window._gmapsLoaded) {
-                if (document.getElementById('reportModal').classList.contains('active')) initMap();
-                return;
-            }
-            if (window._gmapsLoading) return;
-            window._gmapsLoading = true;
-
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBn1yFHTEWLvnsjSfPRdtMgKhhProHkCwY&callback=onGoogleMapsReady`;
-            script.async = true;
-            script.defer = true;
-            document.head.appendChild(script);
-
-            window.onGoogleMapsReady = () => {
-                window._gmapsLoading = false;
-                window._gmapsLoaded = true;
-                initNearbyMap();
-                if (document.getElementById('pageMaintenance').classList.contains('active')) initMaintMap();
-            };
-        }
-
         // ============ REPORT MODAL ============
         function openReportModal() {
             document.getElementById('reportModal').classList.add('active');
@@ -6063,7 +6459,8 @@
             document.getElementById('photoThumb').style.display = 'none';
             document.getElementById('photoUploadArea').style.display = '';
             document.getElementById('locationCoords').classList.remove('show');
-            document.getElementById('otherCategoryWrapper').classList.remove('show');
+            if (categoryLookupTimer) clearTimeout(categoryLookupTimer);
+            updateCategoryPreview();
             selectedFileDataUrl = null;
             selectedLocation = null;
             if (marker) { marker.remove(); marker = null; }
@@ -6109,17 +6506,36 @@
             document.getElementById('reportModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
-        function handleCategoryChange(select) {
-            const wrapper = document.getElementById('otherCategoryWrapper');
-            if (select.value === 'Others') {
-                wrapper.classList.add('show');
-                document.getElementById('otherCategory').required = true;
-            } else {
-                wrapper.classList.remove('show');
-                document.getElementById('otherCategory').required = false;
-                document.getElementById('otherCategory').value = '';
-            }
-            checkNearbyReports();
+        function getCategoryIcon(value) {
+            const text = String(value || '').toLowerCase();
+            const categories = [
+                { pattern: /pothole|road|sidewalk|pavement|obstruction|blocked lane/, icon: 'fa-road', label: 'Road issue' },
+                { pattern: /tree|branch|root|fallen log/, icon: 'fa-tree', label: 'Tree or vegetation issue' },
+                { pattern: /light|lamp|streetlight|electric|power line/, icon: 'fa-lightbulb', label: 'Lighting or electrical issue' },
+                { pattern: /flood|water|drain|sewer|clog|leak/, icon: 'fa-water', label: 'Water or drainage issue' },
+                { pattern: /dump|trash|garbage|waste|litter|rubbish/, icon: 'fa-trash', label: 'Waste issue' },
+                { pattern: /landslide|erosion|soil|mudslide/, icon: 'fa-mountain', label: 'Landslide or erosion issue' },
+                { pattern: /sign|traffic|signal|crosswalk/, icon: 'fa-traffic-light', label: 'Traffic or signage issue' },
+                { pattern: /animal|dog|cat|stray|bite/, icon: 'fa-paw', label: 'Animal concern' },
+                { pattern: /smoke|fire|burn|air|pollution/, icon: 'fa-smog', label: 'Air or fire concern' }
+            ];
+            return categories.find(category => category.pattern.test(text)) || { icon: 'fa-map-pin', label: 'General issue' };
+        }
+
+        function updateCategoryPreview() {
+            const input = document.getElementById('category');
+            if (!input) return;
+            const match = getCategoryIcon(input.value);
+            document.getElementById('categoryPreviewIcon').className = `fas ${match.icon}`;
+            document.getElementById('categoryDetection').textContent = input.value.trim()
+                ? `Detected: ${match.label}`
+                : 'The icon will match the words you enter.';
+        }
+
+        function handleCategoryInput() {
+            updateCategoryPreview();
+            if (categoryLookupTimer) clearTimeout(categoryLookupTimer);
+            categoryLookupTimer = setTimeout(checkNearbyReports, 400);
         }
 
         function handlePhotoUpload(input) {
@@ -6160,16 +6576,14 @@
         async function submitReport(event) {
             event.preventDefault();
             const cat = document.getElementById('category');
-            const otherCat = document.getElementById('otherCategory').value.trim();
+            const categoryText = cat.value.trim();
             const location = document.getElementById('location').value.trim();
             const description = document.getElementById('description').value.trim();
 
-            if (!cat.value) return alert('⚠️ Please select a category.');
-            if (cat.value === 'Others' && !otherCat) return alert('⚠️ Please specify the category name.');
+            if (!categoryText) return alert('Please enter a category.');
             if (!location) return alert('⚠️ Please pin a location.');
             if (description.length < 10) return alert('⚠️ Description must be at least 10 characters.');
 
-            const categoryText = cat.value === 'Others' ? `📌 ${otherCat}` : cat.value;
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             btn.disabled = true;
@@ -6280,9 +6694,7 @@
                 return;
             }
 
-            const cat = document.getElementById('category')?.value || '';
-            const otherCat = document.getElementById('otherCategory')?.value?.trim() || '';
-            const category = cat === 'Others' ? (otherCat ? `📌 ${otherCat}` : '') : cat;
+            const category = document.getElementById('category')?.value?.trim() || '';
 
             const params = `latitude=${encodeURIComponent(selectedLocation.lat)}&longitude=${encodeURIComponent(selectedLocation.lng)}&radius_m=500`
                 + (category ? `&category=${encodeURIComponent(category)}` : '');
@@ -6361,7 +6773,7 @@
                 reports = result.success ? result.reports : [];
             }
             reports = reports.filter(report => report.latitude && report.longitude);
-            const reportIds = reports.map(report => Number(report.id)).sort((a, b) => a - b).join(',');
+            const reportIds = reports.map(report => `${Number(report.id)}:${report.status}`).sort().join(',');
             if (nearbyMapInitialized && nearbyMap && reportIds === nearbyMapReportIds) return;
 
             nearbyMarkers.forEach(marker => marker.remove());
@@ -6388,8 +6800,12 @@
             }
 
             reports.forEach(report => {
-                const marker = L.marker([parseFloat(report.latitude), parseFloat(report.longitude)], {
-                    icon: getLeafletIncidentPin(report.priority)
+                const marker = L.circleMarker([parseFloat(report.latitude), parseFloat(report.longitude)], {
+                    radius: 10,
+                    color: '#ffffff',
+                    weight: 2,
+                    fillColor: getReportStatusColor(report.status),
+                    fillOpacity: 1
                 }).addTo(nearbyMap);
                 marker.bindPopup(`
                     <strong>${escapeHtml(report.category)}</strong><br>
@@ -6402,6 +6818,17 @@
             nearbyMap.fitBounds(L.latLngBounds(reports.map(report => [parseFloat(report.latitude), parseFloat(report.longitude)])), { padding: [18, 18], maxZoom: 15 });
             nearbyMapInitialized = true;
             nearbyMapReportIds = reportIds;
+        }
+
+        function getReportStatusColor(status) {
+            const colors = {
+                Pending: '#f59e0b',
+                Assigned: '#3b82f6',
+                'In Progress': '#8b5cf6',
+                Completed: '#10b981',
+                Rejected: '#ef4444'
+            };
+            return colors[status] || '#64748b';
         }
 
         function getLeafletIncidentPin(priority = 'Medium') {
@@ -6527,6 +6954,7 @@
                         <div class="empty-title">No ${q ? 'matching ' : (currentTaskFilter === 'all' ? '' : currentTaskFilter.toLowerCase() + ' ')}tasks</div>
                         <div class="empty-desc">${q ? 'Try a different search term' : 'Tasks will appear here once assigned'}</div>
                     </div>`;
+                list.dataset.listExpanded = 'false';
                 return;
             }
 
@@ -6546,7 +6974,7 @@
                             </div>
                         </div>
                         <div class="task-meta">
-                            <span class="badge badge-${badge}">${t.status}</span>
+                            <span class="badge badge-${badge} maintenance-task-status">${t.status}</span>
                             ${ratingBadge}
                             <button class="btn-sm btn-sm-actions btn-icon-only" title="Actions" onclick="openActionModal('maint', ${t.id})">
                                 <i class="fas fa-bolt"></i>
@@ -6555,88 +6983,71 @@
                     </div>
                 `;
             }).join('');
+            updateListExpansion(list, '.task-item');
         }
 
-        function initMaintMap() {
+        async function initMaintMap() {
             const el = document.getElementById('maintMap');
-            if (!el || typeof google === 'undefined') return;
-            if (maintMap) { updateMaintMap(); return; }
+            if (!el) return;
 
-            maintMap = new google.maps.Map(el, {
-                center: DEFAULT_CENTER,
-                zoom: 12,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false
-            });
+            try {
+                await loadLeaflet();
+            } catch (error) {
+                el.textContent = 'The task map is temporarily unavailable.';
+                console.error('Task map failed to load:', error);
+                return;
+            }
+
+            if (!maintMap) {
+                el.replaceChildren();
+                maintMap = L.map(el).setView([DEFAULT_CENTER.lat, DEFAULT_CENTER.lng], 12);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                }).addTo(maintMap);
+            } else {
+                maintMap.invalidateSize();
+            }
             updateMaintMap();
         }
 
         function updateMaintMap() {
             if (!maintMap) return;
-            maintMarkers.forEach(m => m.setMap(null));
+            maintMarkers.forEach(marker => marker.remove());
             maintMarkers = [];
 
-            const tasksWithCoords = allTasks.filter(t => t.latitude && t.longitude);
-            if (tasksWithCoords.length === 0) {
-                document.getElementById('maintMap').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#d1d5db;font-size:0.85rem;"><i class="fas fa-map" style="margin-right:8px;"></i> No task locations</div>';
-                return;
-            }
-
-            const bounds = new google.maps.LatLngBounds();
+            const tasksWithCoords = allTasks.filter(task =>
+                task.latitude !== null && task.latitude !== undefined &&
+                task.longitude !== null && task.longitude !== undefined &&
+                Number.isFinite(Number(task.latitude)) && Number.isFinite(Number(task.longitude))
+            );
             tasksWithCoords.forEach(t => {
-                const coords = { lat: parseFloat(t.latitude), lng: parseFloat(t.longitude) };
+                const coords = [Number(t.latitude), Number(t.longitude)];
                 const isAssigned = t.status === 'Assigned';
                 const isInProgress = t.status === 'In Progress';
                 const isCompleted = t.status === 'Completed';
-
-                const pinColor = isAssigned ? '#3b82f6' :
-                                 isInProgress ? '#8b5cf6' :
-                                 isCompleted ? '#10b981' : '#ef4444';
-                const pinIconType = isCompleted ? 'check' : (isInProgress ? 'wrench' : 'dot');
-
-                const marker = new google.maps.Marker({
-                    position: coords,
-                    map: maintMap,
-                    title: t.title,
-                    icon: getAnimatedMarkerPin({
-                        color: pinColor,
-                        pulse: !isCompleted,
-                        iconType: pinIconType
+                const color = getReportStatusColor(t.status);
+                const marker = L.marker(coords, {
+                    icon: L.divIcon({
+                        className: 'task-map-marker-icon',
+                        html: `<span class="task-map-marker" style="--task-marker-color:${color}"><span class="task-map-marker-pulse"></span><span class="task-map-marker-dot"></span></span>`,
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12],
+                        popupAnchor: [0, -12]
                     })
-                });
-
-                const badgeBg = isAssigned ? '#dbeafe' : isInProgress ? '#f3e8ff' : isCompleted ? '#dcfce7' : '#fee2e2';
-                const badgeText = isAssigned ? '#1d4ed8' : isInProgress ? '#6d28d9' : isCompleted ? '#15803d' : '#b91c1c';
-
-                const iw = new google.maps.InfoWindow({
-                    content: `
-                        <div style="font-family:Inter,sans-serif;padding:8px 6px;min-width:190px;color:#1e293b;">
-                            <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;color:#0f172a;">${t.title}</div>
-                            <div style="font-size:0.83rem;margin-bottom:6px;display:flex;align-items:flex-start;gap:4px;color:#475569;">
-                                <span style="color:#10b981;">📍</span> <span>${t.location}</span>
-                            </div>
-                            <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;">
-                                <span style="font-size:0.75rem;padding:2px 8px;border-radius:999px;font-weight:600;background:${badgeBg};color:${badgeText};">${t.status}</span>
-                                <span style="font-size:0.72rem;color:#94a3b8;">${t.priority || 'Normal'}</span>
-                            </div>
-                        </div>
-                    `
-                });
-
-                marker.addListener('click', () => {
-                    maintMarkers.forEach(m => m._iw?.close());
-                    iw.open(maintMap, marker);
-                    marker._iw = iw;
-                });
+                }).addTo(maintMap);
+                marker.bindPopup(`
+                    <strong>${escapeHtml(t.title || 'Task')}</strong><br>
+                    ${escapeHtml(t.location || 'Location unavailable')}<br>
+                    <small>${escapeHtml(t.status || 'Unknown')} · ${escapeHtml(t.priority || 'Normal')}</small>
+                `);
                 maintMarkers.push(marker);
-                bounds.extend(coords);
             });
 
             if (maintMarkers.length > 0) {
-                maintMap.fitBounds(bounds);
-                google.maps.event.addListenerOnce(maintMap, 'bounds_changed', () => {
-                    if (maintMap.getZoom() > 15) maintMap.setZoom(15);
+                maintMap.fitBounds(L.latLngBounds(tasksWithCoords.map(task => [Number(task.latitude), Number(task.longitude)])), {
+                    padding: [24, 24],
+                    maxZoom: 15
                 });
             }
         }
@@ -6703,6 +7114,8 @@
             document.getElementById('completeForm').reset();
             document.getElementById('completeBeforePreview').classList.remove('show');
             document.getElementById('completeAfterPreview').classList.remove('show');
+            document.getElementById('completeBeforeUploadArea').style.display = '';
+            document.getElementById('completeAfterUploadArea').style.display = '';
             document.getElementById('completeBeforeThumb').style.display = 'none';
             document.getElementById('completeAfterThumb').style.display = 'none';
             completeBeforeDataUrl = null;
@@ -6714,6 +7127,12 @@
         function closeCompleteModal() {
             document.getElementById('completeModal').classList.remove('active');
             document.body.style.overflow = 'auto';
+        }
+
+        function chooseCompletePhoto(inputId) {
+            const input = document.getElementById(inputId);
+            input.value = '';
+            input.click();
         }
 
         function handleCompletePhoto(input, previewId, nameId, thumbId) {
@@ -6736,6 +7155,7 @@
                     const thumb = document.getElementById(thumbId);
                     thumb.src = e.target.result;
                     thumb.style.display = 'block';
+                    document.getElementById(previewId === 'completeBeforePreview' ? 'completeBeforeUploadArea' : 'completeAfterUploadArea').style.display = 'none';
                     document.getElementById(previewId).classList.add('show');
                 };
                 reader.onerror = () => {
@@ -6752,6 +7172,7 @@
             document.getElementById(inputId).value = '';
             document.getElementById(previewId).classList.remove('show');
             document.getElementById(thumbId).style.display = 'none';
+            document.getElementById(inputId === 'completeBeforePhoto' ? 'completeBeforeUploadArea' : 'completeAfterUploadArea').style.display = '';
             if (inputId === 'completeBeforePhoto') completeBeforeDataUrl = null;
             if (inputId === 'completeAfterPhoto') completeAfterDataUrl = null;
         }
@@ -6914,6 +7335,7 @@
             const pending = users.filter(user => user.role === 'maintenance' && !user.is_approved && !user.is_rejected);
             if (!pending.length) {
                 list.innerHTML = '<div class="empty-state"><i class="fas fa-user-check"></i><div class="empty-title">No applications waiting</div><div class="empty-desc">New maintenance applicants will appear here</div></div>';
+                list.dataset.listExpanded = 'false';
                 return;
             }
 
@@ -6932,6 +7354,7 @@
                     </div>
                 </div>
             `).join('');
+            updateListExpansion(list, '.task-item');
         }
 
         async function approveMaintenanceUser(userId) {
@@ -6969,6 +7392,7 @@
                         <div class="empty-title">No teams available</div>
                         <div class="empty-desc">Teams will appear here once registered</div>
                     </div>`;
+                list.dataset.listExpanded = 'false';
                 return;
             }
 
@@ -6991,6 +7415,7 @@
                     </div>
                 `;
             }).join('');
+            updateListExpansion(list, '.task-item');
         }
 
         async function loadAutoAssignRules() {
@@ -7008,6 +7433,7 @@
                     <div class="empty-title">No rules configured</div>
                     <div class="empty-desc">Create auto-assign rules to automatically route reports to the right team</div>
                 </div>`;
+                list.dataset.listExpanded = 'false';
                 return;
             }
             list.innerHTML = cachedAutoAssignRules.map(rule => `
@@ -7025,6 +7451,7 @@
                     </div>
                 </div>
             `).join('');
+            updateListExpansion(list, '.task-item');
         }
 
         function populateAutoAssignTeamDropdown() {
@@ -7222,6 +7649,7 @@
                         `;
                     }).join('');
                 }
+                updateListExpansion(citizenList, '.task-item');
             }
 
             const teams = result.teams || [];
@@ -7252,6 +7680,7 @@
                         `;
                     }).join('');
                 }
+                updateListExpansion(teamList, '.task-item');
             }
         }
 
@@ -7316,6 +7745,7 @@
                         <div class="empty-title">No matching reports</div>
                         <div class="empty-desc">Adjust the filters or search terms.</div>
                     </div>`;
+                list.dataset.listExpanded = 'false';
                 return;
             }
 
@@ -7344,6 +7774,7 @@
                     </div>
                 `;
             }).join('');
+            updateListExpansion(list, '.report-item');
         }
 
         async function openAssignModal(reportId) {

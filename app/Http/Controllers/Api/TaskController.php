@@ -63,6 +63,12 @@ class TaskController extends Controller
                 'status' => $report->status,
                 'note' => 'Maintenance started the task',
             ]);
+            UserNotification::create([
+                'user_id' => $report->citizen_id,
+                'report_id' => $report->id,
+                'title' => 'Report in progress',
+                'message' => "{$report->category} — {$teamName} started work",
+            ]);
         }
 
         ActivityLogger::log('START_TASK', "Task #{$task->id} ({$task->title})");

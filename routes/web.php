@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\StatsController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\NotificationPreferenceController;
 use Illuminate\Support\Facades\Route;
 
 // Main page (Blade view we'll create later)
@@ -59,6 +60,8 @@ Route::prefix('api')->group(function () {
         // Notifications
         Route::get ('notifications',      [NotificationController::class, 'index']);
         Route::post('notifications/read', [NotificationController::class, 'markRead']);
+        Route::get ('notification-preferences', [NotificationPreferenceController::class, 'show']);
+        Route::post('notification-preferences', [NotificationPreferenceController::class, 'update']);
 
         // Chat
         Route::get ('chat/unread',             [ChatController::class, 'unread']);

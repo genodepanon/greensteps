@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Report;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\UserNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -50,6 +51,12 @@ class ReportHistoryTest extends TestCase
         $task = Task::where('report_id', $reportId)->firstOrFail();
 
         $this->actingAs($maintenance)->postJson('/api/tasks/' . $task->id . '/start')->assertOk();
+
+        $this->assertDatabaseHas('user_notifications', [
+            'user_id' => $citizen->id,
+            'report_id' => $reportId,
+            'title' => 'Report in progress',
+        ]);
 
         $this->actingAs($citizen)->getJson('/api/reports/' . $reportId)
             ->assertOk()

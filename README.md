@@ -62,3 +62,25 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Email Setup
+
+GreenSteps uses Gmail SMTP for password-reset links, report status updates, and opted-in copies of in-app notifications.
+
+1. Enable 2-Step Verification on the Gmail account and create a Google App Password.
+2. Set these values in `.env`, using the same Gmail address for username and sender:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-gmail-address@gmail.com
+MAIL_PASSWORD=your-google-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-gmail-address@gmail.com
+MAIL_FROM_NAME="GreenSteps"
+MAIL_TIMEOUT=10
+```
+
+3. Set `APP_URL` to the public site URL so password-reset links open the deployed site.
+4. Run `php artisan config:clear` after changing mail settings.
