@@ -30,6 +30,7 @@ class CommentController extends Controller
                     'created_at' => $c->created_at,
                     'full_name'  => $c->user->full_name ?? 'User',
                     'team_name'  => $c->user->team_name ?? null,
+                    'photo_url'  => $c->user->photo_url ?? null,
                 ];
             });
 

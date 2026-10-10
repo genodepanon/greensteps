@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\ActivityLogger;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Auth;
@@ -52,22 +53,26 @@ class AuthController extends Controller
                 'role'      => $user->role,
                 'team_name' => $user->team_name,
                 'points'    => $user->points,
+                'photo_url' => $user->photo_url,
                 'is_approved' => $user->is_approved,
             ],
         ]);
     }
 
-    public function register(Request $request)
+    public function register(Request $request, ImageService $images)
     {
         $data = $request->validate([
-            'full_name' => 'required|string|max:150',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required|string|min:8',
-            'phone'     => 'nullable|string|max:50',
-            'role'      => 'nullable|in:citizen,maintenance,admin',
-            'team_name' => 'nullable|required_if:role,maintenance|string|max:150',
+            'full_name'  => 'required|string|max:150',
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|string|min:8',
+            'phone'      => 'nullable|string|max:50',
+            'role'       => 'nullable|in:citizen,maintenance,admin',
+            'team_name'  => 'nullable|required_if:role,maintenance|string|max:150',
+            'photo_data' => 'nullable|string|max:7000000',
         ]);
         $role = $data['role'] ?? 'citizen';
+
+        $photoPath = !empty($data['photo_data']) ? $images->saveBase64($data['photo_data'], 'avatar') : null;
 
         $user = User::create([
             'full_name' => $data['full_name'],
@@ -76,6 +81,7 @@ class AuthController extends Controller
             'role'      => $role,
             'team_name' => $role === 'maintenance' ? $data['team_name'] : null,
             'phone'     => $data['phone'] ?? null,
+            'photo_url' => $photoPath,
         ]);
 
         ActivityLogger::log('REGISTER', $user->full_name . ' as ' . $user->role . ' (' . $user->email . ')');
@@ -91,13 +97,14 @@ class AuthController extends Controller
         ]);
     }
 
-    public function adminRegister(Request $request)
+    public function adminRegister(Request $request, ImageService $images)
     {
         $data = $request->validate([
-            'full_name' => 'required|string|max:150',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required|string|min:8',
+            'full_name'             => 'required|string|max:150',
+            'email'                 => 'required|email|unique:users,email',
+            'password'              => 'required|string|min:8',
             'password_confirmation' => 'required|string|min:8',
+            'photo_data'            => 'nullable|string|max:7000000',
         ]);
 
         if ($data['password'] !== $data['password_confirmation']) {
@@ -107,6 +114,8 @@ class AuthController extends Controller
             ], 422);
         }
 
+        $photoPath = !empty($data['photo_data']) ? $images->saveBase64($data['photo_data'], 'avatar') : null;
+
         $user = User::create([
             'full_name' => $data['full_name'],
             'email'     => $data['email'],
@@ -114,6 +123,7 @@ class AuthController extends Controller
             'role'      => 'admin',
             'team_name' => null,
             'phone'     => null,
+            'photo_url' => $photoPath,
         ]);
 
         ActivityLogger::log('ADMIN_REGISTER', $user->full_name . ' as admin (' . $user->email . ')');
@@ -172,12 +182,13 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'user' => [
-                'id'        => $u->id,
-                'full_name' => $u->full_name,
-                'email'     => $u->email,
-                'role'      => $u->role,
-                'team_name' => $u->team_name,
-                'points'    => $u->points,
+                'id'          => $u->id,
+                'full_name'   => $u->full_name,
+                'email'       => $u->email,
+                'role'        => $u->role,
+                'team_name'   => $u->team_name,
+                'points'      => $u->points,
+                'photo_url'   => $u->photo_url,
                 'is_approved' => $u->is_approved,
             ],
         ]);
@@ -195,7 +206,7 @@ class AuthController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request, ImageService $images)
     {
         $u = Auth::user();
         $data = $request->validate([
@@ -203,6 +214,8 @@ class AuthController extends Controller
             'email'            => 'required|email|unique:users,email,' . $u->id,
             'current_password' => 'required',
             'new_password'     => 'nullable|string|min:8',
+            'photo_data'       => 'nullable|string|max:7000000',
+            'remove_photo'     => 'nullable|boolean',
         ]);
 
         if (!Hash::check($data['current_password'], $u->password)) {
@@ -214,10 +227,33 @@ class AuthController extends Controller
         if (!empty($data['new_password'])) {
             $u->password = Hash::make($data['new_password']);
         }
+
+        if (!empty($data['remove_photo'])) {
+            $u->photo_url = null;
+        } elseif (!empty($data['photo_data'])) {
+            $photoPath = $images->saveBase64($data['photo_data'], 'avatar');
+            if ($photoPath) {
+                $u->photo_url = $photoPath;
+            }
+        }
+
         $u->save();
 
         ActivityLogger::log('UPDATE_PROFILE', 'Updated to ' . $u->email);
 
-        return response()->json(['success' => true, 'message' => 'Profile updated!']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated!',
+            'user' => [
+                'id'          => $u->id,
+                'full_name'   => $u->full_name,
+                'email'       => $u->email,
+                'role'        => $u->role,
+                'team_name'   => $u->team_name,
+                'points'      => $u->points,
+                'photo_url'   => $u->photo_url,
+                'is_approved' => $u->is_approved,
+            ],
+        ]);
     }
 }

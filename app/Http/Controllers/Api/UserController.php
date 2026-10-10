@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PointsLog;
 use App\Models\User;
 use App\Services\ActivityLogger;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,11 +20,11 @@ class UserController extends Controller
             return response()->json(['success' => false, 'message' => 'Not authorized.']);
         }
         $users = User::orderBy('role')->orderBy('full_name')
-            ->get(['id', 'full_name', 'email', 'role', 'team_name', 'points', 'is_approved', 'is_rejected']);
+            ->get(['id', 'full_name', 'email', 'role', 'team_name', 'points', 'photo_url', 'is_approved', 'is_rejected']);
         return response()->json(['success' => true, 'users' => $users]);
     }
 
-    public function createMaintenance(Request $request)
+    public function createMaintenance(Request $request, ImageService $images)
     {
         $admin = Auth::user();
         if ($admin->role !== 'admin') {
@@ -31,19 +32,23 @@ class UserController extends Controller
         }
 
         $data = $request->validate([
-            'full_name' => 'required|string|max:150',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'team_name' => 'required|string|max:150',
+            'full_name'  => 'required|string|max:150',
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|string|min:8|confirmed',
+            'team_name'  => 'required|string|max:150',
+            'photo_data' => 'nullable|string|max:7000000',
         ]);
+
+        $photoPath = !empty($data['photo_data']) ? $images->saveBase64($data['photo_data'], 'avatar') : null;
 
         $user = User::create([
             'full_name' => $data['full_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => 'maintenance',
+            'email'     => $data['email'],
+            'password'  => Hash::make($data['password']),
+            'role'      => 'maintenance',
             'team_name' => $data['team_name'],
-            'points' => 0,
+            'photo_url' => $photoPath,
+            'points'    => 0,
         ]);
 
         ActivityLogger::log('CREATE_MAINTENANCE_USER', $user->email . ' (' . $user->team_name . ')');

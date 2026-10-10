@@ -59,7 +59,7 @@ class StatsController extends Controller
     public function leaderboard()
     {
         $citizens = User::where('role', 'citizen')
-            ->select('id', 'full_name', 'points')
+            ->select('id', 'full_name', 'points', 'photo_url')
             ->withCount(['reports'])
             ->orderByDesc('points')
             ->orderByDesc('reports_count')
@@ -71,6 +71,7 @@ class StatsController extends Controller
                 'full_name' => $c->full_name,
                 'points'    => (int) $c->points,
                 'reports'   => $c->reports_count,
+                'photo_url' => $c->photo_url,
             ]);
 
         $teams = User::where('role', 'maintenance')

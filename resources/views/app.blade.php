@@ -393,6 +393,8 @@
             body.dark-mode .form-group textarea,
             body.dark-mode .comment-compose textarea,
             body.dark-mode #trackCommentInput,
+            body.dark-mode #trackDiscussionInput,
+            body.dark-mode #reportDetailsCommentInput,
             body.dark-mode #rateComment,
             body.dark-mode #adminRejectReason,
             body.dark-mode #maintRejectReason,
@@ -404,8 +406,82 @@
                 border-color: #3d4248 !important;
             }
             body.dark-mode textarea::placeholder,
-            body.dark-mode .comment-compose textarea::placeholder {
-                color: #d1d5db !important;
+            body.dark-mode .comment-compose textarea::placeholder,
+            body.dark-mode #trackDiscussionInput::placeholder {
+                color: #9ca3af !important;
+            }
+
+            /* DISCUSSION DARK MODE */
+            body.dark-mode .comments-thread {
+                background: #171b1d !important;
+                border: 1px solid #2d3135;
+                border-radius: 14px;
+                padding: 10px !important;
+            }
+            body.dark-mode .comment-bubble {
+                background: #202428 !important;
+                border: 1px solid #2d3135 !important;
+                color: #f3f4f6 !important;
+            }
+            body.dark-mode .comment-bubble.mine {
+                background: #1b2838 !important;
+                border-color: #2b4365 !important;
+            }
+            body.dark-mode .comment-author {
+                color: #f3f4f6 !important;
+            }
+            body.dark-mode .comment-text {
+                color: #e2e8f0 !important;
+            }
+            body.dark-mode .comment-time {
+                color: #94a3b8 !important;
+            }
+            body.dark-mode .comments-empty {
+                color: #94a3b8 !important;
+            }
+            body.dark-mode .comment-avatar {
+                background: #2b3036 !important;
+                border: 2px solid #3d434a !important;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.4) !important;
+            }
+            body.dark-mode .comment-avatar i {
+                color: #cbd5e1 !important;
+            }
+            body.dark-mode .comment-avatar.admin {
+                background: #382c16 !important;
+                border-color: #5c441c !important;
+            }
+            body.dark-mode .comment-avatar.admin i {
+                color: #fcd34d !important;
+            }
+            body.dark-mode .comment-avatar.maintenance {
+                background: #262744 !important;
+                border-color: #3b3d6c !important;
+            }
+            body.dark-mode .comment-avatar.maintenance i {
+                color: #a5b4fc !important;
+            }
+            body.dark-mode .comment-avatar.citizen {
+                background: #192b45 !important;
+                border-color: #27456d !important;
+            }
+            body.dark-mode .comment-avatar.citizen i {
+                color: #93c5fd !important;
+            }
+            body.dark-mode .comment-role.citizen {
+                background: #1e3a5f !important;
+                color: #93c5fd !important;
+            }
+            body.dark-mode .comment-role.admin {
+                background: #4a3818 !important;
+                color: #fcd34d !important;
+            }
+            body.dark-mode .comment-role.maintenance {
+                background: #2d305e !important;
+                color: #c7d2fe !important;
+            }
+            body.dark-mode .comment-compose {
+                background: transparent !important;
             }
             body.dark-mode h3,
             body.dark-mode .card-header h3,
@@ -554,6 +630,95 @@
             body.dark-mode .task-item .task-meta,
             body.dark-mode .report-item .report-meta {
                 color: #f3f4f6 !important;
+            }
+            /* Dark mode for Statistics Modal */
+            body.dark-mode .stats-modal-box {
+                background: #171b1d !important;
+                border: 1px solid #2d3135 !important;
+            }
+            body.dark-mode .stats-modal-box h3 {
+                color: #f3f4f6 !important;
+            }
+            body.dark-mode .stats-modal-box h3 i {
+                color: #4ade80 !important;
+            }
+            body.dark-mode .stat-section-title {
+                color: #f3f4f6 !important;
+            }
+            body.dark-mode .stat-section-title i {
+                color: #4ade80 !important;
+            }
+            body.dark-mode .metric-card {
+                background: #1f2428 !important;
+                border: 1px solid #2d3135 !important;
+            }
+            body.dark-mode .metric-card .metric-num {
+                color: #f3f4f6 !important;
+            }
+            body.dark-mode .metric-card .metric-lbl {
+                color: #9ca3af !important;
+            }
+            body.dark-mode .metric-card:nth-child(1) .metric-icon {
+                background: rgba(59, 130, 246, 0.2) !important;
+                color: #93c5fd !important;
+            }
+            body.dark-mode .metric-card:nth-child(2) .metric-icon {
+                background: rgba(34, 197, 94, 0.2) !important;
+                color: #86efac !important;
+            }
+            body.dark-mode .metric-card:nth-child(3) .metric-icon {
+                background: rgba(239, 68, 68, 0.2) !important;
+                color: #fca5a5 !important;
+            }
+            body.dark-mode .metric-card:nth-child(4) .metric-icon {
+                background: rgba(234, 179, 8, 0.2) !important;
+                color: #fde047 !important;
+            }
+            body.dark-mode .bar-chart {
+                background: #1f2428 !important;
+                border: 1px solid #2d3135 !important;
+            }
+            body.dark-mode .bar-col .bar-value {
+                color: #4ade80 !important;
+            }
+            body.dark-mode .bar-col .bar.empty {
+                background: #2b3036 !important;
+            }
+            body.dark-mode .bar-col .bar-label {
+                color: #9ca3af !important;
+            }
+            body.dark-mode .status-row .status-name {
+                color: #e5e7eb !important;
+            }
+            body.dark-mode .status-row .status-bar-track {
+                background: #282d33 !important;
+            }
+            body.dark-mode .status-row .status-count {
+                color: #f3f4f6 !important;
+            }
+            body.dark-mode .status-row .status-count span {
+                color: #9ca3af !important;
+            }
+            body.dark-mode .cat-row {
+                border-bottom: 1px solid #282d33 !important;
+            }
+            body.dark-mode .cat-row .cat-name {
+                color: #e5e7eb !important;
+            }
+            body.dark-mode .cat-row .cat-count {
+                color: #4ade80 !important;
+                background: rgba(45, 122, 79, 0.25) !important;
+                border: 1px solid rgba(74, 222, 128, 0.2) !important;
+            }
+            body.dark-mode #statsCategoryBreakdown div {
+                color: #9ca3af !important;
+            }
+            body.dark-mode .avatar-edit-preview {
+                border-color: #4ade80;
+                background: #1f2428;
+            }
+            body.dark-mode .avatar-edit-preview .avatar-edit-overlay {
+                background: rgba(0,0,0,0.65);
             }
 
             .btn {
@@ -761,6 +926,11 @@
             .stat-card { background: white; border-radius: 20px; padding: 1.5rem; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
             .stat-card .number { font-size: 2.2rem; font-weight: 700; color: #0b2a3b; }
             .stat-card .label { font-size: 0.85rem; color: #64748b; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+            .data-refresh-transition { animation: dataRefreshIn 0.35s ease-out; }
+            @keyframes dataRefreshIn { from { opacity: 0.45; } to { opacity: 1; } }
+            @media (prefers-reduced-motion: reduce) {
+                .data-refresh-transition { animation: none; }
+            }
 
             .admin-header-nav { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
             .admin-header-nav-item {
@@ -1004,10 +1174,14 @@
                 padding: 4px 10px; border-radius: 40px; margin-left: 8px;
             }
             .gps-indicator.active { display: inline-flex; }
+            .gps-indicator.error { display: inline-flex; color: #92400e; background: #fef3c7; border-color: #fde68a; }
             .gps-indicator .gps-dot {
                 width: 7px; height: 7px; border-radius: 50%; background: #16a34a;
                 animation: livePulse 1.6s ease infinite;
             }
+            .gps-indicator.error .gps-dot { background: #d97706; animation: none; }
+            #gpsSharingIndicator { display: none !important; }
+            #gpsSharingText { display: none; }
 
             @keyframes fadeIn {
                 from { opacity: 0; transform: translateY(-6px); }
@@ -1060,22 +1234,47 @@
             }
             .comment-bubble {
                 background: #f8fafc; border: 1px solid #e2e8f0;
-                border-radius: 12px; padding: 0.65rem 0.8rem;
+                border-radius: 14px; padding: 0.8rem 0.95rem;
             }
             .comment-bubble.mine {
                 background: #eff6ff; border-color: #bfdbfe;
             }
             .comment-meta {
                 display: flex; align-items: center; justify-content: space-between;
-                gap: 8px; margin-bottom: 4px; flex-wrap: wrap;
+                gap: 10px; margin-bottom: 6px; flex-wrap: wrap;
             }
             .comment-author {
-                font-weight: 600; font-size: 0.78rem; color: #0b2a3b;
-                display: inline-flex; align-items: center; gap: 6px;
+                font-weight: 600; font-size: 0.88rem; color: #0b2a3b;
+                display: inline-flex; align-items: center; gap: 10px;
             }
+            .comment-avatar {
+                width: 42px; height: 42px; border-radius: 50%;
+                overflow: hidden; flex-shrink: 0;
+                display: inline-flex; align-items: center; justify-content: center;
+                background: #e2e8f0; border: 2px solid #fff;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+            }
+            .comment-avatar img {
+                width: 100%; height: 100%; object-fit: cover; display: block;
+            }
+            .comment-avatar i {
+                font-size: 1.15rem; color: #64748b;
+            }
+            .comment-avatar.admin {
+                background: #fef3c7; color: #92400e; border-color: #fde68a;
+            }
+            .comment-avatar.admin i { color: #92400e; }
+            .comment-avatar.maintenance {
+                background: #e0e7ff; color: #3730a3; border-color: #c7d2fe;
+            }
+            .comment-avatar.maintenance i { color: #3730a3; }
+            .comment-avatar.citizen {
+                background: #dbeafe; color: #1e40af; border-color: #bfdbfe;
+            }
+            .comment-avatar.citizen i { color: #1e40af; }
             .comment-role {
-                font-size: 0.62rem; font-weight: 600; text-transform: uppercase;
-                letter-spacing: 0.03em; padding: 2px 7px; border-radius: 40px;
+                font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+                letter-spacing: 0.03em; padding: 3px 8px; border-radius: 40px;
             }
             .comment-role.citizen { background: #dbeafe; color: #1e40af; }
             .comment-role.admin { background: #fef3c7; color: #92400e; }
@@ -1112,7 +1311,16 @@
             .empty-state .empty-desc { font-size: 0.8rem; margin-top: 4px; }
 
             #nearbyMap { width: 100%; height: 220px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; margin-top: 0.5rem; }
-            #googleMap { width: 100%; height: 260px; background: #e9eef3; }
+            .incident-map-marker { background: none; border: 0; }
+            .incident-map-marker svg { overflow: visible; }
+            .live-destination-marker, .live-team-marker { background: none; border: 0; }
+            .live-destination-marker svg, .live-team-marker svg { overflow: visible; }
+            @media (prefers-reduced-motion: reduce) {
+                .incident-map-marker animate, .incident-map-marker animateTransform,
+                .live-destination-marker animate, .live-destination-marker animateTransform,
+                .live-team-marker animate, .live-team-marker animateTransform { display: none; }
+            }
+            #reportLocationMap { width: 100%; height: 260px; background: #e9eef3; }
             #maintMap { width: 100%; height: 240px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; }
             #navMap { width: 100%; height: 200px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; margin-bottom: 1rem; }
             .map-container { margin-top: 8px; border-radius: 16px; overflow: hidden; border: 1.5px solid #e2e8f0; position: relative; }
@@ -1214,6 +1422,40 @@
                 display: flex; align-items: center; justify-content: center;
                 font-size: 2.5rem; color: white; margin: 0 auto 1rem;
                 box-shadow: 0 4px 20px rgba(45,122,79,0.3);
+                position: relative; overflow: hidden;
+            }
+            .profile-avatar img {
+                width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;
+            }
+            .user-badge-avatar {
+                display: inline-flex; align-items: center; justify-content: center;
+            }
+            .user-badge-img {
+                width: 24px; height: 24px; border-radius: 50%; object-fit: cover; display: inline-block; vertical-align: middle;
+            }
+            .avatar-edit-wrap {
+                display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 1.2rem;
+            }
+            .avatar-edit-preview {
+                width: 88px; height: 88px; border-radius: 50%;
+                background: linear-gradient(145deg, #2d7a4f, #1a4d33);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 2.6rem; color: white; overflow: hidden;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+                border: 3px solid #2d7a4f; cursor: pointer; position: relative;
+            }
+            .avatar-edit-preview img {
+                width: 100%; height: 100%; object-fit: cover; display: block;
+            }
+            .avatar-edit-overlay {
+                position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+                display: flex; align-items: center; justify-content: center;
+                opacity: 0; transition: opacity 0.2s ease; color: white; font-size: 1.2rem;
+                border-radius: 50%;
+            }
+            .avatar-edit-preview:hover .avatar-edit-overlay { opacity: 1; }
+            .avatar-btn-row {
+                display: flex; gap: 8px; align-items: center; margin-top: 4px;
             }
             .profile-name { text-align: center; font-size: 1.3rem; font-weight: 700; color: #0b2a3b; }
             .profile-role { text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 2px; }
@@ -1628,30 +1870,56 @@
                 flex-shrink: 0;
             }
 
-            .chat-panel-btn {
-                background: rgba(255,255,255,0.12);
-                border: 1px solid rgba(255,255,255,0.18);
-                color: white;
+            .header-icon-btn {
+                position: relative;
                 display: inline-flex;
                 align-items: center;
-                gap: 8px;
+                justify-content: center;
+                width: 38px;
+                height: 38px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.12);
+                color: #ffffff;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                padding: 0;
             }
-            .chat-panel-btn:hover {
-                background: rgba(255,255,255,0.18);
+            .header-icon-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
                 transform: translateY(-1px);
             }
-            .chat-panel-btn .chat-unread-count {
-                display: none;
-                min-width: 19px;
-                height: 19px;
-                padding: 0 5px;
+            .header-icon-badge {
+                position: absolute;
+                top: -5px;
+                right: -6px;
+                min-width: 18px;
+                height: 18px;
+                padding: 0 4px;
                 border-radius: 999px;
                 background: #dc2626;
-                color: white;
+                color: #ffffff;
+                font-size: 0.65rem;
+                font-weight: 700;
+                display: none;
                 align-items: center;
                 justify-content: center;
-                font-size: 0.68rem;
-                font-weight: 700;
+                border: 2px solid #2d7a4f;
+                line-height: 1;
+                pointer-events: none;
+            }
+            body.dark-mode .header-icon-btn {
+                background: #24282c;
+                border-color: #3d4248;
+                color: #f3f4f6;
+            }
+            body.dark-mode .header-icon-btn:hover {
+                background: #2e343a;
+                border-color: #4b525a;
+            }
+            body.dark-mode .header-icon-badge {
+                border-color: #171b1d;
             }
 
             .chat-modal-overlay {
@@ -2022,7 +2290,7 @@
                 .stats-grid { grid-template-columns: 1fr; }
                 .header-left h1 { font-size: 1.2rem; }
                 .card { padding: 1.2rem; }
-                #googleMap, #nearbyMap, #maintMap, .live-track-map { height: 200px; }
+                #reportLocationMap, #nearbyMap, #maintMap, .live-track-map { height: 200px; }
                 .login-container { padding: 2rem 1.2rem; }
                 .metric-grid { grid-template-columns: 1fr; }
                 .bar-chart { height: 120px; }
@@ -2130,11 +2398,6 @@
             <div class="register-link" id="adminRegisterLink" style="display:none;">
                 First time setup? <a onclick="openAdminRegisterModal()">Register admin account</a>
             </div>
-
-            <div style="display:flex; gap:12px; justify-content:center; margin-top:1.2rem; flex-wrap:wrap;">
-                <a href="/community/map" style="color:#2d7a4f; text-decoration:none; font-size:0.85rem; font-weight:500; display:flex; align-items:center; gap:6px;"><i class="fas fa-map-marked-alt"></i> Community Map</a>
-                <span style="color:#e2e8f0; height:20px; width:1px;"></span>
-                <a href="/community/gallery" style="color:#2d7a4f; text-decoration:none; font-size:0.85rem; font-weight:500; display:flex; align-items:center; gap:6px;"><i class="fas fa-camera-retro"></i> Before & After</a>
             </div>
         </div>
     </div>
@@ -2145,16 +2408,19 @@
             <div class="header-left">
                 <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
                 <span class="user-badge" onclick="openProfileModal('citizen')">
-                    <i class="fas fa-user-circle"></i> <span id="citizenUserName">Citizen</span>
+                    <span id="citizenBadgeAvatar" class="user-badge-avatar"><i class="fas fa-user-circle"></i></span> <span id="citizenUserName">Citizen</span>
                     <i class="fas fa-chevron-down" style="font-size:0.6rem; opacity:0.7;"></i>
                 </span>
             </div>
              <div class="header-right">
                 <button class="btn btn-primary" onclick="openReportModal()"><i class="fas fa-plus"></i> New Report</button>
+                <button type="button" class="header-icon-btn" onclick="openChatPanel()" title="Chat" aria-label="Open Chat">
+                    <i class="fas fa-comments"></i>
+                    <span id="citizenChatNavUnread" class="header-icon-badge"></span>
+                </button>
                 <details class="header-menu">
                     <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-ellipsis"></i></summary>
                     <div class="header-menu-panel">
-                        <button type="button" class="header-menu-item" onclick="openChatPanel(); this.closest('details').open = false;"><i class="fas fa-comments"></i> Chat <span id="citizenChatUnread" class="chat-unread-count"></span></button>
                         <button type="button" class="header-menu-item" onclick="openStatisticsModal(); this.closest('details').open = false;"><i class="fas fa-chart-bar"></i> Statistics</button>
                         <div class="header-menu-theme">
                             <span class="header-menu-theme-title">Dark Mode</span>
@@ -2223,11 +2489,20 @@
             <div class="header-left">
                 <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
                 <span class="user-badge" onclick="openProfileModal('maintenance')">
-                    <i class="fas fa-hard-hat"></i> <span id="maintenanceUserName">Team Alpha</span>
+                    <span id="maintBadgeAvatar" class="user-badge-avatar"><i class="fas fa-hard-hat"></i></span> <span id="maintenanceUserName">Team Alpha</span>
                     <i class="fas fa-chevron-down" style="font-size:0.6rem; opacity:0.7;"></i>
                 </span>
             </div>
-             <div class="header-right">
+             <div class="header-right" style="display:flex; align-items:center; gap:8px;">
+                     <button type="button" class="btn btn-info" onclick="openNavigateModal()"><i class="fas fa-location-dot"></i> Navigate</button>
+                <button type="button" class="header-icon-btn" onclick="openChatPanel()" title="Chat" aria-label="Open Chat">
+                    <i class="fas fa-comments"></i>
+                    <span id="maintenanceChatNavUnread" class="header-icon-badge"></span>
+                </button>
+                <span id="gpsSharingIndicator" class="gps-indicator" role="status" aria-live="polite">
+                    <span class="gps-dot"></span>
+                    <span id="gpsSharingText">Sharing location</span>
+                </span>
                 <details class="header-menu">
                     <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-ellipsis"></i></summary>
                     <div class="header-menu-panel">
@@ -2328,7 +2603,7 @@
             <div class="header-left">
                 <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
                 <span class="user-badge" onclick="openProfileModal('admin')">
-                    <i class="fas fa-user-shield"></i> <span id="adminUserName">Admin</span>
+                    <span id="adminBadgeAvatar" class="user-badge-avatar"><i class="fas fa-user-shield"></i></span> <span id="adminUserName">Admin</span>
                     <i class="fas fa-chevron-down" style="font-size:0.6rem; opacity:0.7;"></i>
                 </span>
             </div>
@@ -2749,7 +3024,7 @@
                     <label for="location">Location <span class="required">*</span></label>
                     <input type="text" id="location" placeholder="Click on the map or type address" required />
                     <div class="map-container">
-                        <div id="googleMap"></div>
+                        <div id="reportLocationMap"></div>
                         <div class="map-hint"><i class="fas fa-mouse-pointer"></i> Click map to pin</div>
                     </div>
                     <div class="location-coords" id="locationCoords">
@@ -2794,7 +3069,10 @@
                 <h3><i class="fas fa-user-circle" style="color:#2d7a4f;"></i> My Profile</h3>
                 <button class="btn btn-secondary" onclick="closeProfileModal()" style="padding:0.3rem 0.8rem;"><i class="fas fa-times"></i></button>
             </div>
-            <div class="profile-avatar"><i class="fas fa-user" id="profileIcon"></i></div>
+            <div class="profile-avatar" id="profileAvatarBox">
+                <img id="profileImg" src="" style="display:none;" alt="Profile Photo" />
+                <i class="fas fa-user" id="profileIcon"></i>
+            </div>
             <div class="profile-name" id="profileName">—</div>
             <div class="profile-role" id="profileRole">—</div>
             <div class="profile-stats">
@@ -2862,6 +3140,23 @@
             </div>
             <div class="modal-subtitle">Update your name, email, or password</div>
             <form id="editProfileForm" onsubmit="handleEditProfile(event)">
+                <div class="avatar-edit-wrap">
+                    <div class="avatar-edit-preview" onclick="document.getElementById('editPhotoInput').click()" title="Click to upload profile photo">
+                        <img id="editPhotoPreview" src="" style="display:none;" alt="Preview" />
+                        <i class="fas fa-user" id="editPhotoIcon"></i>
+                        <div class="avatar-edit-overlay"><i class="fas fa-camera"></i></div>
+                    </div>
+                    <input type="file" id="editPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" onchange="handleProfilePhotoSelect(event)" />
+                    <div class="avatar-btn-row">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('editPhotoInput').click()">
+                            <i class="fas fa-camera"></i> <span id="photoBtnLabel">Upload Photo</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" id="removePhotoBtn" onclick="handleProfilePhotoRemove()" style="display:none;">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </div>
+                    <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">JPG, PNG, GIF, or WebP (max 5MB)</div>
+                </div>
                 <div class="form-group">
                     <label for="editFullName">Full Name</label>
                     <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="editFullName" placeholder="Enter your full name" required /></div>
@@ -2986,7 +3281,7 @@
         <div class="modal-box" style="max-width: 620px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
                 <h3><i class="fas fa-circle-info" style="color:#2563eb;"></i> Report Details</h3>
-                <button class="btn btn-secondary" onclick="closeReportDetailsModal()" style="padding:0.3rem 0.8rem;"><i class="fas fa-times"></i></button>
+                <button type="button" class="btn btn-secondary" onclick="closeReportDetailsModal()" style="padding:0.3rem 0.8rem;"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-subtitle" id="reportDetailsTitle">—</div>
             <img id="reportDetailsPhoto" class="report-photo-full" src="" alt="Report Photo" />
@@ -3002,13 +3297,31 @@
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-align-left"></i> Description</span><span class="detail-value" id="reportDetailsDescription" style="text-align:left; overflow-wrap:anywhere;">—</span></div>
                 </div>
             </div>
-            <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid #e2e8f0;">
-                <h4 style="font-size:0.95rem; font-weight:600; color:#0b2a3b; margin-bottom:0.8rem;"><i class="fas fa-comments"></i> Discussion</h4>
-                <div id="reportDetailsComments" style="max-height:300px; overflow-y:auto; margin-bottom:1rem;"></div>
-                <div class="comment-compose">
-                    <textarea id="reportDetailsCommentInput" placeholder="Add a comment..." rows="2"></textarea>
-                    <button class="btn btn-primary btn-sm" onclick="postReportDetailsComment()">Send</button>
-                </div>
+            <div class="form-actions" style="margin-top:1.2rem; display:flex; justify-content:flex-start;">
+                <button type="button" class="btn btn-primary" onclick="openDiscussionFromReportDetails()" style="display:inline-flex; align-items:center; gap:6px;">
+                    <i class="fas fa-comments"></i> Discussion
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="navigateModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3><i class="fas fa-location-dot" style="color:#2563eb;"></i> Navigate to Task</h3>
+            <div class="modal-subtitle">Choose an active task to view its location.</div>
+            <div class="form-group">
+                <label for="navTaskSelect">Active task</label>
+                <select id="navTaskSelect" onchange="selectNavigationTask(this.value)"></select>
+            </div>
+            <div class="modal-details">
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-tag"></i> Task</span><span class="detail-value" id="navTaskName">—</span></div>
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-map-pin"></i> Destination</span><span class="detail-value" id="navDestination">—</span></div>
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-flag"></i> Priority</span><span class="detail-value" id="navPriority">—</span></div>
+            </div>
+            <div id="navMap"></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeNavigateModal()"><i class="fas fa-times"></i> Close</button>
+                <button type="button" class="btn btn-primary" onclick="startNavigation()"><i class="fas fa-location-arrow"></i> Open Directions</button>
             </div>
         </div>
     </div>
@@ -3220,10 +3533,6 @@
 
             <div class="stat-section-title"><i class="fas fa-tags"></i> Top Categories Reported</div>
             <div id="statsCategoryBreakdown"></div>
-
-            <div class="form-actions">
-                <button class="btn btn-secondary" onclick="closeStatisticsModal()" style="width:100%; justify-content:center;"><i class="fas fa-times"></i> Close</button>
-            </div>
         </div>
     </div>
 
@@ -3275,7 +3584,7 @@
         let selectedRole = null;
         let selectedFileDataUrl = null;
         let selectedLocation = null;
-        let map = null, marker = null, mapInitialized = false;
+        let map = null, marker = null;
         let nearbyMap = null, nearbyMarkers = [];
         let maintMap = null, maintMarkers = [];
         let navMap = null, navMarkers = [];
@@ -3308,6 +3617,8 @@
         // Real-time polling state
         let globalPollTimer = null;
         let chatUnreadTimer = null;
+        let dashboardRefreshTimer = null;
+        let dashboardRefreshInProgress = false;
         let lastKnownReportId = 0;
         let lastKnownNotificationId = 0;
         let lastKnownCommentId = 0;
@@ -3727,6 +4038,7 @@
             refreshChatUnreadBadge();
             chatUnreadTimer = setInterval(refreshChatUnreadBadge, 3000);
             globalPollTimer = setInterval(performPoll, 3000); // Poll every 3 seconds
+            dashboardRefreshTimer = setInterval(refreshCurrentDashboardData, 15000);
             console.log('%c🔄 Real-time polling started', 'color:#2563eb;');
         }
 
@@ -3739,8 +4051,47 @@
                 clearInterval(chatUnreadTimer);
                 chatUnreadTimer = null;
             }
+            if (dashboardRefreshTimer) {
+                clearInterval(dashboardRefreshTimer);
+                dashboardRefreshTimer = null;
+            }
             isPolling = false;
         }
+
+        function animateDashboardData() {
+            const selectors = {
+                citizen: ['#pageCitizen .stat-card', '#citizenReportsList', '#citizenNotifList'],
+                maintenance: ['#pageMaintenance .stat-card', '#maintTasksList', '#maintNotifList'],
+                admin: ['#pageAdmin .stat-card', '#adminReportsList', '#adminNotifList', '#adminPendingMaintenanceList', '#adminTeamList', '#adminTopCitizens', '#adminTopTeams', '#adminAutoAssignList']
+            }[currentUser?.role] || [];
+
+            if (selectors.length === 0) return;
+            document.querySelectorAll(selectors.join(',')).forEach(element => {
+                element.classList.remove('data-refresh-transition');
+                void element.offsetWidth;
+                element.classList.add('data-refresh-transition');
+            });
+        }
+
+        async function refreshCurrentDashboardData() {
+            if (!currentUser || dashboardRefreshInProgress || document.hidden) return;
+            dashboardRefreshInProgress = true;
+            try {
+                if (currentUser.role === 'citizen') {
+                    await loadCitizenData();
+                } else if (currentUser.role === 'maintenance') {
+                    await loadMaintenanceData();
+                } else if (currentUser.role === 'admin') {
+                    await loadAdminData();
+                }
+            } finally {
+                dashboardRefreshInProgress = false;
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) refreshCurrentDashboardData();
+        });
 
         async function performPoll() {
             if (!currentUser || !isPolling) return;
@@ -3760,19 +4111,14 @@
                 }
                 pollFailures = 0;
 
+                let shouldRefreshDashboard = false;
+
                 // Handle new reports
                 if (result.reports && result.reports.length > 0) {
                     result.reports.forEach(r => {
                         if (r.id > lastKnownReportId) lastKnownReportId = r.id;
                     });
-                    // Refresh dashboard data based on role
-                    if (currentUser.role === 'citizen') {
-                        await loadCitizenData();
-                    } else if (currentUser.role === 'maintenance') {
-                        await loadMaintenanceData();
-                    } else if (currentUser.role === 'admin') {
-                        await loadAdminData();
-                    }
+                    shouldRefreshDashboard = true;
                 }
 
                 // Handle new notifications
@@ -3780,21 +4126,13 @@
                     result.notifications.forEach(n => {
                         if (n.id > lastKnownNotificationId) lastKnownNotificationId = n.id;
                     });
+                    shouldRefreshDashboard = true;
                     // Show toast for newest notification
                     const latest = result.notifications[0];
                     showToast('🔔 ' + latest.title, latest.message.substring(0, 80));
-                    // Refresh notifications in UI
-                    if (currentUser.role === 'citizen') {
-                        const nResult = await apiGet('notifications');
-                        if (nResult.success) renderNotificationsList('citizenNotifList', nResult.notifications);
-                    } else if (currentUser.role === 'maintenance') {
-                        const nResult = await apiGet('notifications');
-                        if (nResult.success) renderNotificationsList('maintNotifList', nResult.notifications);
-                    } else if (currentUser.role === 'admin') {
-                        const nResult = await apiGet('notifications');
-                        if (nResult.success) renderNotificationsList('adminNotifList', nResult.notifications);
-                    }
                 }
+
+                if (shouldRefreshDashboard) await refreshCurrentDashboardData();
 
                 // Handle new comments (update open discussion threads)
                 if (result.comments && result.comments.length > 0) {
@@ -3934,6 +4272,7 @@
             errorMessage.classList.remove('show');
             currentUser = result.user;
             authToken = result.token; // Store Laravel API token
+            updateUserBadges();
             
             // Initialize Pusher for real-time updates
             // initializePusher();
@@ -3973,8 +4312,6 @@
                 await loadCitizenData();
                 setTimeout(() => {
                     initNearbyMap();
-                    // Initialize Google Maps if not loaded
-                    loadGoogleMaps();
                 }, 300);
             } else if (role === 'maintenance') {
                 document.getElementById('pageMaintenance').classList.add('active');
@@ -4024,53 +4361,75 @@
 
             const reportsResult = await apiGet('reports');
             if (reportsResult.success) {
-                cachedReports = reportsResult.reports;
+                const nextReports = reportsResult.reports || [];
+                const reportsChanged = JSON.stringify(cachedReports) !== JSON.stringify(nextReports);
+                const activePanel = liveTrackActiveReportId
+                    ? document.getElementById('track-panel-' + liveTrackActiveReportId)
+                    : null;
+                const preserveActivePanel = reportsChanged && activePanel?.style.display === 'block' &&
+                    nextReports.slice(0, 8).some(report => Number(report.id) === Number(liveTrackActiveReportId));
+                cachedReports = nextReports;
                 // Track highest report ID for polling
                 cachedReports.forEach(r => {
                     if (r.id > lastKnownReportId) lastKnownReportId = r.id;
                 });
-                const list = document.getElementById('citizenReportsList');
-                if (cachedReports.length === 0) {
-                    list.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-file-alt"></i>
-                            <div class="empty-title">No reports yet</div>
-                            <div class="empty-desc">Your submitted reports will appear here</div>
-                        </div>`;
-                } else {
-                    list.innerHTML = cachedReports.slice(0, 8).map(r => {
-                        const badge = r.status === 'Pending' ? 'pending' :
-                                    r.status === 'Assigned' ? 'assigned' :
-                                    r.status === 'In Progress' ? 'progress' :
-                                    r.status === 'Completed' ? 'completed' : 'rejected';
-                        const timeAgo = getTimeAgo(r.created_at);
-                        return `
-                            <div class="report-item-wrap" id="report-wrap-${r.id}">
-                                <div class="report-item" data-report-id="${r.id}">
-                                    <div class="report-info">
-                                        <i class="fas fa-flag" style="color:#2563eb;"></i>
-                                        <span class="report-title">${r.category}</span>
+                if (reportsChanged) {
+                    const list = document.getElementById('citizenReportsList');
+                    if (cachedReports.length === 0) {
+                        list.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-file-alt"></i>
+                                <div class="empty-title">No reports yet</div>
+                                <div class="empty-desc">Your submitted reports will appear here</div>
+                            </div>`;
+                    } else {
+                        list.innerHTML = cachedReports.slice(0, 8).map(r => {
+                            const badge = r.status === 'Pending' ? 'pending' :
+                                        r.status === 'Assigned' ? 'assigned' :
+                                        r.status === 'In Progress' ? 'progress' :
+                                        r.status === 'Completed' ? 'completed' : 'rejected';
+                            const timeAgo = getTimeAgo(r.created_at);
+                            return `
+                                <div class="report-item-wrap" id="report-wrap-${r.id}">
+                                    <div class="report-item" data-report-id="${r.id}">
+                                        <div class="report-info">
+                                            <i class="fas fa-flag" style="color:#2563eb;"></i>
+                                            <span class="report-title">${r.category}</span>
+                                        </div>
+                                        <div class="report-meta">
+                                            <span class="badge badge-${badge}">${r.status}</span>
+                                            <span class="report-time">${timeAgo}</span>
+                                            <button class="track-btn" onclick="toggleTracking(${r.id})">
+                                                <i class="fas fa-truck-fast"></i> Track
+                                            </button>
+                                            <button class="track-btn" onclick="openReportDetailsModal(${r.id})" title="View report details" aria-label="View report details">
+                                                <i class="fas fa-circle-info" aria-hidden="true"></i>
+                                            </button>
+                                            ${r.status === 'Completed' ? (r.my_rating
+                                                ? `<span class="badge badge-rated" title="You rated this team">⭐ ${r.my_rating}/5</span>`
+                                                : `<button class="track-btn" style="background:#fef3c7; color:#92400e;" data-rate-id="${r.id}"><i class="fas fa-star" style="color:#f59e0b;"></i> Rate</button>`) : ''}
+                                        </div>
                                     </div>
-                                    <div class="report-meta">
-                                        <span class="badge badge-${badge}">${r.status}</span>
-                                        <span class="report-time">${timeAgo}</span>
-                                        <button class="track-btn" onclick="toggleTracking(${r.id})">
-                                            <i class="fas fa-truck-fast"></i> Track
-                                        </button>
-                                        <button class="track-btn" onclick="openReportDetailsModal(${r.id})" title="View report details" aria-label="View report details">
-                                            <i class="fas fa-circle-info" aria-hidden="true"></i>
-                                        </button>
-                                        ${r.status === 'Completed' ? (r.my_rating
-                                            ? `<span class="badge badge-rated" title="You rated this team">⭐ ${r.my_rating}/5</span>`
-                                            : `<button class="track-btn" style="background:#fef3c7; color:#92400e;" data-rate-id="${r.id}"><i class="fas fa-star" style="color:#f59e0b;"></i> Rate</button>`) : ''}
-                                    </div>
+                                    <div id="track-panel-${r.id}" style="display:none;" class="report-track-expand"></div>
                                 </div>
-                                <div id="track-panel-${r.id}" style="display:none;" class="report-track-expand"></div>
-                            </div>
-                        `;
-                    }).join('');
+                            `;
+                        }).join('');
+                    }
+
+                    if (preserveActivePanel) {
+                        const replacementPanel = document.getElementById('track-panel-' + liveTrackActiveReportId);
+                        if (replacementPanel) {
+                            replacementPanel.replaceWith(activePanel);
+                            requestAnimationFrame(() => {
+                                const map = liveTrackMaps[liveTrackActiveReportId]?.map;
+                                if (map?.invalidateSize) map.invalidateSize();
+                            });
+                        }
+                    }
                 }
             }
+
+            if (nearbyMapInitialized && nearbyMap) await initNearbyMap(cachedReports);
 
             const notifsResult = await apiGet('notifications');
             if (notifsResult.success) {
@@ -4080,6 +4439,7 @@
                 });
                 renderNotificationsList('citizenNotifList', cachedNotifications);
             }
+            animateDashboardData();
         }
 
         async function toggleTracking(reportId) {
@@ -4151,8 +4511,9 @@
 
             if (showLiveMap) {
                 setTimeout(() => {
-                    initLiveTrackMap(reportId, report);
-                    startLiveTracking(reportId);
+                    initLiveTrackMap(reportId, report).then(initialized => {
+                        if (initialized) startLiveTracking(reportId);
+                    });
                 }, 250);
             }
         }
@@ -4271,9 +4632,7 @@
                 delete liveTrackPollTimers[reportId];
             }
             if (liveTrackMaps[reportId]) {
-                liveTrackMaps[reportId].teamMarker = null;
-                liveTrackMaps[reportId].destMarker = null;
-                liveTrackMaps[reportId].map = null;
+                liveTrackMaps[reportId].map?.remove();
                 delete liveTrackMaps[reportId];
             }
         }
@@ -4288,63 +4647,160 @@
             return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
         }
 
+        /* Animated Leaflet icons for live destination and team markers */
         function reportAreaIcon() {
-            const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">' +
-                '<circle cx="24" cy="24" r="19" fill="#dc2626" stroke="#ffffff" stroke-width="3"/>' +
-                '<rect x="21.5" y="11" width="5" height="16" rx="2.5" fill="#ffffff"/>' +
-                '<circle cx="24" cy="33" r="3" fill="#ffffff"/>' +
-                '</svg>';
-            return {
-                url: svgDataUri(svg),
-                scaledSize: new google.maps.Size(42, 42),
-                anchor: new google.maps.Point(21, 21)
-            };
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="10" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.8">
+                    <animate attributeName="r" values="10;28;28" dur="1.8s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.85;0.05;0" dur="1.8s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="30" cy="30" r="14" fill="#ef4444" opacity="0.25">
+                    <animate attributeName="r" values="12;16;12" dur="1.8s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="30" cy="30" r="13" fill="#dc2626" stroke="#ffffff" stroke-width="2.5"/>
+                <path d="M30 22 L30 29 M30 33 L30 34" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+            </svg>`;
+            return L.divIcon({ className: 'live-destination-marker', html: svg, iconSize: [46, 46], iconAnchor: [23, 23] });
         }
 
         function teamBuilderIcon() {
-            const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">' +
-                '<circle cx="24" cy="24" r="20" fill="#2563eb" stroke="#ffffff" stroke-width="3"/>' +
-                '<text x="24" y="33" font-size="24" text-anchor="middle" ' +
-                'font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">\uD83D\uDC77</text>' +
-                '</svg>';
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="12" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.85">
+                    <animate attributeName="r" values="12;28;28" dur="1.6s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.9;0;0" dur="1.6s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="30" cy="30" r="15" fill="#2563eb" stroke="#ffffff" stroke-width="2.5"/>
+                <text x="30" y="37" font-size="16" text-anchor="middle" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">&#128119;</text>
+            </svg>`;
+            return L.divIcon({ className: 'live-team-marker', html: svg, iconSize: [46, 46], iconAnchor: [23, 23] });
+        }
+
+        /* Animated Pin for citizen reporting location selector */
+        function getCitizenPinIcon() {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="74" viewBox="0 0 60 74">
+                <!-- Live ground pulse ring -->
+                <ellipse cx="30" cy="67" rx="6" ry="3" fill="none" stroke="#10b981" stroke-width="2">
+                    <animate attributeName="rx" values="6;22;22" dur="1.8s" repeatCount="indefinite" />
+                    <animate attributeName="ry" values="3;10;10" dur="1.8s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.8;0;0" dur="1.8s" repeatCount="indefinite" />
+                </ellipse>
+                <!-- Ground shadow -->
+                <ellipse cx="30" cy="67" rx="8" ry="3.5" fill="#0f172a" opacity="0.25" />
+                <!-- Modern Teardrop Pin with float animation -->
+                <g>
+                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="2.2s" repeatCount="indefinite" ease="ease-in-out"/>
+                    <path d="M30 65 C21 51 12 39 12 26 C12 14.5 20.0 6 30 6 C40.0 6 48 14.5 48 26 C48 39 39 51 30 65 Z"
+                          fill="url(#greenGrad)" stroke="#ffffff" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+                    <!-- Inner glow circle -->
+                    <circle cx="30" cy="26" r="11" fill="#ffffff" />
+                    <!-- Eco / target marker icon -->
+                    <circle cx="30" cy="26" r="6" fill="#059669">
+                        <animate attributeName="r" values="5;7;5" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="30" cy="26" r="2.5" fill="#ffffff" />
+                </g>
+                <defs>
+                    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#10b981"/>
+                        <stop offset="100%" stop-color="#047857"/>
+                    </linearGradient>
+                </defs>
+            </svg>`;
             return {
                 url: svgDataUri(svg),
-                scaledSize: new google.maps.Size(42, 42),
-                anchor: new google.maps.Point(21, 21)
+                scaledSize: new google.maps.Size(46, 56),
+                anchor: new google.maps.Point(23, 51)
             };
         }
 
-        function initLiveTrackMap(reportId, report) {
-            const el = document.getElementById('liveTrackMap-' + reportId);
-            if (!el || typeof google === 'undefined') {
-                setLiveStatus(reportId, 'waiting', 'Map unavailable');
-                return;
+        /* Animated Pin for Incidents / Tasks based on priority or status */
+        function getAnimatedMarkerPin({ color = '#10b981', pulse = true, iconType = 'dot', badge = '' } = {}) {
+            const pulseRings = pulse ? `
+                <ellipse cx="30" cy="67" rx="6" ry="3" fill="none" stroke="${color}" stroke-width="2.4">
+                    <animate attributeName="rx" values="6;22;22" dur="1.7s" repeatCount="indefinite" />
+                    <animate attributeName="ry" values="3;10;10" dur="1.7s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.85;0;0" dur="1.7s" repeatCount="indefinite" />
+                </ellipse>
+                <ellipse cx="30" cy="67" rx="8" ry="3.5" fill="#0f172a" opacity="0.22" />
+            ` : `
+                <ellipse cx="30" cy="67" rx="8" ry="3.5" fill="#0f172a" opacity="0.2" />
+            `;
+
+            let innerContent = '';
+            if (iconType === 'alert') {
+                innerContent = `
+                    <circle cx="30" cy="26" r="11" fill="#ffffff"/>
+                    <path d="M30 19 L30 27 M30 31 L30 32.5" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>
+                `;
+            } else if (iconType === 'wrench') {
+                innerContent = `
+                    <circle cx="30" cy="26" r="11" fill="#ffffff"/>
+                    <path d="M26 23 L33 30 M31 21 L35 25 M25 31 L29 27" stroke="${color}" stroke-width="2.2" stroke-linecap="round"/>
+                `;
+            } else if (iconType === 'check') {
+                innerContent = `
+                    <circle cx="30" cy="26" r="11" fill="#ffffff"/>
+                    <path d="M25 26.5 L28.5 30 L35 22" fill="none" stroke="${color}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                `;
+            } else {
+                innerContent = `
+                    <circle cx="30" cy="26" r="11" fill="#ffffff"/>
+                    <circle cx="30" cy="26" r="6" fill="${color}">
+                        <animate attributeName="r" values="5;7.5;5" dur="1.6s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="30" cy="26" r="2.2" fill="#ffffff"/>
+                `;
             }
 
-            if (liveTrackMaps[reportId]?.map) return;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="74" viewBox="0 0 60 74">
+                ${pulseRings}
+                <g>
+                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-2.5; 0,0" dur="2.4s" repeatCount="indefinite" ease="ease-in-out"/>
+                    <path d="M30 65 C21 51 12 39 12 26 C12 14.5 20.0 6 30 6 C40.0 6 48 14.5 48 26 C48 39 39 51 30 65 Z"
+                          fill="${color}" stroke="#ffffff" stroke-width="2.2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+                    ${innerContent}
+                </g>
+            </svg>`;
+
+            return {
+                url: svgDataUri(svg),
+                scaledSize: new google.maps.Size(46, 56),
+                anchor: new google.maps.Point(23, 51)
+            };
+        }
+
+        async function initLiveTrackMap(reportId, report) {
+            const el = document.getElementById('liveTrackMap-' + reportId);
+            if (!el) return false;
+
+            try {
+                await loadLeaflet();
+            } catch (error) {
+                setLiveStatus(reportId, 'waiting', 'Map unavailable');
+                el.textContent = 'The live team map is temporarily unavailable.';
+                console.error('Live team map failed to load:', error);
+                return false;
+            }
+
+            if (liveTrackMaps[reportId]?.map) {
+                liveTrackMaps[reportId].map.invalidateSize();
+                return true;
+            }
 
             const destLat = report.latitude ? parseFloat(report.latitude) : null;
             const destLng = report.longitude ? parseFloat(report.longitude) : null;
-            const center = (destLat && destLng) ? { lat: destLat, lng: destLng } : DEFAULT_CENTER;
+            const center = (destLat && destLng) ? [destLat, destLng] : [DEFAULT_CENTER.lat, DEFAULT_CENTER.lng];
 
-            const map = new google.maps.Map(el, {
-                center,
-                zoom: 14,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false,
-                zoomControl: true
-            });
+            el.replaceChildren();
+            const map = L.map(el).setView(center, 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+            }).addTo(map);
 
             let destMarker = null;
             if (destLat && destLng) {
-                destMarker = new google.maps.Marker({
-                    position: { lat: destLat, lng: destLng },
-                    map,
-                    title: 'Reported area',
-                    icon: reportAreaIcon(),
-                    zIndex: 1
-                });
+                destMarker = L.marker([destLat, destLng], { title: 'Reported area', icon: reportAreaIcon(), zIndexOffset: 1 }).addTo(map);
             }
 
             liveTrackMaps[reportId] = {
@@ -4355,6 +4811,8 @@
                 teamName: report.assigned_team || 'Team'
             };
             setLiveStatus(reportId, 'waiting', 'Waiting for team GPS…');
+            requestAnimationFrame(() => map.invalidateSize());
+            return true;
         }
 
         function setLiveStatus(reportId, mode, text) {
@@ -4387,14 +4845,9 @@
                 const destPos = { lat: parseFloat(dest.latitude), lng: parseFloat(dest.longitude) };
                 state.dest = destPos;
                 if (state.destMarker) {
-                    state.destMarker.setPosition(destPos);
+                    state.destMarker.setLatLng([destPos.lat, destPos.lng]);
                 } else {
-                    state.destMarker = new google.maps.Marker({
-                        position: destPos,
-                        map: state.map,
-                        title: 'Reported area',
-                        icon: reportAreaIcon()
-                    });
+                    state.destMarker = L.marker([destPos.lat, destPos.lng], { title: 'Reported area', icon: reportAreaIcon() }).addTo(state.map);
                 }
             }
 
@@ -4411,25 +4864,22 @@
             const teamLabel = data.team_name || state.teamName || 'Team';
 
             if (state.teamMarker) {
-                state.teamMarker.setPosition(teamPos);
+                state.teamMarker.setLatLng([teamPos.lat, teamPos.lng]);
             } else {
-                state.teamMarker = new google.maps.Marker({
-                    position: teamPos,
-                    map: state.map,
-                    title: teamLabel + ' (builder team, live)',
+                state.teamMarker = L.marker([teamPos.lat, teamPos.lng], {
+                    title: teamLabel + ' (maintenance team, live)',
                     icon: teamBuilderIcon(),
-                    zIndex: 10
-                });
+                    zIndexOffset: 10
+                }).addTo(state.map);
             }
 
-            const bounds = new google.maps.LatLngBounds();
-            if (state.dest) bounds.extend(state.dest);
-            bounds.extend(teamPos);
-            state.map.fitBounds(bounds);
-            google.maps.event.addListenerOnce(state.map, 'bounds_changed', () => {
-                if (state.map.getZoom() > 16) state.map.setZoom(16);
-                if (state.map.getZoom() < 12) state.map.setZoom(12);
-            });
+            if (!state.hasFittedTeamBounds) {
+                const bounds = state.dest ? L.latLngBounds([state.dest, teamPos]) : L.latLngBounds([teamPos]);
+                state.map.fitBounds(bounds, { padding: [20, 20], minZoom: 12, maxZoom: 16 });
+                state.hasFittedTeamBounds = true;
+            } else if (!state.map.getBounds().pad(-0.2).contains([teamPos.lat, teamPos.lng])) {
+                state.map.panTo([teamPos.lat, teamPos.lng], { animate: true, duration: 0.5 });
+            }
 
             const ago = getTimeAgo(loc.recorded_at);
             setLiveStatus(reportId, 'live', `${teamLabel} · updated ${ago}`);
@@ -4470,7 +4920,20 @@
 
         function setGpsIndicator(active) {
             const el = document.getElementById('gpsSharingIndicator');
-            if (el) el.classList.toggle('active', !!active);
+            if (!el) return;
+            el.classList.toggle('active', !!active);
+            el.classList.remove('error');
+            const text = document.getElementById('gpsSharingText');
+            if (text) text.textContent = 'Sharing location';
+        }
+
+        function setGpsError(message) {
+            const el = document.getElementById('gpsSharingIndicator');
+            if (!el) return;
+            el.classList.remove('active');
+            el.classList.add('error');
+            const text = document.getElementById('gpsSharingText');
+            if (text) text.textContent = message;
         }
 
         function syncGpsSharing() {
@@ -4486,6 +4949,7 @@
         function startGpsSharing() {
             if (!navigator.geolocation) {
                 console.warn('Geolocation not available');
+                setGpsError('Location unavailable');
                 return;
             }
 
@@ -4511,10 +4975,11 @@
                         longitude: pos.coords.longitude,
                         accuracy: pos.coords.accuracy
                     };
+                    setGpsIndicator(true);
                 },
                 (err) => {
                     console.warn('GPS watch error:', err.message);
-                    setGpsIndicator(false);
+                    setGpsError(err.code === 1 ? 'Allow location access' : 'Location unavailable');
                 },
                 { enableHighAccuracy: true, maximumAge: 15000, timeout: 20000 }
             );
@@ -4542,16 +5007,15 @@
                 stopGpsSharing();
                 return;
             }
-            setGpsIndicator(true);
-
             const sendWith = async (coords) => {
                 for (const task of active) {
-                    await apiPost('tasks/' + task.id + '/gps', {
+                    const result = await apiPost('tasks/' + task.id + '/gps', {
                         task_id: task.id,
                         latitude: coords.latitude,
                         longitude: coords.longitude,
                         accuracy: coords.accuracy || null
                     });
+                    if (!result.success) setGpsError('GPS update failed');
                 }
             };
 
@@ -4567,9 +5031,13 @@
                         longitude: pos.coords.longitude,
                         accuracy: pos.coords.accuracy
                     };
+                    setGpsIndicator(true);
                     await sendWith(gpsLastPosition);
                 },
-                (err) => console.warn('GPS ping failed:', err.message),
+                (err) => {
+                    console.warn('GPS ping failed:', err.message);
+                    setGpsError(err.code === 1 ? 'Allow location access' : 'Location unavailable');
+                },
                 { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
             );
         }
@@ -4671,16 +5139,7 @@
                 photoImg.style.display = 'block';
             }
 
-            // Load comments
-            const commentsResult = await apiGet('reports/' + reportId + '/comments');
-            if (commentsResult.success) {
-                document.getElementById('reportDetailsComments').innerHTML = renderCommentsHtml(commentsResult.comments);
-            } else {
-                document.getElementById('reportDetailsComments').innerHTML = renderCommentsHtml([]);
-            }
-
-            // Store report ID for posting comments
-            window.currentReportId = reportId;
+            currentReportDetailsId = reportId;
 
             document.getElementById('reportDetailsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -4689,27 +5148,14 @@
         function closeReportDetailsModal() {
             document.getElementById('reportDetailsModal').classList.remove('active');
             document.body.style.overflow = 'auto';
-            window.currentReportId = null;
+            currentReportDetailsId = null;
         }
 
-        async function postReportDetailsComment() {
-            const input = document.getElementById('reportDetailsCommentInput');
-            const message = input.value.trim();
-            if (!message) return alert('⚠️ Please enter a comment.');
-            if (!window.currentReportId) return alert('⚠️ Report ID not found.');
-
-            const result = await apiPost('reports/' + window.currentReportId + '/comments', { message });
-            if (!result.success) {
-                alert('⚠️ ' + (result.message || 'Could not post comment.'));
-                return;
-            }
-
-            input.value = '';
-            // Reload comments
-            const commentsResult = await apiGet('reports/' + window.currentReportId + '/comments');
-            if (commentsResult.success) {
-                document.getElementById('reportDetailsComments').innerHTML = renderCommentsHtml(commentsResult.comments);
-            }
+        function openDiscussionFromReportDetails() {
+            if (!currentReportDetailsId) return;
+            const rid = currentReportDetailsId;
+            closeReportDetailsModal();
+            openTrackDiscussionModal(rid);
         }
 
         // ============ REPORT COMMENTS ============
@@ -4732,11 +5178,19 @@
                 const roleLabel = c.role === 'maintenance'
                     ? (c.team_name || 'Maintenance')
                     : (c.role === 'admin' ? 'Admin' : 'Citizen');
+                const roleIcon = c.role === 'admin'
+                    ? 'fa-user-shield'
+                    : (c.role === 'maintenance' ? 'fa-tools' : 'fa-user');
+                const avatarHtml = c.photo_url
+                    ? `<span class="comment-avatar ${roleClass}"><img src="${escapeHtml(c.photo_url)}" alt="${escapeHtml(c.full_name || 'User')}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\\\'fas ${roleIcon}\\\'></i>';" /></span>`
+                    : `<span class="comment-avatar ${roleClass}"><i class="fas ${roleIcon}"></i></span>`;
+
                 return `
                     <div class="comment-bubble ${isMine ? 'mine' : ''}">
                         <div class="comment-meta">
                             <span class="comment-author">
-                                ${escapeHtml(c.full_name || 'User')}
+                                ${avatarHtml}
+                                <span>${escapeHtml(c.full_name || 'User')}</span>
                                 <span class="comment-role ${roleClass}">${escapeHtml(roleLabel)}</span>
                             </span>
                             <span class="comment-time">${getTimeAgo(c.created_at)}</span>
@@ -5124,9 +5578,101 @@
             showToast('Admin account created', 'You can now sign in with the new account.');
         }
 
+        let selectedProfilePhotoBase64 = null;
+        let removeProfilePhotoFlag = false;
+
+        function updateUserBadges() {
+            if (!currentUser) return;
+            const photo = currentUser.photo_url;
+            
+            const citizenAvatar = document.getElementById('citizenBadgeAvatar');
+            if (citizenAvatar) {
+                citizenAvatar.innerHTML = photo
+                    ? `<img src="${photo}" class="user-badge-img" alt="Avatar" />`
+                    : `<i class="fas fa-user-circle"></i>`;
+            }
+
+            const maintAvatar = document.getElementById('maintBadgeAvatar');
+            if (maintAvatar) {
+                maintAvatar.innerHTML = photo
+                    ? `<img src="${photo}" class="user-badge-img" alt="Avatar" />`
+                    : `<i class="fas fa-hard-hat"></i>`;
+            }
+
+            const adminAvatar = document.getElementById('adminBadgeAvatar');
+            if (adminAvatar) {
+                adminAvatar.innerHTML = photo
+                    ? `<img src="${photo}" class="user-badge-img" alt="Avatar" />`
+                    : `<i class="fas fa-user-shield"></i>`;
+            }
+        }
+
+        function updateProfileModalAvatar() {
+            if (!currentUser) return;
+            const img = document.getElementById('profileImg');
+            const icon = document.getElementById('profileIcon');
+            if (!img || !icon) return;
+
+            if (currentUser.photo_url) {
+                img.src = currentUser.photo_url;
+                img.style.display = 'block';
+                icon.style.display = 'none';
+            } else {
+                img.style.display = 'none';
+                icon.style.display = 'block';
+            }
+        }
+
+        function handleProfilePhotoSelect(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('⚠️ Profile photo must be less than 5 MB.');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedProfilePhotoBase64 = e.target.result;
+                removeProfilePhotoFlag = false;
+
+                const preview = document.getElementById('editPhotoPreview');
+                const icon = document.getElementById('editPhotoIcon');
+                const removeBtn = document.getElementById('removePhotoBtn');
+                const label = document.getElementById('photoBtnLabel');
+
+                if (preview) { preview.src = e.target.result; preview.style.display = 'block'; }
+                if (icon) icon.style.display = 'none';
+                if (removeBtn) removeBtn.style.display = 'inline-flex';
+                if (label) label.textContent = 'Change Photo';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleProfilePhotoRemove() {
+            selectedProfilePhotoBase64 = null;
+            removeProfilePhotoFlag = true;
+
+            const input = document.getElementById('editPhotoInput');
+            if (input) input.value = '';
+
+            const preview = document.getElementById('editPhotoPreview');
+            const icon = document.getElementById('editPhotoIcon');
+            const removeBtn = document.getElementById('removePhotoBtn');
+            const label = document.getElementById('photoBtnLabel');
+
+            if (preview) { preview.src = ''; preview.style.display = 'none'; }
+            if (icon) icon.style.display = 'block';
+            if (removeBtn) removeBtn.style.display = 'none';
+            if (label) label.textContent = 'Upload Photo';
+        }
+
         // ============ PROFILE ============
         async function openProfileModal(role) {
             if (!currentUser) return;
+            updateProfileModalAvatar();
             const name = document.getElementById('profileName');
             const roleEl = document.getElementById('profileRole');
 
@@ -5173,6 +5719,29 @@
         function openEditProfileModal() {
             closeProfileModal();
             if (!currentUser) return;
+            selectedProfilePhotoBase64 = null;
+            removeProfilePhotoFlag = false;
+
+            const input = document.getElementById('editPhotoInput');
+            if (input) input.value = '';
+
+            const preview = document.getElementById('editPhotoPreview');
+            const icon = document.getElementById('editPhotoIcon');
+            const removeBtn = document.getElementById('removePhotoBtn');
+            const label = document.getElementById('photoBtnLabel');
+
+            if (currentUser.photo_url) {
+                if (preview) { preview.src = currentUser.photo_url; preview.style.display = 'block'; }
+                if (icon) icon.style.display = 'none';
+                if (removeBtn) removeBtn.style.display = 'inline-flex';
+                if (label) label.textContent = 'Change Photo';
+            } else {
+                if (preview) { preview.src = ''; preview.style.display = 'none'; }
+                if (icon) icon.style.display = 'block';
+                if (removeBtn) removeBtn.style.display = 'none';
+                if (label) label.textContent = 'Upload Photo';
+            }
+
             document.getElementById('editFullName').value = currentUser.full_name;
             document.getElementById('editEmail').value = currentUser.email;
             document.getElementById('editCurrentPassword').value = '';
@@ -5255,17 +5824,30 @@
             btn.disabled = true;
 
             try {
-                const result = await apiPost('profile', {
+                const payload = {
                     full_name: fullName,
                     email: email,
                     current_password: currentPassword,
                     new_password: newPassword,
                     confirm_password: confirmPassword
-                });
+                };
+                if (selectedProfilePhotoBase64) {
+                    payload.photo_data = selectedProfilePhotoBase64;
+                }
+                if (removeProfilePhotoFlag) {
+                    payload.remove_photo = 1;
+                }
+
+                const result = await apiPost('profile', payload);
 
                 if (result.success) {
                     currentUser.full_name = fullName;
                     currentUser.email = email;
+                    if (result.user && result.user.photo_url !== undefined) {
+                        currentUser.photo_url = result.user.photo_url;
+                    } else if (removeProfilePhotoFlag) {
+                        currentUser.photo_url = null;
+                    }
                     if (currentUser.role === 'citizen') {
                         document.getElementById('citizenUserName').textContent = fullName;
                     } else if (currentUser.role === 'maintenance') {
@@ -5273,6 +5855,8 @@
                     } else if (currentUser.role === 'admin') {
                         document.getElementById('adminUserName').textContent = fullName;
                     }
+                    updateUserBadges();
+                    updateProfileModalAvatar();
                     showToast('✅ Profile Updated!', 'Your changes have been saved.');
                     closeEditProfileModal();
                 } else {
@@ -5458,7 +6042,7 @@
             window._gmapsLoading = true;
 
             const script = document.createElement('script');
-             script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBn1yFHTEWLvnsjSfPRdtMgKhhProHkCwY&libraries=markerclusterer&callback=onGoogleMapsReady`;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBn1yFHTEWLvnsjSfPRdtMgKhhProHkCwY&callback=onGoogleMapsReady`;
             script.async = true;
             script.defer = true;
             document.head.appendChild(script);
@@ -5466,8 +6050,6 @@
             window.onGoogleMapsReady = () => {
                 window._gmapsLoading = false;
                 window._gmapsLoaded = true;
-                mapInitialized = true;
-                if (document.getElementById('reportModal').classList.contains('active')) initMap();
                 initNearbyMap();
                 if (document.getElementById('pageMaintenance').classList.contains('active')) initMaintMap();
             };
@@ -5484,41 +6066,45 @@
             document.getElementById('otherCategoryWrapper').classList.remove('show');
             selectedFileDataUrl = null;
             selectedLocation = null;
-            if (marker) { marker.setMap(null); marker = null; }
+            if (marker) { marker.remove(); marker = null; }
             document.body.style.overflow = 'hidden';
-            // Load Google Maps (only once) and initialize the report map after the modal is visible
-            loadGoogleMaps();
             ensureReportMap();
             detectCurrentLocation();
         }
 
-        // Initializes the report-pin map reliably (fixes "all maps load / no map" bug)
-        function ensureReportMap() {
-            if (typeof google === 'undefined') return;
-            const el = document.getElementById('googleMap');
+        async function ensureReportMap() {
+            const el = document.getElementById('reportLocationMap');
             if (!el) return;
-            // Skip if already built AND bound to this element
-            if (map) {
-                google.maps.event.trigger(map, 'resize');
-                if (selectedLocation) map.setCenter(selectedLocation);
+            try {
+                await loadLeaflet();
+            } catch (error) {
+                el.textContent = 'The location map is temporarily unavailable.';
+                console.error('Report location map failed to load:', error);
                 return;
             }
-            requestAnimationFrame(() => {
-                const freshEl = document.getElementById('googleMap');
-                if (!freshEl) return;
-                map = new google.maps.Map(freshEl, {
-                    center: selectedLocation || DEFAULT_CENTER,
-                    zoom: 14,
-                    mapTypeControl: false,
-                    streetViewControl: false,
-                    fullscreenControl: false
-                });
-                map.addListener('click', e => placeMarker(e.latLng));
-                if (selectedLocation) {
-                    placeMarker(new google.maps.LatLng(selectedLocation.lat, selectedLocation.lng));
-                }
-            });
+
+            const center = selectedLocation
+                ? [selectedLocation.lat, selectedLocation.lng]
+                : [DEFAULT_CENTER.lat, DEFAULT_CENTER.lng];
+            if (map) {
+                map.invalidateSize();
+                if (selectedLocation) map.setView(center, 16);
+                return;
+            }
+
+            el.replaceChildren();
+            map = L.map(el).setView(center, selectedLocation ? 16 : 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+            }).addTo(map);
+            map.on('click', event => placeMarker(event.latlng));
+            requestAnimationFrame(() => map?.invalidateSize());
+            if (selectedLocation) {
+                placeMarker(L.latLng(selectedLocation.lat, selectedLocation.lng));
+            }
         }
+
         function closeReportModal() {
             document.getElementById('reportModal').classList.remove('active');
             document.body.style.overflow = 'auto';
@@ -5626,48 +6212,26 @@
             }
         }
 
-        // ============ REPORT MAP ============
-        function initMap() {
-            if (map) return;
-            const el = document.getElementById('googleMap');
-            if (!el || typeof google === 'undefined') return;
-
-            map = new google.maps.Map(el, {
-                center: selectedLocation || DEFAULT_CENTER,
-                zoom: 14,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false
-            });
-
-            map.addListener('click', e => placeMarker(e.latLng));
-            if (selectedLocation) {
-                placeMarker(new google.maps.LatLng(selectedLocation.lat, selectedLocation.lng));
-            }
-        }
-
         function placeMarker(latLng) {
             if (marker) {
-                marker.setPosition(latLng);
+                marker.setLatLng(latLng);
             } else {
-                marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
+                marker = L.marker(latLng, {
                     draggable: true,
-                    animation: google.maps.Animation.DROP
-                });
-                marker.addListener('dragend', e => updateLocation(e.latLng));
+                    icon: getLeafletIncidentPin('Low')
+                }).addTo(map);
+                marker.on('dragend', event => updateLocation(event.target.getLatLng()));
             }
             updateLocation(latLng);
         }
 
         function updateLocation(latLng) {
-            selectedLocation = { lat: latLng.lat(), lng: latLng.lng() };
-            const coords = `${latLng.lat().toFixed(5)}° N, ${latLng.lng().toFixed(5)}° E`;
+            selectedLocation = { lat: latLng.lat, lng: latLng.lng };
+            const coords = `${latLng.lat.toFixed(5)}° N, ${latLng.lng.toFixed(5)}° E`;
             document.getElementById('location').value = coords;
             document.getElementById('coordsText').textContent = 'Pinned: ' + coords;
             document.getElementById('locationCoords').classList.add('show');
-            reverseGeocode(latLng.lat(), latLng.lng());
+            reverseGeocode(latLng.lat, latLng.lng);
             checkNearbyReports();
         }
 
@@ -5692,17 +6256,10 @@
                 pos => {
                     const p = { lat: pos.coords.latitude, lng: pos.coords.longitude };
                     selectedLocation = p;
-                    if (typeof google !== 'undefined' && !map) ensureReportMap();
-                    if (map && typeof google !== 'undefined') {
-                        const location = new google.maps.LatLng(p.lat, p.lng);
-                        map.setCenter(location);
-                        map.setZoom(16);
-                        placeMarker(location);
-                    } else {
-                        const coords = `${p.lat.toFixed(5)}° N, ${p.lng.toFixed(5)}° E`;
-                        document.getElementById('location').value = coords;
-                        document.getElementById('coordsText').textContent = 'Pinned: ' + coords;
-                        document.getElementById('locationCoords').classList.add('show');
+                    ensureReportMap();
+                    if (map) {
+                        map.setView([p.lat, p.lng], 16);
+                        placeMarker(L.latLng(p.lat, p.lng));
                     }
                 },
                 err => {
@@ -5765,88 +6322,144 @@
 
         // ============ NEARBY MAP ============
         let nearbyMapInitialized = false;
+        let nearbyMapReportIds = '';
+        let leafletLoaderPromise = null;
 
-        async function initNearbyMap() {
+        function loadLeaflet() {
+            if (window.L) return Promise.resolve();
+            if (leafletLoaderPromise) return leafletLoaderPromise;
+
+            const stylesheet = document.createElement('link');
+            stylesheet.rel = 'stylesheet';
+            stylesheet.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+            document.head.appendChild(stylesheet);
+
+            leafletLoaderPromise = new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+                script.onload = resolve;
+                script.onerror = () => reject(new Error('Leaflet could not be loaded.'));
+                document.head.appendChild(script);
+            });
+            return leafletLoaderPromise;
+        }
+
+        async function initNearbyMap(reports = null) {
             const el = document.getElementById('nearbyMap');
-            if (!el || typeof google === 'undefined') return;
-            if (nearbyMapInitialized && nearbyMap) return;
+            if (!el) return;
 
-            const result = await apiGet('reports');
-            const reports = result.success ? result.reports.filter(r => r.latitude && r.longitude) : [];
+            try {
+                await loadLeaflet();
+            } catch (error) {
+                el.textContent = 'The incident map is temporarily unavailable.';
+                console.error('Incident map failed to load:', error);
+                return;
+            }
+
+            if (!Array.isArray(reports)) {
+                const result = await apiGet('reports');
+                reports = result.success ? result.reports : [];
+            }
+            reports = reports.filter(report => report.latitude && report.longitude);
+            const reportIds = reports.map(report => Number(report.id)).sort((a, b) => a - b).join(',');
+            if (nearbyMapInitialized && nearbyMap && reportIds === nearbyMapReportIds) return;
+
+            nearbyMarkers.forEach(marker => marker.remove());
+            nearbyMarkers = [];
+
             if (reports.length === 0) {
-                el.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#d1d5db;font-size:0.85rem;"><i class="fas fa-map" style="margin-right:8px;"></i> No incidents with coordinates</div>';
+                nearbyMapReportIds = reportIds;
+                if (!nearbyMap) {
+                    el.textContent = 'No incidents with coordinates';
+                }
                 return;
             }
 
             const avgLat = reports.reduce((s, i) => s + parseFloat(i.latitude), 0) / reports.length;
             const avgLng = reports.reduce((s, i) => s + parseFloat(i.longitude), 0) / reports.length;
 
-            nearbyMap = new google.maps.Map(el, {
-                center: { lat: avgLat, lng: avgLng },
-                zoom: 13,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false
-            });
-
-            reports.forEach(report => {
-                const priority = report.priority || 'Medium';
-                const marker = new google.maps.Marker({
-                    position: { lat: parseFloat(report.latitude), lng: parseFloat(report.longitude) },
-                    map: nearbyMap,
-                    title: report.category,
-                    animation: google.maps.Animation.DROP,
-                    icon: getMarkerIcon(priority)
-                });
-
-                const infoWindow = new google.maps.InfoWindow({
-                    content: `
-                        <div style="font-family:Inter,sans-serif; padding:6px 4px; min-width:180px;">
-                            <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px; color:#0b2a3b;">${report.category}</div>
-                            <div style="font-size:0.85rem; color:#1e293b; margin-bottom:6px;">📍 ${report.location}</div>
-                            <div style="font-size:0.72rem; color:#d1d5db;">🕒 ${getTimeAgo(report.created_at)}</div>
-                        </div>
-                    `
-                });
-
-                marker.addListener('click', () => {
-                    nearbyMarkers.forEach(m => m.infoWindow?.close());
-                    infoWindow.open(nearbyMap, marker);
-                });
-                nearbyMarkers.push({ marker, infoWindow });
-            });
-
-            if (nearbyMarkers.length > 2 && google.maps.marker.MarkerClusterer) {
-                new google.maps.marker.MarkerClusterer({
-                    map: nearbyMap,
-                    markers: nearbyMarkers.map(m => m.marker)
-                });
+            if (!nearbyMap) {
+                el.replaceChildren();
+                nearbyMap = L.map(el).setView([avgLat, avgLng], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                }).addTo(nearbyMap);
             }
 
-            const bounds = new google.maps.LatLngBounds();
-            reports.forEach(i => bounds.extend({ lat: parseFloat(i.latitude), lng: parseFloat(i.longitude) }));
-            nearbyMap.fitBounds(bounds);
-            google.maps.event.addListenerOnce(nearbyMap, 'bounds_changed', () => {
-                if (nearbyMap.getZoom() > 15) nearbyMap.setZoom(15);
+            reports.forEach(report => {
+                const marker = L.marker([parseFloat(report.latitude), parseFloat(report.longitude)], {
+                    icon: getLeafletIncidentPin(report.priority)
+                }).addTo(nearbyMap);
+                marker.bindPopup(`
+                    <strong>${escapeHtml(report.category)}</strong><br>
+                    ${escapeHtml(report.location)}<br>
+                    <small>${escapeHtml(report.status)} · ${escapeHtml(getTimeAgo(report.created_at))}</small>
+                `);
+                nearbyMarkers.push(marker);
             });
 
+            nearbyMap.fitBounds(L.latLngBounds(reports.map(report => [parseFloat(report.latitude), parseFloat(report.longitude)])), { padding: [18, 18], maxZoom: 15 });
             nearbyMapInitialized = true;
+            nearbyMapReportIds = reportIds;
+        }
+
+        function getLeafletIncidentPin(priority = 'Medium') {
+            const colors = {
+                Critical: '#ef4444',
+                High: '#f97316',
+                Medium: '#0ea5e9',
+                Low: '#10b981'
+            };
+            const color = colors[priority] || colors.Medium;
+            const isHighPriority = priority === 'Critical' || priority === 'High';
+            const centerIcon = isHighPriority
+                ? '<path d="M30 19 L30 27 M30 31 L30 32.5" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round"/>'
+                : '<circle cx="30" cy="26" r="6" fill="' + color + '"><animate attributeName="r" values="5;7.5;5" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="30" cy="26" r="2.2" fill="#ffffff"/>';
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="74" viewBox="0 0 60 74">
+                <ellipse cx="30" cy="67" rx="6" ry="3" fill="none" stroke="${color}" stroke-width="2.4">
+                    <animate attributeName="rx" values="6;22;22" dur="1.7s" repeatCount="indefinite"/>
+                    <animate attributeName="ry" values="3;10;10" dur="1.7s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.85;0;0" dur="1.7s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="30" cy="67" rx="8" ry="3.5" fill="#0f172a" opacity="0.22"/>
+                <g>
+                    <animateTransform attributeName="transform" type="translate" values="0,0;0,-2.5;0,0" dur="2.4s" repeatCount="indefinite"/>
+                    <path d="M30 65 C21 51 12 39 12 26 C12 14.5 20 6 30 6 C40 6 48 14.5 48 26 C48 39 39 51 30 65 Z" fill="${color}" stroke="#ffffff" stroke-width="2.2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+                    <circle cx="30" cy="26" r="11" fill="#ffffff"/>
+                    ${centerIcon}
+                </g>
+            </svg>`;
+
+            return L.divIcon({
+                className: 'incident-map-marker',
+                html: svg,
+                iconSize: [46, 56],
+                iconAnchor: [23, 51],
+                popupAnchor: [0, -48]
+            });
         }
 
         function getMarkerIcon(priority) {
-            const colors = {
-                'Critical': 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-                'High': 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
-                'Medium': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-                'Low': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            const config = {
+                'Critical': { color: '#ef4444', iconType: 'alert' },
+                'High': { color: '#f97316', iconType: 'alert' },
+                'Medium': { color: '#0ea5e9', iconType: 'dot' },
+                'Low': { color: '#10b981', iconType: 'dot' }
             };
-            return colors[priority] || colors['Medium'];
+            const item = config[priority] || config['Medium'];
+            return getAnimatedMarkerPin({
+                color: item.color,
+                pulse: true,
+                iconType: item.iconType
+            });
         }
 
         // ============ MAINTENANCE ============
         async function loadMaintenanceData() {
             const result = await apiGet('tasks');
             allTasks = result.success ? result.tasks : [];
+            syncGpsSharing();
             if (result.team_name) {
                 document.getElementById('maintenanceUserName').textContent = result.team_name;
             }
@@ -5861,6 +6474,7 @@
                 });
                 renderNotificationsList('maintNotifList', notifsResult.notifications);
             }
+            animateDashboardData();
         }
 
         function updateTaskStats() {
@@ -5972,22 +6586,40 @@
             const bounds = new google.maps.LatLngBounds();
             tasksWithCoords.forEach(t => {
                 const coords = { lat: parseFloat(t.latitude), lng: parseFloat(t.longitude) };
-                const color = t.status === 'Assigned' ? 'blue' :
-                            t.status === 'In Progress' ? 'purple' :
-                            t.status === 'Completed' ? 'green' : 'red';
+                const isAssigned = t.status === 'Assigned';
+                const isInProgress = t.status === 'In Progress';
+                const isCompleted = t.status === 'Completed';
+
+                const pinColor = isAssigned ? '#3b82f6' :
+                                 isInProgress ? '#8b5cf6' :
+                                 isCompleted ? '#10b981' : '#ef4444';
+                const pinIconType = isCompleted ? 'check' : (isInProgress ? 'wrench' : 'dot');
+
                 const marker = new google.maps.Marker({
                     position: coords,
                     map: maintMap,
                     title: t.title,
-                    icon: `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`
+                    icon: getAnimatedMarkerPin({
+                        color: pinColor,
+                        pulse: !isCompleted,
+                        iconType: pinIconType
+                    })
                 });
+
+                const badgeBg = isAssigned ? '#dbeafe' : isInProgress ? '#f3e8ff' : isCompleted ? '#dcfce7' : '#fee2e2';
+                const badgeText = isAssigned ? '#1d4ed8' : isInProgress ? '#6d28d9' : isCompleted ? '#15803d' : '#b91c1c';
 
                 const iw = new google.maps.InfoWindow({
                     content: `
-                        <div style="font-family:Inter,sans-serif;padding:6px;min-width:180px;">
-                            <div style="font-weight:600;margin-bottom:4px;">${t.title}</div>
-                            <div style="font-size:0.85rem;margin-bottom:4px;">📍 ${t.location}</div>
-                            <div style="font-size:0.72rem;color:#64748b;">Status: ${t.status}</div>
+                        <div style="font-family:Inter,sans-serif;padding:8px 6px;min-width:190px;color:#1e293b;">
+                            <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;color:#0f172a;">${t.title}</div>
+                            <div style="font-size:0.83rem;margin-bottom:6px;display:flex;align-items:flex-start;gap:4px;color:#475569;">
+                                <span style="color:#10b981;">📍</span> <span>${t.location}</span>
+                            </div>
+                            <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;">
+                                <span style="font-size:0.75rem;padding:2px 8px;border-radius:999px;font-weight:600;background:${badgeBg};color:${badgeText};">${t.status}</span>
+                                <span style="font-size:0.72rem;color:#94a3b8;">${t.priority || 'Normal'}</span>
+                            </div>
                         </div>
                     `
                 });
@@ -6255,6 +6887,7 @@
                 });
                 renderNotificationsList('adminNotifList', notifsResult.notifications);
             }
+            animateDashboardData();
         }
 
         function switchAdminTab(tabName) {
@@ -6470,6 +7103,90 @@
             if (rule) openAutoAssignModal(rule);
         }
 
+        function openNavigateModal(taskId = null) {
+            const activeTasks = getActiveGpsTasks();
+            if (!activeTasks.length) {
+                showToast('No active tasks', 'There are no assigned tasks to navigate to.');
+                return;
+            }
+
+            const select = document.getElementById('navTaskSelect');
+            select.replaceChildren(...activeTasks.map(task => new Option(`${task.title} · ${task.location}`, task.id)));
+            const selectedTask = activeTasks.find(task => Number(task.id) === Number(taskId)) || activeTasks[0];
+            select.value = String(selectedTask.id);
+            document.getElementById('navigateModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            selectNavigationTask(selectedTask.id);
+        }
+
+        async function selectNavigationTask(taskId) {
+            const task = allTasks.find(item => Number(item.id) === Number(taskId));
+            if (!task) return;
+            activeTask = task;
+
+            document.getElementById('navTaskName').textContent = task.title || 'Task';
+            document.getElementById('navDestination').textContent = task.location || '—';
+            document.getElementById('navPriority').textContent = task.priority || 'Medium';
+
+            const el = document.getElementById('navMap');
+            try {
+                await loadLeaflet();
+            } catch (error) {
+                el.textContent = 'The navigation map is temporarily unavailable.';
+                console.error('Navigation map failed to load:', error);
+                return;
+            }
+
+            const hasCoordinates = task.latitude !== null && task.latitude !== undefined &&
+                task.longitude !== null && task.longitude !== undefined &&
+                Number.isFinite(Number(task.latitude)) && Number.isFinite(Number(task.longitude));
+            const position = hasCoordinates
+                ? [Number(task.latitude), Number(task.longitude)]
+                : [DEFAULT_CENTER.lat, DEFAULT_CENTER.lng];
+
+            if (!navMap) {
+                el.replaceChildren();
+                navMap = L.map(el).setView(position, hasCoordinates ? 15 : 12);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                }).addTo(navMap);
+            }
+
+            navMarkers.forEach(item => item.remove());
+            navMarkers = [];
+            if (hasCoordinates) {
+                navMarkers.push(L.marker(position, {
+                    title: task.title || 'Assigned task',
+                    icon: getLeafletIncidentPin(task.priority || 'Medium')
+                }).addTo(navMap).bindPopup(escapeHtml(task.location || task.title || 'Task destination')));
+            }
+            navMap.setView(position, hasCoordinates ? 15 : 12);
+            requestAnimationFrame(() => navMap?.invalidateSize());
+        }
+
+        function closeNavigateModal() {
+            document.getElementById('navigateModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function startNavigation() {
+            if (!activeTask) return;
+            const hasCoordinates = activeTask.latitude !== null && activeTask.latitude !== undefined &&
+                activeTask.longitude !== null && activeTask.longitude !== undefined &&
+                Number.isFinite(Number(activeTask.latitude)) && Number.isFinite(Number(activeTask.longitude));
+            const destination = hasCoordinates
+                ? `${activeTask.latitude},${activeTask.longitude}`
+                : activeTask.location;
+            if (!destination) {
+                showToast('Destination unavailable', 'This task has no location to navigate to.');
+                return;
+            }
+
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`, '_blank', 'noopener');
+            closeNavigateModal();
+        }
+
         async function loadLeaderboard() {
             const result = await apiGet('leaderboard');
             if (!result.success) return;
@@ -6487,10 +7204,14 @@
                 } else {
                     citizenList.innerHTML = citizens.map((c, i) => {
                         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span style="font-weight:700;color:#d1d5db;">#${i + 1}</span>`;
+                        const avatar = c.photo_url
+                            ? `<img src="${c.photo_url}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; margin-right:8px;" alt="${escapeHtml(c.full_name)}" />`
+                            : `<div style="width:36px; height:36px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; margin-right:8px; color:#64748b; font-size:0.9rem;"><i class="fas fa-user"></i></div>`;
                         return `
                             <div class="task-item">
                                 <div class="task-info">
                                     <span style="width:26px; text-align:center; font-size:1rem;">${medal}</span>
+                                    ${avatar}
                                     <div>
                                         <div class="task-title">${escapeHtml(c.full_name)}</div>
                                         <div class="task-location">${c.reports || 0} report${(c.reports || 0) !== 1 ? 's' : ''}</div>
@@ -6925,6 +7646,9 @@
 
             list.innerHTML = filtered.map(user => {
                 const initial = (user.full_name || 'U').split(' ').map(piece => piece[0]).slice(0, 2).join('').toUpperCase();
+                const avatarMarkup = user.photo_url
+                    ? `<img src="${user.photo_url}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;" alt="Avatar" />`
+                    : initial;
                 const active = selectedChatUserId === user.id ? 'active' : '';
                 const unreadCount = Number(user.unread_count || 0);
                 const preview = user.last_message_image && !user.last_message
@@ -6932,7 +7656,7 @@
                     : (user.last_message || `${user.role || 'Member'}${user.team_name ? ` · ${user.team_name}` : ''}`);
                 return `
                     <button type="button" class="chat-person ${active}" data-user-id="${user.id}">
-                        <div class="chat-person-avatar">${initial}</div>
+                        <div class="chat-person-avatar">${avatarMarkup}</div>
                         <div class="chat-person-meta">
                             <div class="chat-person-name-line">
                                 <span class="chat-person-name">${escapeHtml(user.full_name || 'User')}</span>
@@ -6965,7 +7689,13 @@
             const role = document.getElementById('chatCurrentRole');
             const thread = document.getElementById('chatThread');
 
-            if (avatar) avatar.textContent = (user.full_name || 'U').split(' ').map(part => part[0]).slice(0, 2).join('').toUpperCase();
+            if (avatar) {
+                if (user.photo_url) {
+                    avatar.innerHTML = `<img src="${user.photo_url}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;" alt="Avatar" />`;
+                } else {
+                    avatar.textContent = (user.full_name || 'U').split(' ').map(part => part[0]).slice(0, 2).join('').toUpperCase();
+                }
+            }
             if (name) name.textContent = user.full_name || 'User';
             if (role) role.textContent = user.role || 'member';
 
@@ -6987,7 +7717,7 @@
         }
 
         function updateChatUnreadBadge(count) {
-            ['citizenChatUnread', 'maintenanceChatUnread', 'adminChatUnread'].forEach(id => {
+            ['citizenChatNavUnread', 'maintenanceChatUnread', 'adminChatUnread', 'maintenanceChatNavUnread'].forEach(id => {
                 const badge = document.getElementById(id);
                 if (!badge) return;
                 badge.textContent = count > 99 ? '99+' : String(count || '');
@@ -7138,6 +7868,7 @@
             const sessionResult = await apiGet('session');
             if (sessionResult.success) {
                 currentUser = sessionResult.user;
+                updateUserBadges();
                 if (currentUser.role === 'citizen') {
                     document.getElementById('citizenUserName').textContent = currentUser.full_name;
                     showDashboard('citizen');
@@ -7151,8 +7882,6 @@
             } else if (window.location.pathname.replace(/\/+$/, '').endsWith('/admin')) {
                 selectRole('admin');
             }
-            // Load Google Maps API on page load
-            loadGoogleMaps();
             console.log('%c🌱 GreenSteps ready — MySQL backend + Real-time polling', 'color:#2d7a4f;font-weight:bold;');
         })();
         </script>

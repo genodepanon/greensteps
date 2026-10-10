@@ -41,6 +41,7 @@ class ChatController extends Controller
                     'email' => $contact->email,
                     'role' => $contact->role,
                     'team_name' => $contact->team_name,
+                    'photo_url' => $contact->photo_url,
                     'conversation_id' => $conversation?->id,
                     'last_message' => $lastMessage?->message,
                     'last_message_image' => $this->imageUrl($lastMessage),
@@ -76,6 +77,7 @@ class ChatController extends Controller
                         'email' => $otherUser?->email,
                         'role' => $otherUser?->role,
                         'team_name' => $otherUser?->team_name,
+                        'photo_url' => $otherUser?->photo_url,
                     ],
                     'last_message' => $lastMessage?->message,
                     'last_message_image' => $this->imageUrl($lastMessage),
@@ -110,6 +112,7 @@ class ChatController extends Controller
                 'image_url' => $this->imageUrl($message),
                 'created_at' => $message->created_at->toIso8601String(),
                 'sender_name' => $message->sender?->full_name,
+                'sender_photo' => $message->sender?->photo_url,
             ];
         });
 
