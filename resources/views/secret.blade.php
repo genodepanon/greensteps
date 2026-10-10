@@ -22,13 +22,42 @@
         }
         input[type=text], input[type=password], textarea, select { width:100%; }
         label { display:block; margin:12px 0 4px; font-size:0.85rem; color:#94a3b8; font-weight:600; }
-        table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+        table { width:100%; min-width:760px; border-collapse:collapse; font-size:0.82rem; }
         th, td { padding:8px 10px; text-align:left; border-bottom:1px solid #1e3a4f; vertical-align:top; max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
         th { color:#7dd3fc; font-weight:600; background:#0b2a3b; position:sticky; top:0; }
         tr:hover { background:#1a4358; }
-        .tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
-        .tabs a { padding:6px 14px; background:#123a4f; border-radius:20px; font-size:0.85rem; }
-        .tabs a.active { background:#2d7a4f; color:white; }
+        .table-toolbar { display:grid; grid-template-columns:minmax(180px, 240px) minmax(220px, 1fr) auto auto; gap:12px; align-items:end; background:#123a4f; padding:16px; border-radius:12px; margin-bottom:12px; }
+        .table-toolbar .field { min-width:0; }
+        .table-toolbar label { margin-top:0; }
+        .table-toolbar input, .table-toolbar select { width:100%; }
+        .results-count { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 2px 12px; color:#94a3b8; font-size:0.82rem; }
+        .table-card { overflow-x:auto; padding:0; }
+        .table-card table { margin:0; }
+        .empty-state { text-align:center; padding:48px 20px; color:#94a3b8; }
+        .empty-state h2 { color:#e2e8f0; font-size:1.1rem; margin:10px 0 6px; }
+        .empty-state p { margin:0 0 16px; font-size:0.9rem; }
+        .pagination { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; color:#94a3b8; font-size:0.82rem; }
+        .pagination-actions { display:flex; gap:8px; }
+        .btn-disabled { opacity:0.45; cursor:not-allowed; }
+        .account-form { max-width:720px; margin:0 auto; }
+        .account-form h2 { margin:0 0 6px; color:#e2e8f0; font-size:1.15rem; }
+        .account-form p { margin:0 0 14px; color:#94a3b8; font-size:0.85rem; }
+        .account-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 16px; }
+        .account-grid .form-row { min-width:0; }
+        .account-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+        .field-errors { margin:0 0 12px; padding-left:20px; }
+        @media (max-width:700px) {
+            body { padding:12px; }
+            .topbar { align-items:flex-start; flex-direction:column; }
+            .topbar-right { width:100%; flex-wrap:wrap; }
+            .table-toolbar { grid-template-columns:minmax(0,1fr) auto; }
+            .table-toolbar .field:first-child { grid-column:1 / -1; }
+            .table-toolbar .search-field { grid-column:1 / -1; }
+            .results-count { font-size:0.75rem; }
+            .pagination { align-items:flex-start; flex-direction:column; }
+            .login-box { margin:40px auto; }
+            .account-grid { grid-template-columns:1fr; }
+        }
         .error { background:#7f1d1d; color:#fecaca; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:0.85rem; }
         .flash { background:#14532d; color:#bbf7d0; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:0.85rem; }
         .actions { display:flex; gap:6px; white-space:nowrap; }
@@ -78,31 +107,68 @@
 
 @if($stage === 'table')
     <div class="topbar">
-        <h1>DB Manager · <code style="color:#94a3b8;">{{ $table }}</code> <span class="small">({{ $count }} rows, showing up to 200)</span></h1>
+        <div>
+            <h1>Database manager</h1>
+            <div class="small">{{ \Illuminate\Support\Str::headline($table) }} · {{ number_format($totalCount) }} total rows</div>
+        </div>
         <div class="topbar-right">
-            <a class="btn btn-secondary" href="/axel/create?table={{ urlencode($table) }}">+ New row</a>
-            <a class="btn btn-secondary" href="/axel/logs">📜 Activity Log</a>
+            @if($table === 'users')
+                <a class="btn" href="/axel/accounts/create">+ Create account</a>
+            @else
+                <a class="btn" href="/axel/create?table={{ urlencode($table) }}">+ New row</a>
+            @endif
+            <a class="btn btn-secondary" href="/axel/logs">Activity log</a>
             <a class="btn btn-secondary" href="/axel/logout">Logout</a>
         </div>
     </div>
 
-    <div class="tabs">
-        @foreach($tables as $t)
-            <a href="/axel?table={{ urlencode($t) }}" class="{{ $t === $table ? 'active' : '' }}">{{ $t }}</a>
-        @endforeach
+    <form class="table-toolbar" method="GET" action="/axel">
+        <div class="field">
+            <label for="table">Table</label>
+            <select id="table" name="table">
+                @foreach($tables as $t)
+                    <option value="{{ $t }}" {{ $t === $table ? 'selected' : '' }}>{{ \Illuminate\Support\Str::headline($t) }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="field search-field">
+            <label for="tableSearch">Search this table</label>
+            <input id="tableSearch" type="search" name="q" value="{{ $search }}" placeholder="Search any column">
+        </div>
+        <button class="btn" type="submit">Search</button>
+        @if($search)
+            <a class="btn btn-secondary" href="/axel?table={{ urlencode($table) }}">Clear</a>
+        @endif
+    </form>
+    <div class="results-count">
+        <span>Results {{ number_format($rows->firstItem() ?? 0) }} to {{ number_format($rows->lastItem() ?? 0) }} of {{ number_format($count) }} matching rows</span>
+        @if($search)<span>Search: “{{ $search }}”</span>@endif
     </div>
 
     @if($flash)<div class="flash">{{ $flash }}</div>@endif
     @if($error)<div class="error">{{ $error }}</div>@endif
 
-    <div class="card" style="overflow-x:auto;">
-        @if(count($rows) === 0)
-            <p class="small">No rows.</p>
+    <div class="card table-card">
+        @if($rows->count() === 0)
+            <div class="empty-state">
+                <i class="fas fa-magnifying-glass"></i>
+                <h2>{{ $search ? 'No matching rows' : 'This table is empty' }}</h2>
+                <p>{{ $search ? 'Try another search or clear the current filter.' : 'Add a row to get started.' }}</p>
+                @if($search)
+                    <a class="btn btn-secondary" href="/axel?table={{ urlencode($table) }}">Clear search</a>
+                @else
+                    @if($table === 'users')
+                        <a class="btn" href="/axel/accounts/create">+ Create account</a>
+                    @else
+                        <a class="btn" href="/axel/create?table={{ urlencode($table) }}">+ New row</a>
+                    @endif
+                @endif
+            </div>
         @else
             <table>
                 <thead>
                     <tr>
-                        @foreach($columns as $col)<th>{{ $col }}</th>@endforeach
+                        @foreach($columns as $col)<th>{{ \Illuminate\Support\Str::headline($col) }}</th>@endforeach
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -129,6 +195,23 @@
             </table>
         @endif
     </div>
+    @if($rows->hasPages())
+        <nav class="pagination" aria-label="Table pages">
+            <span>Page {{ $rows->currentPage() }} of {{ $rows->lastPage() }}</span>
+            <div class="pagination-actions">
+                @if($rows->onFirstPage())
+                    <span class="btn btn-secondary btn-disabled">Previous</span>
+                @else
+                    <a class="btn btn-secondary" href="{{ $rows->previousPageUrl() }}">Previous</a>
+                @endif
+                @if($rows->hasMorePages())
+                    <a class="btn btn-secondary" href="{{ $rows->nextPageUrl() }}">Next</a>
+                @else
+                    <span class="btn btn-secondary btn-disabled">Next</span>
+                @endif
+            </div>
+        </nav>
+    @endif
 @endif
 
 @if($stage === 'row')
@@ -176,6 +259,84 @@
             <button class="btn btn-danger" type="submit">Delete this row</button>
         </form>
     </div>
+@endif
+
+@if($stage === 'account-create')
+    <div class="topbar">
+        <div>
+            <h1>Create account</h1>
+            <div class="small">Add a Citizen, Maintenance, or Admin account.</div>
+        </div>
+        <div class="topbar-right">
+            <a class="btn btn-secondary" href="/axel?table=users">← Back to users</a>
+            <a class="btn btn-secondary" href="/axel/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="card account-form">
+        <h2>Account details</h2>
+        <p>Passwords are securely hashed before saving.</p>
+        @if($errors->any())
+            <div class="error">
+                <ul class="field-errors">
+                    @foreach($errors->all() as $message)<li>{{ $message }}</li>@endforeach
+                </ul>
+            </div>
+        @endif
+        <form method="POST" action="/axel/accounts">
+            @csrf
+            <div class="account-grid">
+                <div class="form-row">
+                    <label for="accountName">Full name</label>
+                    <input id="accountName" type="text" name="full_name" value="{{ old('full_name') }}" maxlength="150" autocomplete="name" required>
+                </div>
+                <div class="form-row">
+                    <label for="accountEmail">Email address</label>
+                    <input id="accountEmail" type="email" name="email" value="{{ old('email') }}" maxlength="150" autocomplete="email" required>
+                </div>
+                <div class="form-row">
+                    <label for="accountRole">Account type</label>
+                    <select id="accountRole" name="role" required>
+                        <option value="citizen" {{ old('role', 'citizen') === 'citizen' ? 'selected' : '' }}>Citizen</option>
+                        <option value="maintenance" {{ old('role') === 'maintenance' ? 'selected' : '' }}>Maintenance</option>
+                        <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                    </select>
+                </div>
+                <div class="form-row" id="accountTeamRow" {{ old('role', 'citizen') === 'maintenance' ? '' : 'hidden' }}>
+                    <label for="accountTeam">Maintenance team</label>
+                    <input id="accountTeam" type="text" name="team_name" value="{{ old('team_name') }}" maxlength="150">
+                </div>
+                <div class="form-row">
+                    <label for="accountPhone">Phone (optional)</label>
+                    <input id="accountPhone" type="tel" name="phone" value="{{ old('phone') }}" maxlength="50" autocomplete="tel">
+                </div>
+                <div class="form-row">
+                    <label for="accountPassword">Password</label>
+                    <input id="accountPassword" type="password" name="password" minlength="8" autocomplete="new-password" required>
+                </div>
+                <div class="form-row">
+                    <label for="accountPasswordConfirmation">Confirm password</label>
+                    <input id="accountPasswordConfirmation" type="password" name="password_confirmation" minlength="8" autocomplete="new-password" required>
+                </div>
+            </div>
+            <div class="account-actions">
+                <button class="btn" type="submit">Create account</button>
+                <a class="btn btn-secondary" href="/axel?table=users">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        const accountRole = document.getElementById('accountRole');
+        const accountTeamRow = document.getElementById('accountTeamRow');
+        const accountTeam = document.getElementById('accountTeam');
+        function updateAccountTeamField() {
+            const isMaintenance = accountRole.value === 'maintenance';
+            accountTeamRow.hidden = !isMaintenance;
+            accountTeam.required = isMaintenance;
+        }
+        accountRole.addEventListener('change', updateAccountTeamField);
+        updateAccountTeamField();
+    </script>
 @endif
 
 @if($stage === 'create')

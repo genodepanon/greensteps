@@ -42,7 +42,7 @@ class StatsController extends Controller
                 'assigned'    => (int) $stats->assigned,
                 'in_progress' => (int) $stats->in_progress,
                 'completed'   => (int) $stats->completed,
-                'avg_rating'  => $avg ? round($avg, 1) : '—',
+                'avg_rating'  => $avg !== null ? round($avg, 1) : '—',
             ]);
         }
 
@@ -87,7 +87,7 @@ class StatsController extends Controller
                 return [
                     'team_name'    => $t->team_name,
                     'jobs'         => $jobs,
-                    'avg_rating'   => $avg ? round($avg, 1) : 0,
+                    'avg_rating'   => $avg !== null ? round($avg, 1) : 0,
                     'total_points' => $points,
                 ];
             })

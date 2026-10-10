@@ -22,10 +22,24 @@
                 flex-direction: column;
                 align-items: center;
             }
+            body.app-booting #pageHome,
+            body.app-booting #pageLogin,
+            body.app-booting .dashboard-container { visibility: hidden; }
+            .app-boot-loader {
+                position: fixed; inset: 0; z-index: 900;
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                gap: 12px; background: linear-gradient(145deg, #f0f4f8 0%, #e2eaf1 100%);
+                color: #334155; font-size: 0.9rem;
+            }
+            .app-boot-loader i { color: #2d7a4f; font-size: 1.4rem; }
+            body.dark-mode .app-boot-loader {
+                background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+                color: #e7efea;
+            }
 
             /* DARK MODE */
             body.dark-mode {
-                background: linear-gradient(145deg, #0d0f12 0%, #171a1d 100%);
+                background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
                 color: #f3f4f6;
             }
             body.dark-mode .login-container,
@@ -42,13 +56,17 @@
             body.dark-mode .photo-modal-content,
             body.dark-mode .form-group,
             body.dark-mode .input-wrapper {
-                background: #171b1d;
-                border: 1px solid #2d3135;
+                background: #1e293b;
+                border: 1px solid #334155;
                 color: #f3f4f6;
             }
+            body.dark-mode .form-group,
+            body.dark-mode .input-wrapper {
+                border: none;
+            }
             body.dark-mode .card-header {
-                background: #1d2125;
-                border-bottom: 1px solid #2d3135;
+                background: #334155;
+                border-bottom: 1px solid #334155;
             }
             body.dark-mode .card-header h3 {
                 color: #f3f4f6;
@@ -60,9 +78,9 @@
                 color: #d1d5db;
             }
             body.dark-mode .btn {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
-                border-color: #3d4248;
+                border-color: #475569;
             }
             body.dark-mode .btn-secondary { background: #2b2f33; color: #f3f4f6; }
             body.dark-mode .admin-report-search-input input,
@@ -76,15 +94,27 @@
             body.dark-mode .input-wrapper input,
             body.dark-mode .form-group input,
             body.dark-mode .form-group select {
-                background: #24282c;
+                background: rgba(255, 255, 255, 0.08);
                 color: #f3f4f6;
-                border-color: #3d4248;
+                border: none;
+            }
+            body.dark-mode .admin-report-search-input input:focus,
+            body.dark-mode .search-box input:focus,
+            body.dark-mode .team-selector select:focus,
+            body.dark-mode input:focus,
+            body.dark-mode select:focus,
+            body.dark-mode textarea:focus,
+            body.dark-mode .input-wrapper input:focus,
+            body.dark-mode .form-group input:focus,
+            body.dark-mode .form-group select:focus {
+                background: rgba(255, 255, 255, 0.12);
+                outline: none;
             }
             body.dark-mode input::placeholder,
             body.dark-mode textarea::placeholder,
             body.dark-mode .form-group input::placeholder,
             body.dark-mode select option {
-                color: #d1d5db;
+                color: #6b7280;
             }
             body.dark-mode .logo h1,
             body.dark-mode .login-title { color: #f3f4f6; }
@@ -94,21 +124,21 @@
             body.dark-mode .register-link { color: #cbd5e1; }
             body.dark-mode .form-options a,
             body.dark-mode .register-link a { color: #86efac; }
-            body.dark-mode #selectedRoleBadge { background: #1e3a5f !important; color: #bfdbfe !important; }
-            body.dark-mode #loginFormWrapper > div:first-child > button { color: #d1d5db !important; }
+
+
             body.dark-mode .user-badge {
                 background: rgba(255,255,255,0.05);
                 color: #f3f4f6;
             }
             body.dark-mode .list-expansion-control {
                 color: #86efac;
-                border-top-color: #2d3135;
+                border-top-color: #334155;
             }
             body.dark-mode .badge {
                 filter: grayscale(1) brightness(1.05);
             }
             body.dark-mode .badge-bg {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
             }
             body.dark-mode .report-card .info h4 { color: #f3f4f6; }
@@ -116,26 +146,26 @@
             body.dark-mode .report-actions .btn { background: #2b2f33; color: #f3f4f6; }
             body.dark-mode .header { background: rgba(17,19,21,0.85); }
             body.dark-mode .header-menu-panel {
-                background: #171b1d;
-                border-color: #2d3135;
+                background: #1e293b;
+                border-color: #334155;
             }
             body.dark-mode .header-menu-item {
                 color: #f3f4f6;
             }
             body.dark-mode .header-menu-item:hover {
-                background: #2b2f33;
+                background: #334155;
             }
             body.dark-mode .header-menu-item i {
                 color: #d1d5db;
             }
             body.dark-mode .header-menu-theme {
-                border-bottom-color: #2d3135;
+                border-bottom-color: #334155;
             }
             body.dark-mode .header-menu-theme-title {
                 color: #d1d5db;
             }
             body.dark-mode .header-theme-toggle span {
-                background: #3d4248;
+                background: #475569;
             }
             body.dark-mode .header-theme-toggle input:checked + span {
                 background: #9ca3af;
@@ -143,14 +173,14 @@
             body.dark-mode .empty-desc { color: #d1d5db; }
             body.dark-mode .empty-title { color: #f3f4f6; }
             body.dark-mode .task-item {
-                border-bottom-color: #2d3135;
+                border-bottom-color: #334155;
             }
             body.dark-mode .task-stats {
-                background: #1d2125;
-                border: 1px solid #2d3135;
+                background: #334155;
+                border: 1px solid #334155;
             }
             body.dark-mode .task-stat:hover {
-                background: #2b2f33;
+                background: #334155;
             }
             body.dark-mode .task-stat .num {
                 color: #f3f4f6 !important;
@@ -159,8 +189,8 @@
                 color: #d1d5db;
             }
             body.dark-mode .task-search {
-                background: #24282c;
-                border-color: #3d4248;
+                background: #334155;
+                border-color: #475569;
             }
             body.dark-mode .task-search input {
                 color: #f3f4f6;
@@ -175,37 +205,33 @@
                 color: #f3f4f6;
             }
             body.dark-mode .applicant-action {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
-                border-color: #3d4248;
-            }
-            body.dark-mode .map-legend {
-                background: #1d2125;
-                border: 1px solid #2d3135;
+                border-color: #475569;
             }
             body.dark-mode .map-legend span {
                 color: #f3f4f6;
             }
             body.dark-mode .map-popup,
             body.dark-mode .map-popup-content {
-                background: #171b1d;
+                background: #1e293b;
                 color: #f3f4f6;
             }
             body.dark-mode .modal-overlay {
                 background: rgba(0,0,0,0.72);
             }
             body.dark-mode .progress-bar-bg {
-                background: #2d3135;
+                background: #334155;
             }
             body.dark-mode .progress-bar-fill {
                 background: #d1d5db;
             }
             body.dark-mode .table-row {
-                border-bottom-color: #2d3135;
+                border-bottom-color: #334155;
             }
             body.dark-mode .table-header {
-                background: #1d2125;
-                border-bottom: 1px solid #2d3135;
+                background: #334155;
+                border-bottom: 1px solid #334155;
                 color: #f3f4f6;
             }
             /* MONOCHROME DARK MODE */
@@ -220,9 +246,9 @@
             body.dark-mode .badge-assigned,
             body.dark-mode .badge-progress,
             body.dark-mode .badge-rejected {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
-                border: 1px solid #3d4248;
+                border: 1px solid #475569;
             }
             body.dark-mode .badge-pending i,
             body.dark-mode .badge-assigned i,
@@ -233,6 +259,10 @@
             body.dark-mode .badge-review i {
                 color: #e5e7eb !important;
             }
+            body.dark-mode .badge-pending { background: #43351a; color: #fcd34d; border-color: #725a28; filter: none; }
+            body.dark-mode .badge-progress { background: #33244e; color: #d8b4fe; border-color: #5b427e; filter: none; }
+            body.dark-mode .badge-completed { background: #173b2b; color: #86efac; border-color: #2f6b47; filter: none; }
+            body.dark-mode .badge-rejected { background: #442426; color: #fca5a5; border-color: #704044; filter: none; }
             body.dark-mode .task-location-legend .badge { filter: none; }
             body.dark-mode .task-location-legend i.task-location-dot { color: var(--task-location-color) !important; }
             body.dark-mode .btn-primary {
@@ -249,7 +279,7 @@
             body.dark-mode .btn-admin,
             body.dark-mode .btn-rate,
             body.dark-mode .btn-danger {
-                background: #3d4248;
+                background: #475569;
                 color: #f3f4f6;
                 border: 1px solid #52575d;
             }
@@ -257,7 +287,7 @@
             body.dark-mode .priority-high,
             body.dark-mode .priority-medium,
             body.dark-mode .priority-low {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
             }
             body.dark-mode .status-dot {
@@ -285,17 +315,17 @@
                 color: #e5e7eb !important;
             }
             body.dark-mode .btn-map {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
-                border-color: #3d4248;
+                border-color: #475569;
             }
             body.dark-mode .pref-toggle span:before {
                 background: #d1d5db;
             }
             body.dark-mode .chat-person:hover,
             body.dark-mode .chat-person.active {
-                background: #2b2f33;
-                border-color: #3d4248;
+                background: #334155;
+                border-color: #475569;
             }
             body.dark-mode .chat-person-name {
                 color: #f3f4f6 !important;
@@ -310,24 +340,24 @@
                 color: #9ca3af !important;
             }
             body.dark-mode .chat-message-row.theirs .chat-bubble {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
-                border-color: #3d4248;
+                border-color: #475569;
             }
             body.dark-mode .chat-message-row.mine .chat-bubble {
                 background: linear-gradient(135deg, #2d7a4f 0%, #3f9a69 100%);
                 color: white;
             }
             body.dark-mode .chat-sidebar-header {
-                background: #1d2125;
-                border-bottom-color: #2d3135;
+                background: #334155;
+                border-bottom-color: #334155;
             }
             body.dark-mode .chat-sidebar-header h3 {
                 color: #f3f4f6;
             }
             body.dark-mode .chat-header {
-                background: #1d2125;
-                border-bottom-color: #2d3135;
+                background: #334155;
+                border-bottom-color: #334155;
             }
             body.dark-mode .chat-current-name {
                 color: #f3f4f6;
@@ -336,7 +366,7 @@
                 color: #d1d5db;
             }
             body.dark-mode .chat-header-actions button:hover {
-                background: #2b2f33;
+                background: #334155;
                 color: #f3f4f6;
             }
             body.dark-mode .chat-message-time {
@@ -349,35 +379,28 @@
                 color: rgba(255,255,255,0.75) !important;
             }
             body.dark-mode .chat-messages {
-                background: #171b1d;
+                background: #1e293b;
             }
             body.dark-mode .chat-thread {
-                background: #171b1d !important;
+                background: #1e293b !important;
             }
             body.dark-mode .chat-empty-state {
                 color: #d1d5db !important;
             }
-            body.dark-mode .chat-compose {
-                background: #1d2125 !important;
-                border-top-color: #2d3135 !important;
+            body.dark-mode .chat-composer {
+                background: #1e293b !important;
+                border-top-color: #334155 !important;
             }
             body.dark-mode .chat-attach {
                 color: #2d7a4f !important;
-            }
-            body.dark-mode .chat-compose button {
-                background: #2d7a4f !important;
-                color: white !important;
-            }
-            body.dark-mode .chat-compose button:hover {
-                background: #23673f !important;
             }
             body.dark-mode .chat-attach:hover {
                 color: #3d9a67 !important;
             }
             body.dark-mode .chat-input-row input {
-                background: #24282c !important;
+                background: #334155 !important;
                 color: #f3f4f6 !important;
-                border-color: #3d4248 !important;
+                border-color: #475569 !important;
             }
             body.dark-mode .chat-input-row input::placeholder {
                 color: #9ca3af !important;
@@ -390,12 +413,12 @@
                 background: linear-gradient(135deg, #23673f, #2d7a4f) !important;
             }
             body.dark-mode .chat-sidebar {
-                background: #1d2125;
-                border-right-color: #2d3135;
+                background: #334155;
+                border-right-color: #334155;
             }
             body.dark-mode .chat-search {
-                background: #24282c;
-                border-bottom-color: #2d3135;
+                background: #334155;
+                border-bottom-color: #334155;
             }
             body.dark-mode .chat-search input {
                 background: transparent !important;
@@ -417,30 +440,45 @@
             body.dark-mode #startNotes,
             body.dark-mode #completeNotes,
             body.dark-mode #description {
-                background: #24282c !important;
+                background: rgba(255, 255, 255, 0.08) !important;
                 color: #f3f4f6 !important;
-                border-color: #3d4248 !important;
+                border: none !important;
             }
             body.dark-mode textarea::placeholder,
             body.dark-mode .comment-compose textarea::placeholder,
             body.dark-mode #trackDiscussionInput::placeholder {
                 color: #9ca3af !important;
             }
+            body.dark-mode textarea:focus,
+            body.dark-mode .form-group textarea:focus,
+            body.dark-mode .comment-compose textarea:focus,
+            body.dark-mode #trackCommentInput:focus,
+            body.dark-mode #trackDiscussionInput:focus,
+            body.dark-mode #reportDetailsCommentInput:focus,
+            body.dark-mode #rateComment:focus,
+            body.dark-mode #adminRejectReason:focus,
+            body.dark-mode #maintRejectReason:focus,
+            body.dark-mode #startNotes:focus,
+            body.dark-mode #completeNotes:focus,
+            body.dark-mode #description:focus {
+                background: rgba(255, 255, 255, 0.12) !important;
+                outline: none !important;
+            }
 
             /* DISCUSSION DARK MODE */
             body.dark-mode .comments-thread {
-                background: #171b1d !important;
-                border: 1px solid #2d3135;
+                background: #1e293b !important;
+                border: 1px solid #334155;
                 border-radius: 14px;
                 padding: 10px !important;
             }
             body.dark-mode .comment-bubble {
                 background: #202428 !important;
-                border: 1px solid #2d3135 !important;
+                border: 1px solid #334155 !important;
                 color: #f3f4f6 !important;
             }
             body.dark-mode .comment-bubble.mine {
-                background: #1b2838 !important;
+                background: #334155 !important;
                 border-color: #2b4365 !important;
             }
             body.dark-mode .comment-author {
@@ -478,14 +516,14 @@
                 color: #a5b4fc !important;
             }
             body.dark-mode .comment-avatar.citizen {
-                background: #192b45 !important;
+                background: #334155 !important;
                 border-color: #27456d !important;
             }
             body.dark-mode .comment-avatar.citizen i {
                 color: #93c5fd !important;
             }
             body.dark-mode .comment-role.citizen {
-                background: #1e3a5f !important;
+                background: #334155 !important;
                 color: #93c5fd !important;
             }
             body.dark-mode .comment-role.admin {
@@ -527,11 +565,11 @@
                 color: #f3f4f6 !important;
             }
             body.dark-mode .modal-details {
-                background: #1d2125 !important;
-                border: 1px solid #2d3135;
+                background: #334155 !important;
+                border: 1px solid #334155;
             }
             body.dark-mode .modal-details .detail-row {
-                border-bottom-color: #2d3135;
+                border-bottom-color: #334155;
             }
             body.dark-mode .modal-details .detail-label {
                 color: #d1d5db !important;
@@ -540,8 +578,8 @@
                 color: #f3f4f6 !important;
             }
             body.dark-mode .report-details-map-fallback {
-                background: #24282c;
-                border-color: #3d4248;
+                background: #334155;
+                border-color: #475569;
                 color: #d1d5db;
             }
             body.dark-mode .tracking-timeline,
@@ -549,7 +587,7 @@
             body.dark-mode .report-track-expand,
             body.dark-mode .live-track-wrap,
             body.dark-mode .nav-route {
-                background: #1d2125 !important;
+                background: #334155 !important;
                 border-color: #2d3135 !important;
             }
             body.dark-mode .track-step .step-label,
@@ -565,24 +603,24 @@
             body.dark-mode .track-step.done .step-icon,
             body.dark-mode .track-step.active .step-icon,
             body.dark-mode .track-step.rejected .step-icon {
-                background: #2b2f33 !important;
+                background: #334155 !important;
                 color: #f3f4f6 !important;
-                border: 1px solid #3d4248;
+                border: 1px solid #475569;
             }
             body.dark-mode .track-step::before {
-                background: #3d4248 !important;
+                background: #475569 !important;
             }
             body.dark-mode .track-step.done::before,
             body.dark-mode .track-step.active::before,
             body.dark-mode .track-step.rejected::before {
-                background: #3d4248 !important;
+                background: #475569 !important;
             }
             body.dark-mode .live-status {
-                background: #2b2f33 !important;
+                background: #334155 !important;
                 color: #f3f4f6 !important;
             }
             body.dark-mode .live-status.live {
-                background: #21362c !important;
+                background: #334155 !important;
                 color: #d1d5db !important;
             }
             body.dark-mode .live-status.waiting {
@@ -590,8 +628,8 @@
                 color: #f3f4f6 !important;
             }
             body.dark-mode .live-track-map {
-                background: #171b1d !important;
-                border-color: #3d4248 !important;
+                background: #1e293b !important;
+                border-color: #475569 !important;
             }
             body.dark-mode .profile-name,
             body.dark-mode .profile-stat .number,
@@ -604,27 +642,27 @@
                 color: #d1d5db !important;
             }
             body.dark-mode .profile-stats {
-                background: #1d2125;
-                border: 1px solid #2d3135;
+                background: #334155;
+                border: 1px solid #334155;
             }
             body.dark-mode .profile-menu-item:hover {
                 background: #252a2e;
-                border-color: #3d4248;
+                border-color: #475569;
             }
             body.dark-mode .admin-report-filters {
-                background: #1d2125;
-                border-color: #2d3135;
+                background: #334155;
+                border-color: #334155;
             }
             body.dark-mode .admin-filter-field > span {
                 color: #d1d5db !important;
             }
             body.dark-mode .admin-filter-control:focus {
-                background: #2b2f33;
+                background: #334155;
                 border-color: #6b7280;
                 box-shadow: 0 0 0 3px rgba(209,213,219,0.1);
             }
             body.dark-mode .admin-report-filter-toggle[aria-expanded="true"] {
-                background: #2b2f33;
+                background: #334155;
                 border-color: #6b7280;
                 color: #f3f4f6;
             }
@@ -654,8 +692,8 @@
             }
             /* Dark mode for Statistics Modal */
             body.dark-mode .stats-modal-box {
-                background: #171b1d !important;
-                border: 1px solid #2d3135 !important;
+                background: #1e293b !important;
+                border: 1px solid #334155 !important;
             }
             body.dark-mode .stats-modal-box h3 {
                 color: #f3f4f6 !important;
@@ -670,8 +708,8 @@
                 color: #4ade80 !important;
             }
             body.dark-mode .metric-card {
-                background: #1f2428 !important;
-                border: 1px solid #2d3135 !important;
+                background: #334155 !important;
+                border: 1px solid #334155 !important;
             }
             body.dark-mode .metric-card .metric-num {
                 color: #f3f4f6 !important;
@@ -696,8 +734,8 @@
                 color: #fde047 !important;
             }
             body.dark-mode .bar-chart {
-                background: #1f2428 !important;
-                border: 1px solid #2d3135 !important;
+                background: #334155 !important;
+                border: 1px solid #334155 !important;
             }
             body.dark-mode .bar-col .bar-value {
                 color: #4ade80 !important;
@@ -736,7 +774,7 @@
             }
             body.dark-mode .avatar-edit-preview {
                 border-color: #4ade80;
-                background: #1f2428;
+                background: #334155;
             }
             body.dark-mode .avatar-edit-preview .avatar-edit-overlay {
                 background: rgba(0,0,0,0.65);
@@ -859,8 +897,8 @@
             .home-final-cta .home-cta { flex: 0 0 auto; background: #2d7a4f; border-color: #2d7a4f; color: #ffffff; }
             .home-final-cta .home-cta:hover { background: #23673f; }
             .home-footer { padding: 22px 40px; border-top: 1px solid #e0e9e4; color: #748780; text-align: center; font-size: 0.75rem; }
-            body.dark-mode .home-page { background: #111817; color: #e7efea; }
-            body.dark-mode .home-section { background: #111817; }
+            body.dark-mode .home-page { background: #0f172a; color: #e7efea; }
+            body.dark-mode .home-section { background: #0f172a; }
             body.dark-mode .home-kicker { color: #a7d8a0; }
             body.dark-mode .home-section h2,
             body.dark-mode .home-benefits h2,
@@ -871,13 +909,13 @@
             body.dark-mode .home-benefits-copy,
             body.dark-mode .home-final-cta p { color: #c1cec7; }
             body.dark-mode .home-feature-grid,
-            body.dark-mode .home-feature { border-color: #34443b; }
-            body.dark-mode .home-feature-icon { background: #20342b; color: #a7d8a0; }
-            body.dark-mode .home-benefits { background: #1a2720; }
+            body.dark-mode .home-feature { border-color: #334155; }
+            body.dark-mode .home-feature-icon { background: #334155; color: #a7d8a0; }
+            body.dark-mode .home-benefits { background: #1e293b; }
             body.dark-mode .home-benefit-list li { color: #d3ddd7; }
             body.dark-mode .home-benefit-list i { color: #a7d8a0; }
-            body.dark-mode .home-final-cta { background: #111817; }
-            body.dark-mode .home-footer { border-top-color: #34443b; color: #aab8b1; }
+            body.dark-mode .home-final-cta { background: #0f172a; }
+            body.dark-mode .home-footer { border-top-color: #334155; color: #aab8b1; }
             @media (max-width: 700px) {
                 .home-hero { min-height: 420px; height: min(660px, 72svh); }
                 .home-nav { padding: 18px 20px; }
@@ -934,9 +972,9 @@
             .role-btn.citizen-role:hover { border-color: #2d7a4f; background: #f0fdf4; }
             .role-btn.maintenance-role:hover { border-color: #2563eb; background: #eff6ff; }
             .role-btn.admin-role:hover { border-color: #7c3aed; background: #f5f3ff; }
-            body.dark-mode .role-btn.citizen-role:hover { border-color: #4b9b64; background: #1d3428; }
-            body.dark-mode .role-btn.maintenance-role:hover { border-color: #5790cf; background: #1d3045; }
-            body.dark-mode .role-btn.admin-role:hover { border-color: #9874d3; background: #302741; }
+            body.dark-mode .role-btn.citizen-role:hover { border-color: #4b9b64; background: #334155; }
+            body.dark-mode .role-btn.maintenance-role:hover { border-color: #5790cf; background: #334155; }
+            body.dark-mode .role-btn.admin-role:hover { border-color: #9874d3; background: #334155; }
             body.dark-mode .role-btn:hover .role-arrow { color: #f3f4f6 !important; }
             .role-icon {
                 width: 48px; height: 48px; border-radius: 16px;
@@ -959,15 +997,14 @@
             .form-group .input-wrapper i { position: absolute; left: 14px; color: #94a3b8; font-size: 1rem; }
             .form-group input, .form-group select, .form-group textarea {
                 width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem;
-                border-radius: 16px; border: 1.5px solid #e2e8f0;
+                border-radius: 16px; border: none;
                 font-family: inherit; font-size: 0.95rem;
                 transition: 0.15s ease; background: #f8fafc;
             }
             .form-group textarea { padding: 0.8rem 1rem; resize: vertical; min-height: 60px; }
             .form-group select { padding: 0.8rem 1rem; }
             .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-                outline: none; border-color: #2d7a4f; background: white;
-                box-shadow: 0 0 0 3px rgba(45,122,79,0.08);
+                outline: none; background: white;
             }
             .form-options { display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0 1.5rem; font-size: 0.85rem; }
             .form-options label { display: flex; align-items: center; gap: 6px; color: #64748b; cursor: pointer; }
@@ -1068,6 +1105,7 @@
             .header-theme-toggle input:focus-visible + span { outline: 2px solid #6b7280; outline-offset: 2px; }
 
             .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+            #pageCitizen .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
             .stat-card { background: white; border-radius: 20px; padding: 1.5rem; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
             .stat-card .number { font-size: 2.2rem; font-weight: 700; color: #0b2a3b; }
             .stat-card .label { font-size: 0.85rem; color: #64748b; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
@@ -1105,10 +1143,10 @@
             .admin-report-search-input > i { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: #64748b; }
             .admin-report-search-input input {
                 width: 100%; min-width: 0; height: 42px; padding: 0.6rem 0.75rem 0.6rem 2.4rem;
-                border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc;
+                border: none; border-radius: 12px; background: #f8fafc;
                 color: #1e293b; font: inherit; font-size: 0.85rem;
             }
-            .admin-report-search-input input:focus { outline: none; border-color: #2d7a4f; background: white; box-shadow: 0 0 0 3px rgba(45,122,79,0.08); }
+            .admin-report-search-input input:focus { outline: none; background: white; }
             .admin-report-search-button, .admin-report-filter-toggle {
                 display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
                 min-height: 42px; padding: 0.55rem 0.8rem; border: 1px solid #e2e8f0;
@@ -1267,7 +1305,7 @@
             }
             .track-btn:hover { background: #e2e8f0; }
             .track-btn i { font-size: 0.65rem; color: #2563eb; }
-
+            .track-btn.report-rate-btn { width: 34px; height: 18px; flex: 0 0 34px; justify-content: center; padding: 0; }
             .report-track-expand {
                 grid-column: 1 / -1; width: 100%;
                 padding: 0.5rem 0.2rem 0.2rem 0.2rem;
@@ -1356,13 +1394,18 @@
 
             .notification-item {
                 display: flex; gap: 12px; padding: 0.8rem 0;
-                border-bottom: 1px solid #f0f4f9; transition: 0.1s ease;
+                border-bottom: 1px solid #f0f4f9; transition: all 0.2s ease;
+                border-left: 3px solid transparent;
             }
             .notification-item:last-child { border-bottom: none; }
             .notification-item .notif-icon {
                 width: 32px; height: 32px; border-radius: 50%; background: #dbeafe;
                 display: flex; align-items: center; justify-content: center;
                 color: #1e4a7a; font-size: 0.8rem; flex-shrink: 0;
+            }
+            body.dark-mode .notification-item .notif-icon {
+                background: rgba(75, 155, 100, 0.2);
+                color: #4b9b64;
             }
             .notification-item .notif-content { flex: 1; }
             .notification-item .notif-content .notif-title { font-weight: 500; font-size: 0.9rem; }
@@ -1445,13 +1488,12 @@
             }
             .comment-compose textarea {
                 width: 100%; min-height: 72px; resize: vertical;
-                border: 1px solid #cbd9e8; border-radius: 12px;
+                border: none; border-radius: 12px;
                 padding: 0.7rem 0.85rem; font-family: inherit;
-                font-size: 0.85rem; color: #0b2a3b; background: #fff;
+                font-size: 0.85rem; color: #0b2a3b; background: #f8fafc;
             }
             .comment-compose textarea:focus {
-                outline: none; border-color: #2563eb;
-                box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+                outline: none; background: #fff;
             }
             .comment-compose-actions {
                 display: flex; justify-content: flex-end; gap: 8px;
@@ -1461,6 +1503,16 @@
             .empty-state i { font-size: 2.5rem; opacity: 0.4; margin-bottom: 0.6rem; display: block; }
             .empty-state .empty-title { font-weight: 500; font-size: 0.95rem; color: #64748b; }
             .empty-state .empty-desc { font-size: 0.8rem; margin-top: 4px; }
+            .data-loading-state,
+            .data-load-error {
+                min-height: 68px; display: flex; align-items: center; justify-content: center;
+                gap: 10px; padding: 1rem; color: #64748b; font-size: 0.85rem;
+            }
+            .data-loading-state i { color: #2d7a4f; }
+            .data-load-error { flex-wrap: wrap; }
+            body.dark-mode .data-loading-state,
+            body.dark-mode .data-load-error { color: #cbd5e1; }
+            .metric-loading-spinner { color: #2d7a4f; font-size: 0.65em; }
 
             #nearbyMap { width: 100%; height: 220px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; margin-top: 0.5rem; }
             .incident-map-marker { background: none; border: 0; }
@@ -1575,11 +1627,12 @@
 
             .category-input-row { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 10px; align-items: center; }
             .category-icon-preview { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid #bbd6c4; border-radius: 12px; background: #f0fdf4; color: #2d7a4f; font-size: 1.15rem; }
-            .category-input-row input { width: 100%; min-width: 0; min-height: 46px; padding: 0.7rem 0.85rem; border: 1px solid #cbd9e8; border-radius: 12px; background: #fff; color: #183b3a; font: inherit; }
-            .category-input-row input:focus { outline: none; border-color: #2d7a4f; box-shadow: 0 0 0 3px rgba(45,122,79,0.1); }
+            .category-input-row input { width: 100%; min-width: 0; min-height: 46px; padding: 0.7rem 0.85rem; border: none; border-radius: 12px; background: #f8fafc; color: #183b3a; font: inherit; }
+            .category-input-row input:focus { outline: none; background: #fff; }
             .category-detection { min-height: 1rem; margin-top: 0.4rem; color: #64748b; font-size: 0.75rem; }
-            body.dark-mode .category-icon-preview { border-color: #3e6650; background: #1b2b22; color: #86efac; }
-            body.dark-mode .category-input-row input { border-color: #3d4248; background: #24282c; color: #f3f4f6; }
+            body.dark-mode .category-icon-preview { border-color: #475569; background: #334155; color: #86efac; }
+            body.dark-mode .category-input-row input { border: none; background: rgba(255, 255, 255, 0.08); color: #f3f4f6; }
+            body.dark-mode .category-input-row input:focus { background: rgba(255, 255, 255, 0.12); }
             body.dark-mode .category-detection { color: #aab7b2; }
 
             .profile-avatar {
@@ -1787,13 +1840,13 @@
 
             .rating-stars { display: flex; gap: 4px; align-items: center; }
             .rating-stars .star {
+                padding: 0; border: 0; background: transparent; line-height: 1;
                 font-size: 1.6rem; color: #d1d5db; cursor: pointer;
                 transition: 0.15s ease;
             }
             .rating-stars .star:hover,
             .rating-stars .star.active { color: #f59e0b; }
             .rating-stars .star:hover ~ .star { color: #d1d5db; }
-
             .action-modal-buttons {
                 display: flex; flex-direction: column; gap: 10px;
                 margin-top: 1rem;
@@ -1827,6 +1880,20 @@
             .completion-photo-card.after .photo-label {
                 color: #2d7a4f;
             }
+            .rating-photos { gap: 0.65rem; margin: 0.7rem 0 1rem; }
+            .rating-photos .completion-photo-card { padding: 0.65rem; border-radius: 12px; }
+            .rating-photos .completion-photo-card img,
+            .rating-photo-empty { height: 104px; }
+            .rating-photo-empty {
+                display: grid; place-items: center; width: 100%;
+                border-radius: 12px; background: #e9eef3; color: #64748b;
+                font-size: 0.76rem;
+            }
+            .rating-photo-empty.after { background: #dcfce7; color: #166534; }
+            body.dark-mode .rating-photos .completion-photo-card { background: #1e293b; border-color: #334155; }
+            body.dark-mode .rating-photos .completion-photo-card.after { background: #173b2b; border-color: #2f6b47; }
+            body.dark-mode .rating-photo-empty { background: #334155; color: #cbd5e1; }
+            body.dark-mode .rating-photo-empty.after { background: #244832; color: #86efac; }
 
             .stats-modal-box {
                 max-width: 700px;
@@ -1961,6 +2028,14 @@
                 width: 20px;
                 height: 20px;
                 display: none;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            body.dark-mode #notificationBadge,
+            body.dark-mode #maintenanceNotificationBadge,
+            body.dark-mode #adminNotificationBadge {
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            }
+            #notificationBadge, #maintenanceNotificationBadge, #adminNotificationBadge {
                 align-items: center;
                 justify-content: center;
                 font-size: 0.7rem;
@@ -1974,7 +2049,8 @@
                 padding: 0.8rem 0;
                 border-bottom: 1px solid #f0f4f9;
                 cursor: pointer;
-                transition: 0.15s ease;
+                transition: all 0.2s ease;
+                border-left: 3px solid transparent;
             }
             .notification-item:hover {
                 background: #f8fafc;
@@ -1985,22 +2061,24 @@
             }
             .notification-item.unread {
                 background: #f0fdf4;
+                border-left: 3px solid #4b9b64;
             }
             .notification-item.unread:hover {
                 background: #dcfce7;
             }
             body.dark-mode .notification-item {
-                background: #171b1d;
-                border-bottom-color: #2d3135;
+                background: transparent;
+                border-bottom-color: #334155;
             }
             body.dark-mode .notification-item:hover {
-                background: #20252a;
+                background: rgba(255, 255, 255, 0.05);
             }
             body.dark-mode .notification-item.unread {
-                background: #1b2b22;
+                background: transparent;
+                border-left: 3px solid #4b9b64;
             }
             body.dark-mode .notification-item.unread:hover {
-                background: #21362c;
+                background: rgba(75, 155, 100, 0.1);
             }
             body.dark-mode .notif-title {
                 color: #f3f4f6;
@@ -2077,8 +2155,8 @@
                 pointer-events: none;
             }
             body.dark-mode .header-icon-btn {
-                background: #24282c;
-                border-color: #3d4248;
+                background: #334155;
+                border-color: #475569;
                 color: #f3f4f6;
             }
             body.dark-mode .header-icon-btn:hover {
@@ -2086,7 +2164,7 @@
                 border-color: #4b525a;
             }
             body.dark-mode .header-icon-badge {
-                border-color: #171b1d;
+                border-color: #1e293b;
             }
 
             .chat-modal-overlay {
@@ -2103,6 +2181,46 @@
             .chat-modal-overlay.active {
                 display: flex;
             }
+            .chat-modal-overlay.minimized {
+                inset: auto 18px 18px auto;
+                display: block;
+                width: auto;
+                height: auto;
+                padding: 0;
+                background: transparent;
+                backdrop-filter: none;
+                pointer-events: none;
+            }
+            .chat-modal-overlay.minimized .chat-modal-box { display: none; }
+            .chat-modal-overlay.minimized .chat-minimized-launcher { display: inline-flex; }
+            .chat-minimized-launcher {
+                display: none;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 16px;
+                border: 0;
+                border-radius: 999px;
+                background: #2d7a4f;
+                color: #fff;
+                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.24);
+                font: inherit;
+                font-weight: 700;
+                cursor: pointer;
+                pointer-events: auto;
+            }
+            .chat-minimized-unread {
+                display: none;
+                min-width: 20px;
+                height: 20px;
+                padding: 0 5px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 999px;
+                background: #dc2626;
+                color: #fff;
+                font-size: 0.7rem;
+            }
+            body.dark-mode .chat-minimized-launcher { background: #2d7a4f; color: #fff; }
             .chat-modal-box {
                 width: min(900px, 100%);
                 height: min(80vh, 760px);
@@ -2266,6 +2384,26 @@
                 padding: 18px 20px;
                 border-bottom: 1px solid #e2e8f0;
                 background: #fff;
+            }
+            .chat-header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+            .chat-window-control,
+            .chat-mobile-back {
+                width: 36px;
+                height: 36px;
+                display: inline-grid;
+                place-items: center;
+                border: 1px solid #dbe5ef;
+                border-radius: 50%;
+                background: #f8fafc;
+                color: #334155;
+                cursor: pointer;
+            }
+            .chat-mobile-back { display: none; }
+            body.dark-mode .chat-window-control,
+            body.dark-mode .chat-mobile-back {
+                border-color: #475569;
+                background: #334155;
+                color: #f3f4f6;
             }
             .chat-header-left {
                 display: flex;
@@ -2442,14 +2580,43 @@
                 padding: 24px;
             }
 
-            @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+            @media (max-width: 1024px) {
+                .stats-grid { grid-template-columns: repeat(2, 1fr); }
+                #pageCitizen .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            }
             @media (max-width: 768px) {
                 .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
                 .header-right { width: 100%; flex-wrap: wrap; }
                 .main-grid { grid-template-columns: 1fr; }
                 .stats-grid { grid-template-columns: 1fr 1fr; }
-                .chat-modal-box { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 220px) minmax(0, 1fr); height: 85vh; }
-                .chat-sidebar { border-right: none; border-bottom: 1px solid #e2e8f0; max-height: none; }
+                .chat-modal-overlay { padding: 0; align-items: stretch; }
+                .chat-modal-box {
+                    width: 100%;
+                    height: 100vh;
+                    height: 100dvh;
+                    max-height: 100dvh;
+                    grid-template-columns: minmax(0, 1fr);
+                    grid-template-rows: minmax(0, 1fr);
+                    border: 0;
+                    border-radius: 0;
+                }
+                .chat-modal-overlay[data-mobile-view="contacts"] .chat-main { display: none; }
+                .chat-modal-overlay[data-mobile-view="thread"] .chat-sidebar { display: none; }
+                .chat-sidebar { border: 0; max-height: none; min-height: 0; }
+                .chat-header { padding: 12px 14px; gap: 8px; }
+                .chat-header-left { min-width: 0; gap: 8px; }
+                .chat-mobile-back { display: inline-grid; flex: 0 0 auto; }
+                .chat-window-control { width: 34px; height: 34px; }
+                .chat-current-name { max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                .chat-thread { padding: 14px 12px 8px; }
+                .chat-bubble { max-width: 88%; font-size: 0.9rem; }
+                .chat-composer { padding: 12px 12px calc(12px + env(safe-area-inset-bottom)); }
+                .chat-photo-picker { margin-bottom: 8px; }
+                .chat-input-row { gap: 8px; }
+                .chat-input-row input { min-width: 0; padding: 0.75rem 0.9rem; }
+                .chat-send-btn { width: 44px; height: 44px; padding: 0; display: inline-grid; place-items: center; flex: 0 0 auto; }
+                .chat-send-btn span { display: none; }
+                .chat-modal-overlay.minimized { inset: auto 12px calc(12px + env(safe-area-inset-bottom)) auto; }
                 .report-item, .task-item { flex-direction: column; align-items: flex-start; gap: 8px; }
                 .modal-box { padding: 1.5rem; }
             }
@@ -2459,6 +2626,7 @@
             }
             @media (max-width: 480px) {
                 .stats-grid { grid-template-columns: 1fr; }
+                #pageCitizen .stats-grid { grid-template-columns: 1fr; }
                 .header-left h1 { font-size: 1.2rem; }
                 .card { padding: 1.2rem; }
                 #reportLocationMap, #nearbyMap, #maintMap, .live-track-map { height: 200px; }
@@ -2494,7 +2662,7 @@
             .role-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(24,59,50,0.09); }
             .role-icon { border-radius: 11px; }
             .form-group input, .form-group select, .form-group textarea { border-radius: 10px; }
-            .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #5d9a70; }
+            .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; }
             .btn { border-radius: 8px; box-shadow: none; }
             .btn:hover { transform: translateY(-1px); }
             .btn-sm, .btn-sm-admin, .admin-header-nav-item { border-radius: 7px; }
@@ -2531,36 +2699,36 @@
             .header-menu-panel { border-radius: 10px; }
             .map-container { border-color: #dce7e0; }
 
-            body.dark-mode { background: #101714; color: #e7efea; }
+            body.dark-mode { background: #0f172a; color: #e7efea; }
             body.dark-mode .login-container,
             body.dark-mode .dashboard-container .card,
             body.dark-mode .dashboard-container .stat-card,
             body.dark-mode .modal-box {
-                background: #17211b;
-                border-color: #2e4035;
+                background: #1e293b;
+                border-color: #334155;
                 box-shadow: 0 8px 24px rgba(0,0,0,0.18);
             }
-            body.dark-mode .dashboard-container .header { background: #173d32; border-color: #29483a; }
-            body.dark-mode .dashboard-container .card-header { background: transparent; border-bottom-color: #2e4035; }
+            body.dark-mode .dashboard-container .header { background: #1e293b; border-color: #334155; }
+            body.dark-mode .dashboard-container .card-header { background: transparent; border-bottom-color: #334155; }
             body.dark-mode .dashboard-container .card-header h3,
             body.dark-mode .dashboard-container .stat-card .number { color: #e7efea; }
             body.dark-mode .dashboard-container .stat-card .label { color: #b9c9c0; }
             body.dark-mode #pageMaintenance .maintenance-task-status { filter: none !important; border: 1px solid transparent; }
-            body.dark-mode #pageMaintenance .maintenance-task-status.badge-assigned { background: #17344d; color: #93c5fd; border-color: #315d7e; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-assigned { background: #1e3a5f; color: #93c5fd; border-color: #3b82f6; }
             body.dark-mode #pageMaintenance .maintenance-task-status.badge-progress { background: #33244e; color: #d8b4fe; border-color: #5b427e; }
-            body.dark-mode #pageMaintenance .maintenance-task-status.badge-completed { background: #18372a; color: #86efac; border-color: #326347; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-completed { background: #1e3a5f; color: #86efac; border-color: #3b82f6; }
             body.dark-mode #pageMaintenance .maintenance-task-status.badge-rejected { background: #442426; color: #fca5a5; border-color: #704044; }
             body.dark-mode #pageMaintenance .maintenance-task-status.badge-pending { background: #43351a; color: #fcd34d; border-color: #725a28; }
-            body.dark-mode .role-btn { background: #1b2922; border-color: #344b3d; }
+            body.dark-mode .role-btn { background: #1e293b; border-color: #334155; }
             body.dark-mode .role-name { color: #f3f7f4 !important; }
             body.dark-mode .role-desc { color: #c1cec7 !important; }
-            body.dark-mode .role-btn.citizen-role:hover { background: #1d3428; border-color: #4b9b64; }
-            body.dark-mode .role-btn.maintenance-role:hover { background: #1d3045; border-color: #5790cf; }
-            body.dark-mode .role-btn.admin-role:hover { background: #302741; border-color: #9874d3; }
+            body.dark-mode .role-btn.citizen-role:hover { background: #334155; border-color: #4b9b64; }
+            body.dark-mode .role-btn.maintenance-role:hover { background: #334155; border-color: #5790cf; }
+            body.dark-mode .role-btn.admin-role:hover { background: #334155; border-color: #9874d3; }
             body.dark-mode .form-group label { color: #e1e9e4 !important; }
-            body.dark-mode .report-item:hover, body.dark-mode .task-item:hover { background: #1c2b23; }
-            body.dark-mode .modal-details { background: #1d2922 !important; border-color: #34483b; }
-            body.dark-mode .header-menu-panel { background: #17211b; border-color: #2e4035; }
+            body.dark-mode .report-item:hover, body.dark-mode .task-item:hover { background: #334155; }
+            body.dark-mode .modal-details { background: #1e293b !important; border-color: #334155; }
+            body.dark-mode .header-menu-panel { background: #1e293b; border-color: #334155; }
 
             @media (max-width: 768px) {
                 .dashboard-container .header { padding: 1.1rem 1.2rem; }
@@ -2570,7 +2738,11 @@
         </style>
         <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-    <body>
+    <body class="app-booting">
+    <div id="appBootLoader" class="app-boot-loader" role="status" aria-live="polite">
+        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+        <span>Loading...</span>
+    </div>
 
     <!-- PUBLIC HOMEPAGE -->
     <div id="pageHome" class="home-page">
@@ -2591,7 +2763,7 @@
                     <h1 id="homeHeroTitle">GreenSteps</h1>
                     <p class="home-hero-copy">Spot a local issue? Report it, follow its progress, and help your neighborhood move toward a cleaner, safer place.</p>
                     <div class="home-hero-actions">
-                        <button type="button" class="home-cta home-cta-primary" onclick="openLoginPage('citizen')"><i class="fas fa-plus" aria-hidden="true"></i> Report an issue</button>
+                        <button type="button" class="home-cta home-cta-primary" onclick="openLoginPage()"><i class="fas fa-plus" aria-hidden="true"></i> Report an issue</button>
                         <a class="home-cta home-cta-secondary" href="#homeFeatures">Explore GreenSteps <i class="fas fa-arrow-down" aria-hidden="true"></i></a>
                     </div>
                     <p class="home-hero-note">Local reports. Clear updates. Shared progress.</p>
@@ -2659,86 +2831,42 @@
         <div class="divider"></div>
 
         <div class="login-title">Welcome to GreenSteps</div>
-        <div class="login-subtitle">Choose how you want to sign in</div>
+        <div class="login-subtitle">Sign in to your account</div>
 
-        <div class="role-buttons" id="roleButtons">
-            <button type="button" class="role-btn citizen-role" onclick="selectRole('citizen')">
-                <div class="role-icon citizen-icon"><i class="fas fa-user"></i></div>
-                <div class="role-info">
-                    <div class="role-name">Login as Citizen</div>
-                    <div class="role-desc">Report issues & track progress</div>
-                </div>
-                <i class="fas fa-chevron-right role-arrow"></i>
-            </button>
-
-            <button type="button" class="role-btn maintenance-role" onclick="selectRole('maintenance')">
-                <div class="role-icon maintenance-icon"><i class="fas fa-hard-hat"></i></div>
-                <div class="role-info">
-                    <div class="role-name">Login as Maintenance</div>
-                    <div class="role-desc">View & complete assigned tasks</div>
-                </div>
-                <i class="fas fa-chevron-right role-arrow"></i>
-            </button>
-
-            <button id="adminRoleButton" type="button" class="role-btn admin-role" onclick="selectRole('admin')">
-                <div class="role-icon admin-icon"><i class="fas fa-user-shield"></i></div>
-                <div class="role-info">
-                    <div class="role-name">Login as Admin</div>
-                    <div class="role-desc">Manage reports, assign teams & give points</div>
-                </div>
-                <i class="fas fa-chevron-right role-arrow"></i>
-            </button>
+        <div id="errorMessage" class="error-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText">Invalid credentials. Please try again.</span>
         </div>
 
-        <div id="loginFormWrapper" style="display:none;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:1.2rem;">
-                <button type="button" onclick="backToRoles()" style="background:none;border:none;cursor:pointer;color:#64748b;font-size:0.9rem;display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:8px;">
-                    <i class="fas fa-arrow-left"></i> Back
-                </button>
-                <div id="selectedRoleBadge" style="padding:4px 14px; border-radius:40px; font-size:0.75rem; font-weight:600; background:#dbeafe; color:#1e4a7a;">
-                    <i class="fas fa-user"></i> Citizen
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Enter your email" required />
                 </div>
             </div>
-
-            <div class="login-title" id="formTitle">Citizen Login</div>
-            <div class="login-subtitle" id="formSubtitle">Login to report issues and track progress</div>
-
-            <div id="errorMessage" class="error-message">
-                <i class="fas fa-exclamation-circle"></i>
-                <span id="errorText">Invalid credentials. Please try again.</span>
-            </div>
-
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" placeholder="Enter your email" required />
-                    </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Enter your password" required />
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" placeholder="Enter your password" required />
-                    </div>
-                </div>
-                <div class="form-options">
-                    <label><input type="checkbox" checked /> Remember me</label>
-                    <a onclick="forgotPassword()">Forgot password?</a>
-                </div>
-                <button type="submit" class="btn-login" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">Login as Citizen</span>
-                </button>
-            </form>
+            </div>
+            <div class="form-options">
+                <label><input type="checkbox" checked /> Remember me</label>
+                <a onclick="forgotPassword()">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn-login" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> <span>Sign In</span>
+            </button>
+        </form>
 
-            <div class="register-link" id="registerLinkBlock">
-                Don't have an account? <a onclick="openRegisterModal()">Register here</a>
-            </div>
-            <div class="register-link" id="adminRegisterLink" style="display:none;">
-                First time setup? <a onclick="openAdminRegisterModal()">Register admin account</a>
-            </div>
-            </div>
+        <div class="register-link" id="registerLinkBlock">
+            Don't have an account? <a onclick="openRegisterModal()">Register here</a>
+        </div>
+        <div class="register-link" id="adminRegisterLink" style="display:none;">
+            First time setup? <a onclick="openAdminRegisterModal()">Register admin account</a>
         </div>
     </div>
 
@@ -2779,7 +2907,6 @@
             <div class="stat-card"><div class="number" id="citizenTotalReports">0</div><div class="label"><i class="far fa-file-alt"></i> Total Reports</div></div>
             <div class="stat-card"><div class="number" id="citizenPending">0</div><div class="label"><i class="fas fa-hourglass-half" style="color:#f59e0b;"></i> Pending</div></div>
             <div class="stat-card"><div class="number" id="citizenCompleted">0</div><div class="label"><i class="fas fa-check-circle" style="color:#16a34a;"></i> Completed</div></div>
-            <div class="stat-card"><div class="number">⭐ <span id="citizenPoints">0</span></div><div class="label"><i class="fas fa-star" style="color:#f59e0b;"></i> Community Points</div></div>
         </div>
 
         <div class="main-grid">
@@ -2788,10 +2915,9 @@
                     <h3><i class="fas fa-list-ul"></i> Recent Reports</h3>
                 </div>
                 <div id="citizenReportsList">
-                    <div class="empty-state">
-                        <i class="fas fa-file-alt"></i>
-                        <div class="empty-title">No reports yet</div>
-                        <div class="empty-desc">Your submitted reports will appear here</div>
+                    <div class="data-loading-state" role="status">
+                        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                        <span>Loading recent reports...</span>
                     </div>
                 </div>
             </div>
@@ -2853,7 +2979,6 @@
                 <details class="header-menu">
                     <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-ellipsis"></i></summary>
                     <div class="header-menu-panel">
-                        <button type="button" class="header-menu-item" onclick="openChatPanel(); this.closest('details').open = false;"><i class="fas fa-comments"></i> Chat <span id="maintenanceChatUnread" class="chat-unread-count"></span></button>
                         <div class="header-menu-theme">
                             <span class="header-menu-theme-title">Dark Mode</span>
                             <label class="header-theme-toggle" title="Toggle dark mode">
@@ -3183,13 +3308,17 @@
             <section class="chat-main">
                 <div class="chat-header">
                     <div class="chat-header-left">
+                        <button class="chat-mobile-back" type="button" onclick="showChatContacts()" aria-label="Back to conversations" title="Back to conversations"><i class="fas fa-arrow-left"></i></button>
                         <div id="chatCurrentAvatar" class="chat-current-avatar">?</div>
                         <div>
                             <div id="chatCurrentName" class="chat-current-name">Select a chat</div>
                             <div id="chatCurrentRole" class="chat-current-role">online</div>
                         </div>
                     </div>
-                    <button class="btn btn-secondary btn-sm" type="button" onclick="closeChatPanel()"><i class="fas fa-times"></i> Close</button>
+                    <div class="chat-header-actions">
+                        <button class="chat-window-control" type="button" onclick="minimizeChatPanel()" aria-label="Minimize chat" title="Minimize chat"><i class="fas fa-minus"></i></button>
+                        <button class="chat-window-control" type="button" onclick="closeChatPanel()" aria-label="Close chat" title="Close chat"><i class="fas fa-times"></i></button>
+                    </div>
                 </div>
 
                 <div id="chatThread" class="chat-thread">
@@ -3211,11 +3340,16 @@
                     </div>
                     <div class="chat-input-row">
                         <input id="chatMessageInput" type="text" placeholder="Type a message..." />
-                        <button class="chat-send-btn" type="button" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i> Send</button>
+                        <button class="chat-send-btn" type="button" onclick="sendChatMessage()" aria-label="Send message"><i class="fas fa-paper-plane"></i><span>Send</span></button>
                     </div>
                 </div>
             </section>
         </div>
+        <button id="chatMinimizedLauncher" class="chat-minimized-launcher" type="button" onclick="restoreChatPanel()" aria-label="Restore messages" title="Restore messages">
+            <i class="fas fa-comments" aria-hidden="true"></i>
+            <span>Messages</span>
+            <span id="chatMinimizedUnread" class="chat-minimized-unread"></span>
+        </button>
     </div>
 
     <div id="chatPhotoViewer" class="chat-photo-viewer" aria-hidden="true" onclick="closeChatPhotoViewer(event)">
@@ -3229,6 +3363,16 @@
             <h3><i class="fas fa-user-plus" style="color:#2d7a4f;"></i> Create Account</h3>
             <div class="modal-subtitle" id="registerSubtitle">Join GreenSteps and help your community</div>
             <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="regRole">I want to sign up as <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user-tag"></i>
+                        <select id="regRole" required onchange="toggleTeamField()">
+                            <option value="citizen">Citizen</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group" id="registerTeamWrapper" style="display:none;">
                     <label for="regTeam">Team Name <span class="required">*</span></label>
                     <input id="regTeam" type="text" maxlength="150" placeholder="Enter your team name" />
@@ -3660,7 +3804,7 @@
             <div class="form-group">
                 <label for="assignTeamSelect">Select Team</label>
                 <select id="assignTeamSelect">
-                    <option value="">Loading teams...</option>
+                    <option value="">Select a team...</option>
                 </select>
             </div>
             <div class="form-actions">
@@ -3680,14 +3824,26 @@
                 <div class="detail-row"><span class="detail-label"><i class="fas fa-users"></i> Team</span><span class="detail-value" id="rateTeamName">—</span></div>
                 <div class="detail-row"><span class="detail-label"><i class="fas fa-map-pin"></i> Location</span><span class="detail-value" id="rateTaskLocation">—</span></div>
             </div>
+            <div class="completion-photos rating-photos" aria-label="Maintenance work photos">
+                <div class="completion-photo-card">
+                    <img id="rateBeforePhoto" src="" alt="Before maintenance work" style="display:none;" />
+                    <div id="rateBeforePhotoEmpty" class="rating-photo-empty">No before photo</div>
+                    <div class="photo-label">Before</div>
+                </div>
+                <div class="completion-photo-card after">
+                    <img id="rateAfterPhoto" src="" alt="After maintenance work" style="display:none;" />
+                    <div id="rateAfterPhotoEmpty" class="rating-photo-empty after">No after photo</div>
+                    <div class="photo-label">After</div>
+                </div>
+            </div>
             <div class="form-group">
                 <label>Rating <span class="required">*</span></label>
-                <div class="rating-stars" id="ratingStars">
-                    <span class="star" data-value="1" onclick="setRating(1)"><i class="fas fa-star"></i></span>
-                    <span class="star" data-value="2" onclick="setRating(2)"><i class="fas fa-star"></i></span>
-                    <span class="star" data-value="3" onclick="setRating(3)"><i class="fas fa-star"></i></span>
-                    <span class="star" data-value="4" onclick="setRating(4)"><i class="fas fa-star"></i></span>
-                    <span class="star" data-value="5" onclick="setRating(5)"><i class="fas fa-star"></i></span>
+                <div class="rating-stars" id="ratingStars" role="group" aria-label="Choose a rating from zero to five stars">
+                    <button type="button" class="star" data-value="1" onclick="setRating(1)" aria-label="1 star, click again to rate zero stars" title="Click again to choose 0 stars"><i class="fas fa-star"></i></button>
+                    <button type="button" class="star" data-value="2" onclick="setRating(2)" aria-label="2 stars"><i class="fas fa-star"></i></button>
+                    <button type="button" class="star" data-value="3" onclick="setRating(3)" aria-label="3 stars"><i class="fas fa-star"></i></button>
+                    <button type="button" class="star" data-value="4" onclick="setRating(4)" aria-label="4 stars"><i class="fas fa-star"></i></button>
+                    <button type="button" class="star" data-value="5" onclick="setRating(5)" aria-label="5 stars"><i class="fas fa-star"></i></button>
                     <span style="margin-left:8px; font-weight:500; color:#64748b;" id="ratingLabel">Select rating</span>
                 </div>
             </div>
@@ -3903,7 +4059,6 @@
 
         let currentUser = null;
         let authToken = null;
-        let selectedRole = null;
         let selectedFileDataUrl = null;
         let selectedLocation = null;
         let categoryLookupTimer = null;
@@ -3930,9 +4085,11 @@
         let selectedRating = 0;
         let actionModalData = null;
         let cachedReports = [];
+        let citizenReportsLoaded = false;
         let cachedNotifications = [];
         let cachedTeams = [];
         let cachedAutoAssignRules = [];
+        let loadedChatThreadUserId = null;
         let activeTrackDiscussionReportId = null;
 
         let completeBeforeDataUrl = null;
@@ -4305,6 +4462,9 @@
 
         // Load notifications from the API
         async function loadNotifications() {
+            const listId = currentUser?.role === 'maintenance' ? 'maintNotifList' :
+                currentUser?.role === 'admin' ? 'adminNotifList' : 'citizenNotifList';
+            showDataLoading(listId, 'Loading notifications...');
             const result = await apiGet('notifications');
             if (result.success) {
                 const notifications = result.notifications || [];
@@ -4317,6 +4477,8 @@
                 }
                 const unread = notifications.filter(n => !Number(n.is_read)).length;
                 updateNotificationBadge(unread);
+            } else {
+                showDataLoadError(listId, 'Could not load notifications.', () => loadNotifications());
             }
         }
 
@@ -4380,6 +4542,75 @@
                 dashboardRefreshTimer = null;
             }
             isPolling = false;
+        }
+
+        function resolveDataContainer(target) {
+            return typeof target === 'string' ? document.getElementById(target) : target;
+        }
+
+        function showDataLoading(target, message, force = false) {
+            const element = resolveDataContainer(target);
+            if (!element || (element.dataset.dataLoaded === 'true' && !force)) return element;
+            if (force) delete element.dataset.dataLoaded;
+
+            const state = document.createElement('div');
+            state.className = 'data-loading-state';
+            state.setAttribute('role', 'status');
+            state.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
+            const label = document.createElement('span');
+            label.textContent = message;
+            state.append(label);
+            element.replaceChildren(state);
+            return element;
+        }
+
+        function showMetricLoading(ids) {
+            ids.forEach(id => {
+                const element = document.getElementById(id);
+                if (element && element.dataset.metricLoaded !== 'true') {
+                    element.innerHTML = '<i class="fas fa-spinner fa-spin metric-loading-spinner" aria-label="Loading"></i>';
+                }
+            });
+        }
+
+        function setMetricValue(id, value, onlyIfUnloaded = false) {
+            const element = document.getElementById(id);
+            if (!element || (onlyIfUnloaded && element.dataset.metricLoaded === 'true')) return;
+            element.textContent = String(value);
+            element.dataset.metricLoaded = 'true';
+            element.classList.remove('data-refresh-transition');
+            void element.offsetWidth;
+            element.classList.add('data-refresh-transition');
+        }
+
+        function markDataLoaded(target, animate = true) {
+            const element = resolveDataContainer(target);
+            if (!element) return;
+            element.dataset.dataLoaded = 'true';
+            if (!animate) return;
+            element.classList.remove('data-refresh-transition');
+            void element.offsetWidth;
+            element.classList.add('data-refresh-transition');
+        }
+
+        function showDataLoadError(target, message, retry) {
+            const element = resolveDataContainer(target);
+            if (!element || element.dataset.dataLoaded === 'true') return;
+            const state = document.createElement('div');
+            state.className = 'data-load-error';
+            state.setAttribute('role', 'alert');
+            const label = document.createElement('span');
+            label.textContent = message;
+            state.append(label);
+            if (retry) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'track-btn';
+                button.textContent = 'Try again';
+                button.addEventListener('click', retry, { once: true });
+                state.append(button);
+            }
+            element.replaceChildren(state);
         }
 
         function animateDashboardData() {
@@ -4483,12 +4714,11 @@
                         document.getElementById('citizenTotalReports').textContent = result.stats.total || 0;
                         document.getElementById('citizenPending').textContent = result.stats.pending || 0;
                         document.getElementById('citizenCompleted').textContent = result.stats.completed || 0;
-                        document.getElementById('citizenPoints').textContent = result.stats.points || 0;
                     } else if (currentUser.role === 'maintenance') {
                         document.getElementById('maintAssigned').textContent = (result.stats.assigned || 0) + (result.stats.in_progress || 0);
                         document.getElementById('maintInProgress').textContent = result.stats.in_progress || 0;
                         document.getElementById('maintCompleted').textContent = result.stats.completed || 0;
-                        document.getElementById('maintAvgRating').textContent = result.stats.avg_rating && result.stats.avg_rating !== '—' ? result.stats.avg_rating : '—';
+                        document.getElementById('maintAvgRating').textContent = result.stats.avg_rating !== null && result.stats.avg_rating !== '—' ? result.stats.avg_rating : '—';
                     } else if (currentUser.role === 'admin') {
                         document.getElementById('adminTotalReports').textContent = result.stats.total || 0;
                         document.getElementById('adminPendingReports').textContent = result.stats.pending || 0;
@@ -4506,65 +4736,9 @@
         function openLoginPage(role = null) {
             document.getElementById('pageHome').style.display = 'none';
             document.getElementById('pageLogin').style.display = 'block';
-            document.getElementById('roleButtons').style.display = 'flex';
-            document.getElementById('loginFormWrapper').style.display = 'none';
-            document.getElementById('errorMessage').classList.remove('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (role) selectRole(role);
-        }
-
-        function selectRole(role) {
-            selectedRole = role;
-            document.getElementById('roleButtons').style.display = 'none';
-            document.getElementById('loginFormWrapper').style.display = 'block';
-
-            const badge = document.getElementById('selectedRoleBadge');
-            if (role === 'citizen') {
-                badge.style.background = '#dbeafe';
-                badge.style.color = '#1e4a7a';
-                badge.innerHTML = '<i class="fas fa-user"></i> Citizen';
-                document.getElementById('formTitle').textContent = 'Citizen Login';
-                document.getElementById('formSubtitle').textContent = 'Login to report issues and track progress';
-                document.getElementById('loginBtnText').textContent = 'Login as Citizen';
-                document.getElementById('registerLinkBlock').style.display = 'block';
-                document.querySelector('#registerLinkBlock a').textContent = 'Register here';
-                document.getElementById('adminRegisterLink').style.display = 'none';
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-            } else if (role === 'maintenance') {
-                badge.style.background = '#e0e7ff';
-                badge.style.color = '#3730a3';
-                badge.innerHTML = '<i class="fas fa-hard-hat"></i> Maintenance';
-                document.getElementById('formTitle').textContent = 'Maintenance Login';
-                document.getElementById('formSubtitle').textContent = 'Login to view and complete assigned tasks';
-                document.getElementById('loginBtnText').textContent = 'Login as Maintenance';
-                document.getElementById('registerLinkBlock').style.display = 'block';
-                document.querySelector('#registerLinkBlock a').textContent = 'Apply as maintenance';
-                document.getElementById('adminRegisterLink').style.display = 'none';
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-            } else if (role === 'admin') {
-                badge.style.background = '#ede9fe';
-                badge.style.color = '#6d28d9';
-                badge.innerHTML = '<i class="fas fa-user-shield"></i> Admin';
-                document.getElementById('formTitle').textContent = 'Admin Login';
-                document.getElementById('formSubtitle').textContent = 'Manage reports, assign teams, and award points';
-                document.getElementById('loginBtnText').textContent = 'Login as Admin';
-                document.getElementById('registerLinkBlock').style.display = 'block';
-                document.querySelector('#registerLinkBlock a').textContent = 'Register as admin';
-                document.getElementById('adminRegisterLink').style.display = 'none';
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-            }
-            setTimeout(() => document.getElementById('email').focus(), 200);
-        }
-
-        function backToRoles() {
-            selectedRole = null;
-            document.getElementById('roleButtons').style.display = 'flex';
-            document.getElementById('loginFormWrapper').style.display = 'none';
             document.getElementById('errorMessage').classList.remove('show');
             document.getElementById('loginForm').reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ============ LOGIN ============
@@ -4590,15 +4764,7 @@
             if (!result.success) {
                 errorText.textContent = result.message || 'Invalid credentials.';
                 errorMessage.classList.add('show');
-                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">Login</span>';
-                loginBtn.disabled = false;
-                return;
-            }
-
-            if (selectedRole && result.user.role !== selectedRole) {
-                errorText.textContent = `This account is registered as ${result.user.role}. Please select "${result.user.role}" role.`;
-                errorMessage.classList.add('show');
-                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">Login</span>';
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>Sign In</span>';
                 loginBtn.disabled = false;
                 return;
             }
@@ -4630,7 +4796,7 @@
                 setTimeout(() => showDashboard('citizen'), 600);
             }
 
-            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">Login</span>';
+            loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>Sign In</span>';
             loginBtn.disabled = false;
         }
 
@@ -4675,10 +4841,7 @@
             document.getElementById('pageCitizen').classList.remove('active');
             document.getElementById('pageMaintenance').classList.remove('active');
             document.getElementById('pageAdmin').classList.remove('active');
-            selectedRole = null;
             currentUser = null;
-            document.getElementById('roleButtons').style.display = 'flex';
-            document.getElementById('loginFormWrapper').style.display = 'none';
             document.getElementById('errorMessage').classList.remove('show');
             document.getElementById('loginForm').reset();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4686,30 +4849,40 @@
 
         // ============ CITIZEN DATA ============
         async function loadCitizenData() {
-            const stats = await apiGet('stats');
+            const reportsList = document.getElementById('citizenReportsList');
+            showMetricLoading(['citizenTotalReports', 'citizenPending', 'citizenCompleted']);
+            showDataLoading(reportsList, 'Loading recent reports...');
+            showDataLoading('citizenNotifList', 'Loading notifications...');
+
+            const [stats, reportsResult, notifsResult] = await Promise.all([
+                apiGet('stats'),
+                apiGet('reports'),
+                apiGet('notifications')
+            ]);
             if (stats.success) {
-                document.getElementById('citizenTotalReports').textContent = stats.total || 0;
-                document.getElementById('citizenPending').textContent = stats.pending || 0;
-                document.getElementById('citizenCompleted').textContent = stats.completed || 0;
-                document.getElementById('citizenPoints').textContent = stats.points || 0;
+                setMetricValue('citizenTotalReports', stats.total || 0);
+                setMetricValue('citizenPending', stats.pending || 0);
+                setMetricValue('citizenCompleted', stats.completed || 0);
+            } else {
+                ['citizenTotalReports', 'citizenPending', 'citizenCompleted'].forEach(id => setMetricValue(id, '—', true));
             }
 
-            const reportsResult = await apiGet('reports');
             if (reportsResult.success) {
                 const nextReports = reportsResult.reports || [];
-                const reportsChanged = JSON.stringify(cachedReports) !== JSON.stringify(nextReports);
+                const reportsChanged = !citizenReportsLoaded || JSON.stringify(cachedReports) !== JSON.stringify(nextReports);
                 const activePanel = liveTrackActiveReportId
                     ? document.getElementById('track-panel-' + liveTrackActiveReportId)
                     : null;
                 const preserveActivePanel = reportsChanged && activePanel?.style.display === 'block' &&
                     nextReports.some(report => Number(report.id) === Number(liveTrackActiveReportId));
                 cachedReports = nextReports;
+                citizenReportsLoaded = true;
                 // Track highest report ID for polling
                 cachedReports.forEach(r => {
                     if (r.id > lastKnownReportId) lastKnownReportId = r.id;
                 });
                 if (reportsChanged) {
-                    const list = document.getElementById('citizenReportsList');
+                    const list = reportsList;
                     if (cachedReports.length === 0) {
                         list.innerHTML = `
                             <div class="empty-state">
@@ -4740,9 +4913,9 @@
                                             <button class="track-btn" onclick="openReportDetailsModal(${r.id})" title="View report details" aria-label="View report details">
                                                 <i class="fas fa-circle-info" aria-hidden="true"></i>
                                             </button>
-                                            ${r.status === 'Completed' ? (r.my_rating
-                                                ? `<span class="badge badge-rated" title="You rated this team">⭐ ${r.my_rating}/5</span>`
-                                                : `<button class="track-btn" style="background:#fef3c7; color:#92400e;" data-rate-id="${r.id}"><i class="fas fa-star" style="color:#f59e0b;"></i> Rate</button>`) : ''}
+                                            ${r.status === 'Completed' ? (r.my_rating !== null && r.my_rating !== undefined
+                                                ? `<span class="badge badge-rated" title="You rated this team">⭐ ${Number(r.my_rating)}/5</span>`
+                                                : `<button type="button" class="track-btn report-rate-btn" data-rate-id="${r.id}" onclick="openCitizenRating(${r.id})" aria-label="Rate maintenance team" title="Rate maintenance team"><i class="fas fa-star" aria-hidden="true"></i></button>`) : ''}
                                         </div>
                                     </div>
                                     <div id="track-panel-${r.id}" style="display:none;" class="report-track-expand"></div>
@@ -4763,17 +4936,21 @@
                         }
                     }
                 }
+                markDataLoaded(reportsList);
+            } else if (!citizenReportsLoaded && reportsList) {
+                showDataLoadError(reportsList, 'Could not load recent reports.', () => loadCitizenData());
             }
 
             if (nearbyMapInitialized && nearbyMap) await initNearbyMap(cachedReports);
 
-            const notifsResult = await apiGet('notifications');
             if (notifsResult.success) {
                 cachedNotifications = notifsResult.notifications;
                 cachedNotifications.forEach(n => {
                     if (n.id > lastKnownNotificationId) lastKnownNotificationId = n.id;
                 });
                 renderNotificationsList('citizenNotifList', cachedNotifications);
+            } else {
+                showDataLoadError('citizenNotifList', 'Could not load notifications.', () => loadCitizenData());
             }
             animateDashboardData();
         }
@@ -5589,7 +5766,7 @@
             activeTrackDiscussionReportId = reportId;
             const thread = document.getElementById('trackDiscussionThread');
             document.getElementById('trackDiscussionInput').value = '';
-            thread.innerHTML = '<div class="comments-empty">Loading comments…</div>';
+            thread.innerHTML = '<div class="comments-empty" role="status"><i class="fas fa-spinner fa-spin" aria-hidden="true" style="margin-right:6px;"></i>Loading comments...</div>';
             document.getElementById('trackDiscussionModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             await loadReportComments(reportId, 'trackDiscussionThread');
@@ -5695,6 +5872,7 @@
                         <div class="empty-desc">Comments and updates will appear here</div>
                     </div>`;
                 el.dataset.listExpanded = 'false';
+                markDataLoaded(el);
                 return;
             }
             el.innerHTML = notifications.map(n => {
@@ -5708,6 +5886,7 @@
                 </div>`;
             }).join('');
             updateListExpansion(el, '.notification-item');
+            markDataLoaded(el);
         }
 
         async function handleNotificationClick(el, notifId, reportId) {
@@ -5901,20 +6080,21 @@
         function openRegisterModal() {
             document.getElementById('registerModal').classList.add('active');
             document.getElementById('registerForm').reset();
+            document.getElementById('regRole').value = 'citizen';
+            toggleTeamField();
+            document.body.style.overflow = 'hidden';
+        }
 
+        function toggleTeamField() {
+            const role = document.getElementById('regRole').value;
             const teamWrapper = document.getElementById('registerTeamWrapper');
             const subtitle = document.getElementById('registerSubtitle');
-            const isMaintenance = selectedRole === 'maintenance';
-            const isAdmin = selectedRole === 'admin';
+            const isMaintenance = role === 'maintenance';
             teamWrapper.style.display = isMaintenance ? 'block' : 'none';
             document.getElementById('regTeam').required = isMaintenance;
-            subtitle.textContent = isAdmin
-                ? 'Create an admin account to manage the system'
-                : (isMaintenance
-                    ? 'Apply to join a maintenance team. An admin must approve your account.'
-                    : 'Create a citizen account to help your community');
-
-            document.body.style.overflow = 'hidden';
+            subtitle.textContent = isMaintenance
+                ? 'Apply to join a maintenance team. An admin must approve your account.'
+                : 'Create a citizen account to help your community';
         }
         function closeRegisterModal() {
             document.getElementById('registerModal').classList.remove('active');
@@ -5927,7 +6107,7 @@
             const password = document.getElementById('regPassword').value;
             const confirm = document.getElementById('confirmPassword').value;
             const phone = document.getElementById('phone').value.trim();
-            const role = selectedRole === 'maintenance' ? 'maintenance' : (selectedRole === 'admin' ? 'admin' : 'citizen');
+            const role = document.getElementById('regRole').value;
             const teamName = document.getElementById('regTeam').value.trim();
             const btn = document.getElementById('registerBtn');
 
@@ -5953,10 +6133,10 @@
 
                 if (result.success) {
                     showToast(
-                        role === 'maintenance' ? 'Application submitted' : (role === 'admin' ? 'Admin account created' : 'Account created'),
+                        role === 'maintenance' ? 'Application submitted' : 'Account created',
                         role === 'maintenance'
                             ? 'You can sign in now. An administrator must approve your account before you can receive or work on tasks.'
-                            : (role === 'admin' ? 'Admin account created successfully!' : `Welcome, ${fullName}!`)
+                            : `Welcome, ${fullName}!`
                     );
                     closeRegisterModal();
                     document.getElementById('email').value = email;
@@ -6611,12 +6791,10 @@
                 btn.disabled = false;
                 showToast('✅ Report Submitted!', `${categoryText} — Pending review. +5 points!${result.share_url ? ' Share link ready in report details.' : ''}`);
 
-                try {
-                    await loadCitizenData();
-                } catch (refreshError) {
+                loadCitizenData().catch(refreshError => {
                     console.error('Report submitted but dashboard refresh failed:', refreshError);
                     showToast('Report submitted', 'Your report was saved. The dashboard could not refresh; reload it to see the update.');
-                }
+                });
             } catch (error) {
                 console.error('Report submission failed:', error);
                 alert('⚠️ ' + (error.message || 'Could not submit the report. Please try again.'));
@@ -6884,22 +7062,32 @@
 
         // ============ MAINTENANCE ============
         async function loadMaintenanceData() {
+            showMetricLoading(['maintAssigned', 'maintInProgress', 'maintCompleted', 'maintAvgRating']);
+            showDataLoading('maintTasksList', 'Loading assigned tasks...');
+            showDataLoading('maintNotifList', 'Loading notifications...');
             const result = await apiGet('tasks');
-            allTasks = result.success ? result.tasks : [];
-            syncGpsSharing();
-            if (result.team_name) {
-                document.getElementById('maintenanceUserName').textContent = result.team_name;
+            if (result.success) {
+                allTasks = result.tasks || [];
+                syncGpsSharing();
+                if (result.team_name) {
+                    document.getElementById('maintenanceUserName').textContent = result.team_name;
+                }
+                updateTaskStats();
+                renderTasks();
+                updateMaintMap();
+                updateMaintRating();
+            } else {
+                ['maintAssigned', 'maintInProgress', 'maintCompleted'].forEach(id => setMetricValue(id, '—', true));
+                showDataLoadError('maintTasksList', 'Could not load assigned tasks.', () => loadMaintenanceData());
             }
-            updateTaskStats();
-            renderTasks();
-            updateMaintMap();
-            updateMaintRating();
             const notifsResult = await apiGet('notifications');
             if (notifsResult.success) {
                 notifsResult.notifications.forEach(n => {
                     if (n.id > lastKnownNotificationId) lastKnownNotificationId = n.id;
                 });
                 renderNotificationsList('maintNotifList', notifsResult.notifications);
+            } else {
+                showDataLoadError('maintNotifList', 'Could not load notifications.', () => loadMaintenanceData());
             }
             animateDashboardData();
         }
@@ -6909,9 +7097,9 @@
             const inProgress = allTasks.filter(t => t.status === 'In Progress').length;
             const completed = allTasks.filter(t => t.status === 'Completed').length;
 
-            document.getElementById('maintAssigned').textContent = assigned + inProgress;
-            document.getElementById('maintInProgress').textContent = inProgress;
-            document.getElementById('maintCompleted').textContent = completed;
+            setMetricValue('maintAssigned', assigned + inProgress);
+            setMetricValue('maintInProgress', inProgress);
+            setMetricValue('maintCompleted', completed);
 
             document.getElementById('tabAssigned').textContent = assigned;
             document.getElementById('tabInProgress').textContent = inProgress;
@@ -6919,9 +7107,12 @@
         }
 
         async function updateMaintRating() {
+            showMetricLoading(['maintAvgRating']);
             const stats = await apiGet('stats');
             if (stats.success) {
-                document.getElementById('maintAvgRating').textContent = stats.avg_rating && stats.avg_rating !== '—' ? stats.avg_rating : '—';
+                setMetricValue('maintAvgRating', stats.avg_rating !== null && stats.avg_rating !== '—' ? stats.avg_rating : '—');
+            } else {
+                setMetricValue('maintAvgRating', '—', true);
             }
         }
 
@@ -6955,6 +7146,7 @@
                         <div class="empty-desc">${q ? 'Try a different search term' : 'Tasks will appear here once assigned'}</div>
                     </div>`;
                 list.dataset.listExpanded = 'false';
+                markDataLoaded(list, false);
                 return;
             }
 
@@ -7276,15 +7468,32 @@
         }
 
         async function loadAdminData() {
+            showMetricLoading(['adminTotalReports', 'adminPendingReports', 'adminAssignedReports', 'adminCompletedReports']);
+            [
+                ['adminReportsList', 'Loading reports...'],
+                ['adminNotifList', 'Loading notifications...'],
+                ['adminPendingMaintenanceList', 'Loading applications...'],
+                ['adminTeamList', 'Loading teams...'],
+                ['adminTopCitizens', 'Loading leaderboard...'],
+                ['adminTopTeams', 'Loading leaderboard...'],
+                ['adminAutoAssignList', 'Loading rules...']
+            ].forEach(([id, label]) => showDataLoading(id, label));
+
             const usersResult = await apiGet('users');
-            if (usersResult.success) renderPendingMaintenanceUsers(usersResult.users || []);
+            if (usersResult.success) {
+                renderPendingMaintenanceUsers(usersResult.users || []);
+            } else {
+                showDataLoadError('adminPendingMaintenanceList', 'Could not load applications.', () => loadAdminData());
+            }
 
             const stats = await apiGet('stats');
             if (stats.success) {
-                document.getElementById('adminTotalReports').textContent = stats.total || 0;
-                document.getElementById('adminPendingReports').textContent = stats.pending || 0;
-                document.getElementById('adminAssignedReports').textContent = stats.assigned || 0;
-                document.getElementById('adminCompletedReports').textContent = stats.completed || 0;
+                setMetricValue('adminTotalReports', stats.total || 0);
+                setMetricValue('adminPendingReports', stats.pending || 0);
+                setMetricValue('adminAssignedReports', stats.assigned || 0);
+                setMetricValue('adminCompletedReports', stats.completed || 0);
+            } else {
+                ['adminTotalReports', 'adminPendingReports', 'adminAssignedReports', 'adminCompletedReports'].forEach(id => setMetricValue(id, '—', true));
             }
 
             const reportsResult = await apiGet('reports');
@@ -7295,6 +7504,8 @@
                     if (r.id > lastKnownReportId) lastKnownReportId = r.id;
                 });
                 renderAdminReports();
+            } else {
+                showDataLoadError('adminReportsList', 'Could not load reports.', () => loadAdminData());
             }
 
             await loadTeams();
@@ -7307,6 +7518,8 @@
                     if (n.id > lastKnownNotificationId) lastKnownNotificationId = n.id;
                 });
                 renderNotificationsList('adminNotifList', notifsResult.notifications);
+            } else {
+                showDataLoadError('adminNotifList', 'Could not load notifications.', () => loadAdminData());
             }
             animateDashboardData();
         }
@@ -7336,6 +7549,7 @@
             if (!pending.length) {
                 list.innerHTML = '<div class="empty-state"><i class="fas fa-user-check"></i><div class="empty-title">No applications waiting</div><div class="empty-desc">New maintenance applicants will appear here</div></div>';
                 list.dataset.listExpanded = 'false';
+                markDataLoaded(list, false);
                 return;
             }
 
@@ -7355,6 +7569,7 @@
                 </div>
             `).join('');
             updateListExpansion(list, '.task-item');
+            markDataLoaded(list, false);
         }
 
         async function approveMaintenanceUser(userId) {
@@ -7378,8 +7593,13 @@
         }
 
         async function loadTeams() {
+            showDataLoading('adminTeamList', 'Loading teams...');
             const result = await apiGet('teams');
-            cachedTeams = result.success ? result.teams : [];
+            if (!result.success) {
+                showDataLoadError('adminTeamList', 'Could not load teams.', () => loadTeams());
+                return;
+            }
+            cachedTeams = result.teams || [];
             renderAdminTeams();
         }
 
@@ -7393,6 +7613,7 @@
                         <div class="empty-desc">Teams will appear here once registered</div>
                     </div>`;
                 list.dataset.listExpanded = 'false';
+                markDataLoaded(list);
                 return;
             }
 
@@ -7416,11 +7637,18 @@
                 `;
             }).join('');
             updateListExpansion(list, '.task-item');
+            markDataLoaded(list, false);
+            markDataLoaded(list);
         }
 
         async function loadAutoAssignRules() {
+            showDataLoading('adminAutoAssignList', 'Loading rules...');
             const result = await apiGet('auto-assign-rules');
-            cachedAutoAssignRules = result.success ? result.rules : [];
+            if (!result.success) {
+                showDataLoadError('adminAutoAssignList', 'Could not load rules.', () => loadAutoAssignRules());
+                return;
+            }
+            cachedAutoAssignRules = result.rules || [];
             renderAutoAssignRules();
         }
 
@@ -7434,6 +7662,7 @@
                     <div class="empty-desc">Create auto-assign rules to automatically route reports to the right team</div>
                 </div>`;
                 list.dataset.listExpanded = 'false';
+                markDataLoaded(list);
                 return;
             }
             list.innerHTML = cachedAutoAssignRules.map(rule => `
@@ -7452,6 +7681,7 @@
                 </div>
             `).join('');
             updateListExpansion(list, '.task-item');
+            markDataLoaded(list);
         }
 
         function populateAutoAssignTeamDropdown() {
@@ -7615,8 +7845,14 @@
         }
 
         async function loadLeaderboard() {
+            showDataLoading('adminTopCitizens', 'Loading leaderboard...');
+            showDataLoading('adminTopTeams', 'Loading leaderboard...');
             const result = await apiGet('leaderboard');
-            if (!result.success) return;
+            if (!result.success) {
+                showDataLoadError('adminTopCitizens', 'Could not load leaderboard.', () => loadLeaderboard());
+                showDataLoadError('adminTopTeams', 'Could not load leaderboard.', () => loadLeaderboard());
+                return;
+            }
 
             const citizens = result.citizens || [];
             const citizenList = document.getElementById('adminTopCitizens');
@@ -7650,6 +7886,7 @@
                     }).join('');
                 }
                 updateListExpansion(citizenList, '.task-item');
+                markDataLoaded(citizenList, false);
             }
 
             const teams = result.teams || [];
@@ -7665,7 +7902,7 @@
                 } else {
                     teamList.innerHTML = teams.map((t, i) => {
                         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span style="font-weight:700;color:#d1d5db;">#${i + 1}</span>`;
-                        const rating = parseFloat(t.avg_rating) > 0 ? `${t.avg_rating}⭐` : '—';
+                        const rating = Number(t.jobs) > 0 ? `${t.avg_rating}⭐` : '—';
                         return `
                             <div class="task-item">
                                 <div class="task-info">
@@ -7681,6 +7918,7 @@
                     }).join('');
                 }
                 updateListExpansion(teamList, '.task-item');
+                markDataLoaded(teamList, false);
             }
         }
 
@@ -7746,6 +7984,7 @@
                         <div class="empty-desc">Adjust the filters or search terms.</div>
                     </div>`;
                 list.dataset.listExpanded = 'false';
+                markDataLoaded(list, false);
                 return;
             }
 
@@ -7775,6 +8014,7 @@
                 `;
             }).join('');
             updateListExpansion(list, '.report-item');
+            markDataLoaded(list, false);
         }
 
         async function openAssignModal(reportId) {
@@ -7823,6 +8063,29 @@
         }
 
         // ============ CITIZEN RATING (rate the maintenance team) ============
+        function setRatingPhoto(imageId, placeholderId, photoPath) {
+            const image = document.getElementById(imageId);
+            const placeholder = document.getElementById(placeholderId);
+            if (!image || !placeholder) return;
+
+            const showPlaceholder = () => {
+                image.onerror = null;
+                image.removeAttribute('src');
+                image.style.display = 'none';
+                placeholder.style.display = 'grid';
+            };
+
+            if (!photoPath) {
+                showPlaceholder();
+                return;
+            }
+
+            image.onerror = showPlaceholder;
+            image.style.display = 'block';
+            placeholder.style.display = 'none';
+            image.src = photoPath;
+        }
+
         async function openCitizenRating(reportId) {
             const report = cachedReports.find(r => r.id === reportId);
             if (!report) return;
@@ -7831,11 +8094,13 @@
                 return;
             }
             adminActiveTask = { id: report.task_id, title: report.category, location: report.location, team_name: report.assigned_team || 'Maintenance Team' };
-            selectedRating = 0;
+            selectedRating = null;
 
             document.getElementById('rateTaskName').textContent = report.category;
             document.getElementById('rateTeamName').textContent = report.assigned_team || 'Maintenance Team';
             document.getElementById('rateTaskLocation').textContent = report.location;
+            setRatingPhoto('rateBeforePhoto', 'rateBeforePhotoEmpty', report.before_photo);
+            setRatingPhoto('rateAfterPhoto', 'rateAfterPhotoEmpty', report.after_photo);
             document.getElementById('rateComment').value = '';
             document.getElementById('ratingLabel').textContent = 'Select rating';
 
@@ -7849,10 +8114,11 @@
             document.getElementById('ratingModal').classList.remove('active');
             document.body.style.overflow = 'auto';
             adminActiveTask = null;
-            selectedRating = 0;
+            selectedRating = null;
         }
 
         function setRating(value) {
+            if (value === 1 && selectedRating === 1) value = 0;
             selectedRating = value;
             document.querySelectorAll('#ratingStars .star').forEach(s => {
                 const starVal = parseInt(s.dataset.value);
@@ -7862,15 +8128,17 @@
                     s.classList.remove('active');
                 }
             });
-            const labels = { 1: 'Poor', 2: 'Fair', 3: 'Good', 4: 'Very Good', 5: 'Excellent' };
-            document.getElementById('ratingLabel').textContent = labels[value] || value + ' star' + (value > 1 ? 's' : '');
+            const labels = { 0: '0 stars', 1: 'Poor', 2: 'Fair', 3: 'Good', 4: 'Very Good', 5: 'Excellent' };
+            document.getElementById('ratingLabel').textContent = labels[value] || value + ' stars';
         }
 
         async function submitRating() {
             if (!adminActiveTask) return;
-            if (selectedRating === 0) return alert('⚠️ Please select a rating (1-5 stars).');
+            if (selectedRating === null) return alert('⚠️ Please select a rating (0-5 stars).');
 
             const comment = document.getElementById('rateComment').value.trim();
+            const ratedTeamName = adminActiveTask.team_name;
+            const submittedRating = selectedRating;
             const btn = document.getElementById('rateBtn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             btn.disabled = true;
@@ -7884,7 +8152,7 @@
 
                 if (result.success) {
                     closeRatingModal();
-                    showToast('⭐ Thanks for rating!', `${adminActiveTask.team_name} received ${selectedRating}/5 stars.`);
+                    showToast('⭐ Thanks for rating!', `${ratedTeamName} received ${submittedRating}/5 stars.`);
                     try {
                         await loadCitizenData();
                     } catch (refreshError) {
@@ -8011,8 +8279,11 @@
         async function openChatPanel() {
             const modal = document.getElementById('chatModal');
             if (!modal) return;
+            modal.classList.remove('minimized');
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
+            modal.querySelector('.chat-modal-box')?.removeAttribute('aria-hidden');
+            modal.dataset.mobileView = selectedChatUserId ? 'thread' : 'contacts';
             document.body.style.overflow = 'hidden';
             await loadChatContacts();
             if (!chatPollTimer) {
@@ -8022,11 +8293,35 @@
             }
         }
 
+        function minimizeChatPanel() {
+            const modal = document.getElementById('chatModal');
+            if (!modal || !modal.classList.contains('active')) return;
+            modal.classList.add('minimized');
+            modal.querySelector('.chat-modal-box')?.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
+        }
+
+        function restoreChatPanel() {
+            const modal = document.getElementById('chatModal');
+            if (!modal) return;
+            modal.classList.remove('minimized');
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            modal.querySelector('.chat-modal-box')?.removeAttribute('aria-hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showChatContacts() {
+            const modal = document.getElementById('chatModal');
+            if (modal) modal.dataset.mobileView = 'contacts';
+        }
+
         function closeChatPanel() {
             const modal = document.getElementById('chatModal');
             if (!modal) return;
-            modal.classList.remove('active');
+            modal.classList.remove('active', 'minimized');
             modal.setAttribute('aria-hidden', 'true');
+            modal.querySelector('.chat-modal-box')?.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = 'auto';
             if (chatPollTimer) {
                 clearInterval(chatPollTimer);
@@ -8035,8 +8330,13 @@
         }
 
         async function loadChatContacts() {
+            const list = document.getElementById('chatPeopleList');
+            const listWasLoaded = list?.dataset.dataLoaded === 'true';
+            const previousContacts = JSON.stringify(chatPeople);
+            showDataLoading(list, 'Loading conversations...');
             const result = await apiGet('chat/contacts');
             if (!result.success) {
+                showDataLoadError(list, 'Could not load conversations.', () => loadChatContacts());
                 return;
             }
 
@@ -8048,13 +8348,14 @@
             });
             updateChatUnreadBadge(chatPeople.reduce((total, user) => total + Number(user.unread_count || 0), 0));
             renderChatContacts();
+            markDataLoaded(list, !listWasLoaded || previousContacts !== JSON.stringify(chatPeople));
 
             if (!selectedChatUserId && chatPeople.length) {
-                await selectChatUser(chatPeople[0].id);
+                await selectChatUser(chatPeople[0].id, false);
             } else if (selectedChatUserId) {
                 const existing = chatPeople.find(user => user.id === selectedChatUserId);
                 if (existing) {
-                    await selectChatUser(selectedChatUserId);
+                    await selectChatUser(selectedChatUserId, false);
                 }
             }
         }
@@ -8072,6 +8373,7 @@
 
             if (!filtered.length) {
                 list.innerHTML = '<div class="chat-empty-state"><div>No contacts found.</div></div>';
+                markDataLoaded(list, false);
                 return;
             }
 
@@ -8106,13 +8408,16 @@
                     if (userId) selectChatUser(userId);
                 });
             });
+            markDataLoaded(list, false);
         }
 
-        async function selectChatUser(userId) {
+        async function selectChatUser(userId, animate = true) {
             const user = chatPeople.find(person => person.id === userId);
             if (!user) return;
 
             selectedChatUserId = userId;
+            const modal = document.getElementById('chatModal');
+            if (modal) modal.dataset.mobileView = 'thread';
             renderChatContacts();
 
             const avatar = document.getElementById('chatCurrentAvatar');
@@ -8132,19 +8437,26 @@
 
             if (!user.conversation_id) {
                 thread.innerHTML = '<div class="chat-system">No conversation yet. Start the chat by sending a message.</div>';
+                loadedChatThreadUserId = userId;
+                markDataLoaded(thread, animate);
                 return;
             }
 
+            const conversationChanged = loadedChatThreadUserId !== userId;
+            if (conversationChanged) showDataLoading(thread, 'Loading messages...', true);
             const result = await apiGet(`chat/conversations/${user.conversation_id}/messages`);
             if (!result.success) {
-                thread.innerHTML = '<div class="chat-system">Unable to load messages right now.</div>';
+                if (conversationChanged) {
+                    showDataLoadError(thread, 'Could not load messages.', () => selectChatUser(userId));
+                }
                 return;
             }
 
             user.unread_count = 0;
             updateChatUnreadBadge(chatPeople.reduce((total, person) => total + Number(person.unread_count || 0), 0));
             renderChatContacts();
-            renderChatThread(result.messages || []);
+            loadedChatThreadUserId = userId;
+            renderChatThread(result.messages || [], animate || conversationChanged);
         }
 
         function updateChatUnreadBadge(count) {
@@ -8158,6 +8470,11 @@
             if (panelBadge) {
                 panelBadge.textContent = count ? `${count > 99 ? '99+' : count} new` : '';
                 panelBadge.style.display = count > 0 ? 'inline-flex' : 'none';
+            }
+            const minimizedBadge = document.getElementById('chatMinimizedUnread');
+            if (minimizedBadge) {
+                minimizedBadge.textContent = count > 99 ? '99+' : String(count || '');
+                minimizedBadge.style.display = count > 0 ? 'inline-flex' : 'none';
             }
         }
 
@@ -8181,12 +8498,13 @@
             if (result.success) updateChatUnreadBadge(Number(result.unread_count || 0));
         }
 
-        function renderChatThread(messages) {
+        function renderChatThread(messages, animate = true) {
             const thread = document.getElementById('chatThread');
             if (!thread) return;
 
             if (!messages.length) {
                 thread.innerHTML = '<div class="chat-system">No messages yet. Say hello.</div>';
+                markDataLoaded(thread, animate);
                 return;
             }
 
@@ -8206,6 +8524,7 @@
             }).join('');
 
             thread.scrollTop = thread.scrollHeight;
+            markDataLoaded(thread, animate);
         }
 
         async function sendChatMessage() {
@@ -8310,9 +8629,9 @@
                     document.getElementById('adminUserName').textContent = currentUser.full_name;
                     showDashboard('admin');
                 }
-            } else if (window.location.pathname.replace(/\/+$/, '').endsWith('/admin')) {
-                selectRole('admin');
             }
+            document.getElementById('appBootLoader')?.remove();
+            document.body.classList.remove('app-booting');
             console.log('%c🌱 GreenSteps ready — MySQL backend + Real-time polling', 'color:#2d7a4f;font-weight:bold;');
         })();
         </script>

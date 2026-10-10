@@ -27,6 +27,8 @@ class ReportController extends Controller
                 ->get()
                 ->map(function ($r) {
                     $r->task_id = $r->latestTask?->id;
+                    $r->before_photo = $r->latestTask?->before_photo;
+                    $r->after_photo = $r->latestTask?->after_photo;
                     $r->my_rating = $r->latestTask
                         ? Rating::where('task_id', $r->latestTask->id)->value('rating')
                         : null;

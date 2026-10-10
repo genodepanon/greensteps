@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 class SecretDbController extends Controller
 {
@@ -26,9 +28,23 @@ class SecretDbController extends Controller
         $table = $request->query('table', 'users');
         if (!in_array($table, self::TABLES, true)) $table = 'users';
 
-        $rows = DB::table($table)->orderByDesc('id')->limit(200)->get();
-        $columns = $rows->isNotEmpty() ? array_keys((array) $rows->first()) : Schema::getColumnListing($table);
-        $count = DB::table($table)->count();
+        $columns = Schema::getColumnListing($table);
+        if ($table === 'users') {
+            $columns = array_values(array_diff($columns, ['password', 'remember_token']));
+        }
+        $search = trim((string) $request->query('q', ''));
+        $query = DB::table($table);
+        if ($search !== '') {
+            $query->where(function ($query) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', '%' . $search . '%');
+                }
+            });
+        }
+
+        $count = (clone $query)->count();
+        $totalCount = DB::table($table)->count();
+        $rows = $query->orderByDesc('id')->paginate(50)->withQueryString();
 
         return view('secret', [
             'stage'   => 'table',
@@ -37,6 +53,8 @@ class SecretDbController extends Controller
             'rows'    => $rows,
             'columns' => $columns,
             'count'   => $count,
+            'totalCount' => $totalCount,
+            'search'  => $search,
             'error'   => $request->query('error'),
             'flash'   => $request->query('flash'),
         ]);
@@ -68,6 +86,9 @@ class SecretDbController extends Controller
         if (!$row) abort(404);
 
         $columns = Schema::getColumnListing($table);
+        if ($table === 'users') {
+            $columns = array_values(array_diff($columns, ['password', 'remember_token']));
+        }
 
         return view('secret', [
             'stage'   => 'row',
@@ -88,6 +109,9 @@ class SecretDbController extends Controller
 
         $id = (int) $request->input('__id');
         $data = $request->except(['__table', '__id', '_token']);
+        if ($table === 'users') {
+            unset($data['password'], $data['remember_token']);
+        }
 
         foreach ($data as $k => $v) {
             if ($v === '__NULL__') $data[$k] = null;
@@ -115,6 +139,7 @@ class SecretDbController extends Controller
         if (!session(self::SESSION_KEY)) abort(403);
         $table = $request->query('table', 'users');
         if (!in_array($table, self::TABLES, true)) $table = 'users';
+        if ($table === 'users') return redirect('/axel/accounts/create');
 
         $columns = Schema::getColumnListing($table);
 
@@ -133,6 +158,7 @@ class SecretDbController extends Controller
         if (!session(self::SESSION_KEY)) abort(403);
         $table = $request->input('__table');
         if (!in_array($table, self::TABLES, true)) abort(400);
+        if ($table === 'users') return redirect('/axel/accounts/create');
 
         $data = $request->except(['__table', '_token']);
         foreach ($data as $k => $v) {
@@ -142,6 +168,38 @@ class SecretDbController extends Controller
         DB::table($table)->insert($data);
 
         return redirect('/axel?table=' . urlencode($table) . '&flash=created');
+    }
+
+    public function accountForm()
+    {
+        if (!session(self::SESSION_KEY)) abort(403);
+        return view('secret', ['stage' => 'account-create', 'tables' => self::TABLES]);
+    }
+
+    public function createAccount(Request $request)
+    {
+        if (!session(self::SESSION_KEY)) abort(403);
+
+        $data = $request->validate([
+            'full_name' => 'required|string|max:150',
+            'email' => 'required|email|max:150|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|in:citizen,maintenance,admin',
+            'team_name' => 'nullable|required_if:role,maintenance|string|max:150',
+            'phone' => 'nullable|string|max:50',
+        ]);
+
+        User::create([
+            'full_name' => $data['full_name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role' => $data['role'],
+            'team_name' => $data['role'] === 'maintenance' ? $data['team_name'] : null,
+            'phone' => $data['phone'] ?? null,
+            'points' => 0,
+        ]);
+
+        return redirect('/axel?table=users&flash=account+created');
     }
 
     // ============ ACTIVITY LOG VIEWER ============

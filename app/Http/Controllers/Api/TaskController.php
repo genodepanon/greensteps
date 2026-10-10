@@ -216,12 +216,12 @@ class TaskController extends Controller
         }
 
         $data = $request->validate([
-            'rating'  => 'required|integer|between:1,5',
+            'rating'  => 'required|integer|between:0,5',
             'comment' => 'nullable|string',
         ]);
 
         $report = Report::find($task->report_id);
-        if (!$report || $report->citizen_id !== $u->id) {
+        if (!$report || (int) $report->citizen_id !== (int) $u->id) {
             return response()->json(['success' => false, 'message' => 'You can only rate your own reports.']);
         }
         if ($report->status !== 'Completed') {
