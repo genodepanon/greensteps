@@ -203,6 +203,41 @@ class ChatController extends Controller
             ->first();
     }
 
+    public function delete(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->validate([
+            'recipient_id' => 'required|integer|exists:users,id',
+        ]);
+        $recipientId = (int) $data['recipient_id'];
+
+        if ($recipientId === $user->id) {
+            return response()->json(['success' => false, 'message' => 'You cannot delete a conversation with yourself.'], 422);
+        }
+
+        $ids = [$user->id, $recipientId];
+        sort($ids);
+
+        $conversation = ChatConversation::where('user_one_id', $ids[0])
+            ->where('user_two_id', $ids[1])
+            ->first();
+
+        if (!$conversation) {
+            return response()->json(['success' => false, 'message' => 'Conversation not found.'], 404);
+        }
+
+        // Delete all messages in the conversation
+        $conversation->messages()->delete();
+
+        // Delete the conversation
+        $conversation->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Conversation deleted.',
+        ]);
+    }
+
     private function imageUrl(?ChatMessage $message): ?string
     {
         if (!$message?->image_path) {

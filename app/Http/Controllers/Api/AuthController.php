@@ -212,21 +212,14 @@ class AuthController extends Controller
         $data = $request->validate([
             'full_name'        => 'required|string|max:150',
             'email'            => 'required|email|unique:users,email,' . $u->id,
-            'current_password' => 'required',
+            'current_password' => 'nullable',
             'new_password'     => 'nullable|string|min:8',
             'photo_data'       => 'nullable|string|max:7000000',
             'remove_photo'     => 'nullable|boolean',
         ]);
 
-        if (!Hash::check($data['current_password'], $u->password)) {
-            return response()->json(['success' => false, 'message' => 'Current password is incorrect.']);
-        }
-
         $u->full_name = $data['full_name'];
         $u->email = $data['email'];
-        if (!empty($data['new_password'])) {
-            $u->password = Hash::make($data['new_password']);
-        }
 
         if (!empty($data['remove_photo'])) {
             $u->photo_url = null;
@@ -254,6 +247,29 @@ class AuthController extends Controller
                 'photo_url'   => $u->photo_url,
                 'is_approved' => $u->is_approved,
             ],
+        ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $u = Auth::user();
+        $data = $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|string|min:8',
+        ]);
+
+        if (!Hash::check($data['current_password'], $u->password)) {
+            return response()->json(['success' => false, 'message' => 'Current password is incorrect.']);
+        }
+
+        $u->password = Hash::make($data['new_password']);
+        $u->save();
+
+        ActivityLogger::log('CHANGE_PASSWORD', $u->email);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password changed successfully.',
         ]);
     }
 }

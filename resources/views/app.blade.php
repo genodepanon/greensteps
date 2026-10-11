@@ -355,6 +355,16 @@
             body.dark-mode .chat-sidebar-header h3 {
                 color: #f3f4f6;
             }
+            body.dark-mode .chat-sidebar-close {
+                border-color: #475569;
+                background: #334155;
+                color: #f3f4f6;
+            }
+            body.dark-mode .chat-sidebar-close:hover {
+                background: #475569;
+                color: #fca5a5;
+                border-color: rgba(220, 38, 38, 0.5);
+            }
             body.dark-mode .chat-header {
                 background: #334155;
                 border-bottom-color: #334155;
@@ -368,6 +378,11 @@
             body.dark-mode .chat-header-actions button:hover {
                 background: #334155;
                 color: #f3f4f6;
+            }
+            body.dark-mode .chat-header-actions button:first-child:hover {
+                background: rgba(220, 38, 38, 0.3);
+                color: #fca5a5;
+                border-color: rgba(220, 38, 38, 0.5);
             }
             body.dark-mode .chat-message-time {
                 color: #9ca3af !important;
@@ -645,13 +660,8 @@
                 color: #f3f4f6 !important;
             }
             body.dark-mode .profile-role,
-            body.dark-mode .profile-stat .label,
             body.dark-mode .profile-menu-item i {
                 color: #d1d5db !important;
-            }
-            body.dark-mode .profile-stats {
-                background: #334155;
-                border: 1px solid #334155;
             }
             body.dark-mode .profile-menu-item:hover {
                 background: #252a2e;
@@ -1076,7 +1086,7 @@
                 position: absolute;
                 top: calc(100% + 8px);
                 right: 0;
-                z-index: 1100;
+                z-index: 9999;
                 min-width: 190px;
                 display: grid;
                 gap: 4px;
@@ -1521,11 +1531,71 @@
                 min-height: 68px; display: flex; align-items: center; justify-content: center;
                 gap: 10px; padding: 1rem; color: #64748b; font-size: 0.85rem;
             }
-            .data-loading-state i { color: #2d7a4f; }
+            .data-loading-state i { color: #2d7a4f; animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
             .data-load-error { flex-wrap: wrap; }
             body.dark-mode .data-loading-state,
             body.dark-mode .data-load-error { color: #cbd5e1; }
-            .metric-loading-spinner { color: #2d7a4f; font-size: 0.65em; }
+            .metric-loading-spinner { color: #2d7a4f; font-size: 0.65em; animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+            /* Enhanced Loading Animations */
+            @keyframes pulse-spin {
+                0% { transform: scale(1) rotate(0deg); opacity: 1; }
+                50% { transform: scale(1.1) rotate(180deg); opacity: 0.8; }
+                100% { transform: scale(1) rotate(360deg); opacity: 1; }
+            }
+
+            @keyframes fade-pulse {
+                0%, 100% { opacity: 0.4; }
+                50% { opacity: 1; }
+            }
+
+            @keyframes shimmer {
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
+            }
+
+            .loading-skeleton {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+                border-radius: 4px;
+            }
+
+            body.dark-mode .loading-skeleton {
+                background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+                background-size: 200% 100%;
+            }
+
+            .loading-dots::after {
+                content: '';
+                animation: dots 1.5s steps(4, end) infinite;
+            }
+
+            @keyframes dots {
+                0%, 20% { content: ''; }
+                40% { content: '.'; }
+                60% { content: '..'; }
+                80%, 100% { content: '...'; }
+            }
+
+            .btn-loading {
+                position: relative;
+                pointer-events: none;
+            }
+
+            .btn-loading::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: inherit;
+                animation: btn-pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            }
+
+            @keyframes btn-pulse {
+                0%, 100% { opacity: 0; }
+                50% { opacity: 1; }
+            }
 
             #nearbyMap { width: 100%; height: 220px; border-radius: 16px; background: #e9eef3; border: 1px solid #cbd9e8; margin-top: 0.5rem; }
             .incident-map-marker { background: none; border: 0; }
@@ -1691,14 +1761,6 @@
             }
             .profile-name { text-align: center; font-size: 1.3rem; font-weight: 700; color: #0b2a3b; }
             .profile-role { text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 2px; }
-            .profile-stats {
-                display: grid; grid-template-columns: repeat(3, 1fr);
-                gap: 0.5rem; margin: 1.2rem 0; padding: 1rem;
-                background: #f8fafc; border-radius: 16px;
-            }
-            .profile-stat { text-align: center; }
-            .profile-stat .number { font-size: 1.4rem; font-weight: 700; color: #0b2a3b; }
-            .profile-stat .label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; }
 
             .profile-menu-item {
                 display: flex; align-items: center; gap: 12px;
@@ -1833,23 +1895,69 @@
             .btn-icon-only i { margin: 0 !important; }
 
             .success-toast {
-                position: fixed; top: 20px; right: 20px;
-                background: #2d7a4f; color: white;
-                padding: 16px 24px; border-radius: 16px;
-                box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-                display: none; align-items: center; gap: 12px;
-                animation: slideIn 0.3s ease; z-index: 2000; max-width: 400px;
+                position: fixed; top: 24px; right: 24px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                color: #1e293b;
+                padding: 12px 16px;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                border: 1px solid rgba(0,0,0,0.06);
+                display: none; align-items: center; gap: 10px;
+                animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 2000; max-width: 320px;
+                font-size: 0.85rem;
             }
             .success-toast.show { display: flex; }
             @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
+                from { transform: translateX(20px); opacity: 0; }
                 to { transform: translateX(0); opacity: 1; }
             }
-            .success-toast i { font-size: 1.4rem; }
-            .success-toast .toast-content { flex: 1; }
-            .success-toast .toast-title { font-weight: 600; font-size: 0.95rem; }
-            .success-toast .toast-desc { font-size: 0.8rem; opacity: 0.9; }
-            .success-toast .toast-close { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.7; }
+            .success-toast i { font-size: 1rem; color: #2d7a4f; }
+            .success-toast .toast-content { flex: 1; min-width: 0; }
+            .success-toast .toast-title { font-weight: 500; font-size: 0.85rem; color: #1e293b; }
+            .success-toast .toast-desc { font-size: 0.75rem; color: #64748b; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .success-toast .toast-close {
+                background: none; border: none;
+                color: #94a3b8; font-size: 0.9rem;
+                cursor: pointer; opacity: 0.6;
+                padding: 4px; border-radius: 6px;
+                transition: all 0.2s ease;
+            }
+            .success-toast .toast-close:hover {
+                opacity: 1; background: rgba(0,0,0,0.05);
+                color: #64748b;
+            }
+            body.dark-mode .success-toast {
+                background: rgba(30, 41, 59, 0.95);
+                backdrop-filter: blur(10px);
+                color: #f1f5f9;
+                border-color: rgba(255,255,255,0.08);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            }
+            body.dark-mode .success-toast i { color: #86efac; }
+            body.dark-mode .success-toast .toast-title { color: #f1f5f9; }
+            body.dark-mode .success-toast .toast-desc { color: #94a3b8; }
+            body.dark-mode .success-toast .toast-close {
+                color: #64748b;
+            }
+            body.dark-mode .success-toast .toast-close:hover {
+                background: rgba(255,255,255,0.08);
+                color: #94a3b8;
+            }
+
+            @media (max-width: 768px) {
+                .success-toast {
+                    top: 16px; right: 16px; left: 16px;
+                    max-width: none;
+                    padding: 10px 14px;
+                    font-size: 0.8rem;
+                }
+                .success-toast i { font-size: 0.9rem; }
+                .success-toast .toast-title { font-size: 0.8rem; }
+                .success-toast .toast-desc { font-size: 0.7rem; }
+                .success-toast .toast-close { font-size: 0.85rem; padding: 3px; }
+            }
 
             .rating-stars { display: flex; gap: 4px; align-items: center; }
             .rating-stars .star {
@@ -2275,6 +2383,24 @@
                 font-weight: 700;
                 white-space: nowrap;
             }
+            .chat-sidebar-close {
+                display: none;
+                width: 32px;
+                height: 32px;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #dbe5ef;
+                border-radius: 50%;
+                background: #f8fafc;
+                color: #334155;
+                cursor: pointer;
+                font-size: 0.9rem;
+            }
+            .chat-sidebar-close:hover {
+                background: #e2e8f0;
+                color: #dc2626;
+                border-color: rgba(220, 38, 38, 0.3);
+            }
             .chat-search {
                 padding: 0 18px 12px;
             }
@@ -2410,6 +2536,11 @@
                 background: #f8fafc;
                 color: #334155;
                 cursor: pointer;
+            }
+            .chat-header-actions button:first-child:hover {
+                background: rgba(220, 38, 38, 0.1);
+                color: #dc2626;
+                border-color: rgba(220, 38, 38, 0.3);
             }
             .chat-mobile-back { display: none; }
             body.dark-mode .chat-window-control,
@@ -2640,11 +2771,33 @@
                 #pageCitizen .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             }
             @media (max-width: 768px) {
-                .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-                .header-right { width: 100%; flex-wrap: wrap; }
+                .header { flex-direction: row; align-items: center; gap: 0.5rem; }
+                .header-right { width: auto; flex-wrap: nowrap; }
+                .header-menu-panel {
+                    position: fixed;
+                    right: 8px;
+                    top: 50px;
+                    left: auto;
+                    max-width: 180px;
+                    width: auto;
+                }
+                .header-left h1 { font-size: 0; }
+                .header-left h1 i { font-size: 1.3rem; }
+                .header-left h1::after { content: ''; }
+                .user-badge { padding: 3px 8px; font-size: 0.7rem; gap: 4px; }
+                .user-badge-avatar { display: none; }
+                .fa-chevron-down { display: none; }
+                .header-icon-btn { padding: 8px; }
+                .header-icon-btn i { font-size: 0.9rem; }
+                .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
                 .main-grid { grid-template-columns: 1fr; }
                 .stats-grid { grid-template-columns: 1fr 1fr; }
                 .chat-modal-overlay { padding: 0; align-items: stretch; }
+            }
+            @media (max-width: 480px) {
+                .header-left h1 { font-size: 0 !important; }
+                .header-left h1 i { font-size: 1.2rem; }
+            }
                 .chat-modal-box {
                     width: 100%;
                     height: 100vh;
@@ -2657,6 +2810,8 @@
                 }
                 .chat-modal-overlay[data-mobile-view="contacts"] .chat-main { display: none; }
                 .chat-modal-overlay[data-mobile-view="thread"] .chat-sidebar { display: none; }
+                .chat-modal-overlay[data-mobile-view="thread"] .chat-mobile-back { display: inline-grid !important; }
+                .chat-modal-overlay[data-mobile-view="contacts"] .chat-sidebar-close { display: inline-flex !important; }
                 .chat-sidebar { border: 0; max-height: none; min-height: 0; }
                 .chat-header { padding: 12px 14px; gap: 8px; }
                 .chat-header-left { min-width: 0; gap: 8px; }
@@ -2796,8 +2951,7 @@
 </head>
     <body class="app-booting">
     <div id="appBootLoader" class="app-boot-loader" role="status" aria-live="polite">
-        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
-        <span>Loading...</span>
+        <i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>
     </div>
 
     <!-- PUBLIC HOMEPAGE -->
@@ -2932,7 +3086,7 @@
             <div class="header-left">
                 <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
                 <span class="user-badge" onclick="openProfileModal('citizen')">
-                    <span id="citizenBadgeAvatar" class="user-badge-avatar"><i class="fas fa-user-circle"></i></span> <span id="citizenUserName">Citizen</span>
+                    <span id="citizenBadgeAvatar" class="user-badge-avatar"><i class="fas fa-user-circle"></i></span> <span id="citizenUserName">User</span>
                     <i class="fas fa-chevron-down" style="font-size:0.6rem; opacity:0.7;"></i>
                 </span>
             </div>
@@ -2943,7 +3097,7 @@
                     <span id="citizenChatNavUnread" class="header-icon-badge"></span>
                 </button>
                 <details class="header-menu">
-                    <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-ellipsis"></i></summary>
+                    <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-bars"></i></summary>
                     <div class="header-menu-panel">
                         <button type="button" class="header-menu-item" onclick="openStatisticsModal(); this.closest('details').open = false;"><i class="fas fa-chart-bar"></i> Statistics</button>
                         <div class="header-menu-theme">
@@ -2973,8 +3127,7 @@
                 <div id="pendingReportList" aria-live="polite"></div>
                 <div id="citizenReportsList">
                     <div class="data-loading-state" role="status">
-                        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
-                        <span>Loading recent reports...</span>
+                        <i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>
                     </div>
                 </div>
             </div>
@@ -3019,12 +3172,11 @@
             <div class="header-left">
                 <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
                 <span class="user-badge" onclick="openProfileModal('maintenance')">
-                    <span id="maintBadgeAvatar" class="user-badge-avatar"><i class="fas fa-hard-hat"></i></span> <span id="maintenanceUserName">Team Alpha</span>
+                    <span id="maintBadgeAvatar" class="user-badge-avatar"><i class="fas fa-hard-hat"></i></span> <span id="maintenanceUserName">Maintenance</span>
                     <i class="fas fa-chevron-down" style="font-size:0.6rem; opacity:0.7;"></i>
                 </span>
             </div>
              <div class="header-right" style="display:flex; align-items:center; gap:8px;">
-                     <button type="button" class="btn btn-info" onclick="openNavigateModal()"><i class="fas fa-location-dot"></i> Navigate</button>
                 <button type="button" class="header-icon-btn" onclick="openChatPanel()" title="Chat" aria-label="Open Chat">
                     <i class="fas fa-comments"></i>
                     <span id="maintenanceChatNavUnread" class="header-icon-badge"></span>
@@ -3034,7 +3186,7 @@
                     <span id="gpsSharingText">Sharing location</span>
                 </span>
                 <details class="header-menu">
-                    <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-ellipsis"></i></summary>
+                    <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-bars"></i></summary>
                     <div class="header-menu-panel">
                         <div class="header-menu-theme">
                             <span class="header-menu-theme-title">Dark Mode</span>
@@ -3048,6 +3200,7 @@
                 </details>
             </div>
         </header>
+        <button type="button" class="btn btn-info" onclick="openNavigateModal()" style="margin: 8px 0;"><i class="fas fa-location-dot"></i> Navigate</button>
 
         <div id="maintenanceApprovalNotice" class="card" style="display:none; margin-bottom:1rem; border-left:4px solid #f59e0b;">
             <strong><i class="fas fa-clock"></i> Application awaiting approval</strong>
@@ -3132,13 +3285,17 @@
             <div class="header-left">
                 <h1><i class="fas fa-leaf"></i> GreenSteps</h1>
                 <span class="user-badge" onclick="openProfileModal('admin')">
-                    <span id="adminBadgeAvatar" class="user-badge-avatar"><i class="fas fa-user-shield"></i></span> <span id="adminUserName">Admin</span>
+                    <span id="adminBadgeAvatar" class="user-badge-avatar"><i class="fas fa-user-shield"></i></span> <span id="adminUserName">User</span>
                     <i class="fas fa-chevron-down" style="font-size:0.6rem; opacity:0.7;"></i>
                 </span>
             </div>
              <div class="header-right">
+                <button type="button" class="header-icon-btn" onclick="openChatPanel()" title="Chat" aria-label="Open Chat">
+                    <i class="fas fa-comments"></i>
+                    <span id="adminChatNavUnread" class="header-icon-badge"></span>
+                </button>
                 <details class="header-menu">
-                    <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-ellipsis"></i></summary>
+                    <summary class="btn btn-secondary btn-sm" title="More options" aria-label="More options"><i class="fas fa-bars"></i></summary>
                     <div class="header-menu-panel">
                         <button type="button" class="header-menu-item" onclick="switchAdminTab('reports'); this.closest('details').open = false;"><i class="fas fa-clipboard-list"></i> Reports</button>
                         <button type="button" class="header-menu-item" onclick="switchAdminTab('notifications'); this.closest('details').open = false;"><i class="fas fa-bell"></i> Notifications</button>
@@ -3146,8 +3303,6 @@
                         <button type="button" class="header-menu-item" onclick="switchAdminTab('teams'); this.closest('details').open = false;"><i class="fas fa-users"></i> Teams</button>
                         <button type="button" class="header-menu-item" onclick="switchAdminTab('leaderboard'); this.closest('details').open = false;"><i class="fas fa-trophy"></i> Leaderboard</button>
                         <button type="button" class="header-menu-item" onclick="switchAdminTab('autoassign'); this.closest('details').open = false;"><i class="fas fa-magic"></i> Auto-Assign</button>
-                        <div style="height:1px; background:#e2e8f0; margin:8px 0;"></div>
-                        <button type="button" class="header-menu-item" onclick="openChatPanel(); this.closest('details').open = false;"><i class="fas fa-comments"></i> Chat <span id="adminChatUnread" class="chat-unread-count"></span></button>
                         <div class="header-menu-theme">
                             <span class="header-menu-theme-title">Dark Mode</span>
                             <label class="header-theme-toggle" title="Toggle dark mode">
@@ -3354,7 +3509,10 @@
             <aside class="chat-sidebar">
                 <div class="chat-sidebar-header">
                     <h3><i class="fas fa-comments"></i> Messages</h3>
-                    <span id="chatSidebarUnread" class="chat-sidebar-total-unread"></span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span id="chatSidebarUnread" class="chat-sidebar-total-unread"></span>
+                        <button class="chat-sidebar-close" type="button" onclick="closeChatPanel()" aria-label="Close chat" title="Close chat"><i class="fas fa-times"></i></button>
+                    </div>
                 </div>
                 <div class="chat-search">
                     <input id="chatSearchInput" type="text" placeholder="Search contacts" oninput="renderChatContacts()" />
@@ -3373,7 +3531,7 @@
                         </div>
                     </div>
                     <div class="chat-header-actions">
-                        <button class="chat-window-control" type="button" onclick="minimizeChatPanel()" aria-label="Minimize chat" title="Minimize chat"><i class="fas fa-minus"></i></button>
+                        <button class="chat-window-control" type="button" onclick="deleteChatConversation()" aria-label="Delete conversation" title="Delete conversation"><i class="fas fa-trash"></i></button>
                         <button class="chat-window-control" type="button" onclick="closeChatPanel()" aria-label="Close chat" title="Close chat"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
@@ -3420,6 +3578,18 @@
     <div id="chatPhotoViewer" class="chat-photo-viewer" aria-hidden="true" onclick="closeChatPhotoViewer(event)">
         <button class="chat-photo-viewer-close" type="button" aria-label="Close photo" onclick="closeChatPhotoViewer(event, true)"><i class="fas fa-times"></i></button>
         <img id="chatPhotoViewerImage" src="" alt="Chat photo" />
+    </div>
+
+    <!-- DELETE CONVERSATION CONFIRMATION MODAL -->
+    <div id="deleteChatModal" class="modal-overlay" style="z-index: 1400;">
+        <div class="modal-box" style="max-width: 420px;">
+            <h3><i class="fas fa-trash" style="color:#dc2626;"></i> Delete Conversation</h3>
+            <div class="modal-subtitle">Are you sure you want to delete this conversation? This action cannot be undone.</div>
+            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 1.5rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteChatModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeleteChat()">Delete</button>
+            </div>
+        </div>
     </div>
 
     <!-- REGISTER MODAL -->
@@ -3507,6 +3677,24 @@
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closePasswordModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Update password</button>
+                </div>
+            </form>
+            <form id="changePasswordForm" onsubmit="submitChangePassword(event)" style="display:none;">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required autocomplete="current-password" />
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required minlength="8" autocomplete="new-password" />
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" required minlength="8" autocomplete="new-password" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closePasswordModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
                 </div>
             </form>
         </div>
@@ -3616,14 +3804,14 @@
             </div>
             <div class="profile-name" id="profileName">—</div>
             <div class="profile-role" id="profileRole">—</div>
-            <div class="profile-stats">
-                <div class="profile-stat"><div class="number" id="profileStat1">0</div><div class="label" id="profileStat1Label">Reports</div></div>
-                <div class="profile-stat"><div class="number" id="profileStat2">0</div><div class="label" id="profileStat2Label">Resolved</div></div>
-                <div class="profile-stat"><div class="number">⭐ <span id="profilePoints">0</span></div><div class="label">Points</div></div>
-            </div>
             <div class="profile-menu-item" onclick="openEditProfileModal()">
                 <i class="fas fa-user-edit"></i>
                 <span class="menu-text">Edit Profile</span>
+                <i class="fas fa-chevron-right menu-arrow"></i>
+            </div>
+            <div class="profile-menu-item" onclick="openPasswordModal()">
+                <i class="fas fa-lock"></i>
+                <span class="menu-text">Security</span>
                 <i class="fas fa-chevron-right menu-arrow"></i>
             </div>
         </div>
@@ -3665,7 +3853,7 @@
                 <h3><i class="fas fa-user-edit" style="color:#2d7a4f;"></i> Edit Profile</h3>
                 <button class="btn btn-secondary" onclick="closeEditProfileModal()" style="padding:0.3rem 0.8rem;"><i class="fas fa-times"></i></button>
             </div>
-            <div class="modal-subtitle">Update your name, email, or password</div>
+            <div class="modal-subtitle">Update your name and email</div>
             <form id="editProfileForm" onsubmit="handleEditProfile(event)">
                 <div class="avatar-edit-wrap">
                     <div class="avatar-edit-preview" onclick="document.getElementById('editPhotoInput').click()" title="Click to upload profile photo">
@@ -3691,18 +3879,6 @@
                 <div class="form-group">
                     <label for="editEmail">Email Address</label>
                     <div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="editEmail" placeholder="Enter your email" required /></div>
-                </div>
-                <div class="form-group">
-                    <label for="editCurrentPassword">Current Password</label>
-                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="editCurrentPassword" placeholder="Enter current password" required /></div>
-                </div>
-                <div class="form-group">
-                    <label for="editNewPassword">New Password (leave blank to keep current)</label>
-                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="editNewPassword" placeholder="At least 8 characters" minlength="8" /></div>
-                </div>
-                <div class="form-group">
-                    <label for="editConfirmPassword">Confirm New Password</label>
-                    <div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="editConfirmPassword" placeholder="Confirm new password" /></div>
                 </div>
                 <div class="edit-profile-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeEditProfileModal()"><i class="fas fa-times"></i> Cancel</button>
@@ -3815,7 +3991,11 @@
             <div class="modal-subtitle" id="reportDetailsTitle">—</div>
             <img id="reportDetailsPhoto" class="report-photo-full" src="" alt="Report Photo" />
             <div style="margin-top:1rem;">
-                <div class="modal-details">
+                <button type="button" class="btn btn-secondary" onclick="toggleReportDetails()" style="width:100%; justify-content:center; margin-bottom:1rem;">
+                    <i class="fas fa-eye" id="reportDetailsToggleIcon"></i>
+                    <span id="reportDetailsToggleText">Show Details</span>
+                </button>
+                <div class="modal-details" id="reportDetailsContent" style="display:none;">
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-tag"></i> Category</span><span class="detail-value" id="reportDetailsCategory">—</span></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-user"></i> Reported By</span><span class="detail-value" id="reportDetailsCitizen">—</span></div>
                     <div class="detail-row"><span class="detail-label"><i class="fas fa-envelope"></i> Email</span><span class="detail-value" id="reportDetailsEmail">—</span></div>
@@ -4361,8 +4541,85 @@
             document.getElementById('toastTitle').textContent = title;
             document.getElementById('toastDesc').textContent = desc;
             t.classList.add('show');
+
+            // Reset any existing swipe
+            t.style.transform = '';
+            t.style.opacity = '';
+
             setTimeout(() => t.classList.remove('show'), 4000);
         }
+
+        // Swipe to dismiss functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const toast = document.getElementById('successToast');
+            if (!toast) return;
+
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isSwiping = false;
+
+            toast.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isSwiping = true;
+                toast.style.transition = 'none';
+            }, { passive: true });
+
+            toast.addEventListener('touchmove', function(e) {
+                if (!isSwiping) return;
+
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                const diffX = touchX - touchStartX;
+                const diffY = touchY - touchStartY;
+
+                // Only swipe horizontally
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    e.preventDefault();
+                    toast.style.transform = `translateX(${diffX}px)`;
+                    toast.style.opacity = 1 - (Math.abs(diffX) / 200);
+                }
+            }, { passive: false });
+
+            toast.addEventListener('touchend', function(e) {
+                if (!isSwiping) return;
+                isSwiping = false;
+
+                const touchX = e.changedTouches[0].clientX;
+                const diffX = touchX - touchStartX;
+
+                toast.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+
+                // Swipe threshold to dismiss
+                if (Math.abs(diffX) > 80) {
+                    toast.style.transform = `translateX(${diffX > 0 ? 100 : -100}%)`;
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        toast.style.transform = '';
+                        toast.style.opacity = '';
+                    }, 300);
+                } else {
+                    // Reset position
+                    toast.style.transform = '';
+                    toast.style.opacity = '';
+                }
+            });
+
+            // Close header menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const headerMenus = document.querySelectorAll('.header-menu');
+                headerMenus.forEach(menu => {
+                    const panel = menu.querySelector('.header-menu-panel');
+                    if (!panel) return;
+
+                    // Check if click is outside the menu
+                    if (!menu.contains(e.target)) {
+                        menu.removeAttribute('open');
+                    }
+                });
+            });
+        });
 
         // Pusher Real-time Setup
         
@@ -4650,10 +4907,7 @@
             const state = document.createElement('div');
             state.className = 'data-loading-state';
             state.setAttribute('role', 'status');
-            state.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
-            const label = document.createElement('span');
-            label.textContent = message;
-            state.append(label);
+            state.innerHTML = '<i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             element.replaceChildren(state);
             return element;
         }
@@ -4662,7 +4916,7 @@
             ids.forEach(id => {
                 const element = document.getElementById(id);
                 if (element && element.dataset.metricLoaded !== 'true') {
-                    element.innerHTML = '<i class="fas fa-spinner fa-spin metric-loading-spinner" aria-label="Loading"></i>';
+                    element.innerHTML = '<i class="fas fa-circle-notch metric-loading-spinner" aria-label="Loading" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
                 }
             });
         }
@@ -4850,7 +5104,8 @@
                 return;
             }
 
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            loginBtn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            loginBtn.classList.add('btn-loading');
             loginBtn.disabled = true;
 
             const result = await apiPost('login', { email, password });
@@ -4859,6 +5114,7 @@
                 errorText.textContent = result.message || 'Invalid credentials.';
                 errorMessage.classList.add('show');
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>Sign In</span>';
+                loginBtn.classList.remove('btn-loading');
                 loginBtn.disabled = false;
                 return;
             }
@@ -4877,7 +5133,7 @@
             lastKnownCommentId = 0;
 
             if (currentUser.role === 'maintenance') {
-                document.getElementById('maintenanceUserName').textContent = currentUser.team_name || currentUser.full_name;
+                document.getElementById('maintenanceUserName').textContent = currentUser.full_name;
                 showToast('✅ Login Successful!', `Welcome back, ${currentUser.full_name}!`);
                 setTimeout(() => showDashboard('maintenance'), 600);
             } else if (currentUser.role === 'admin') {
@@ -4891,6 +5147,7 @@
             }
 
             loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> <span>Sign In</span>';
+            loginBtn.classList.remove('btn-loading');
             loginBtn.disabled = false;
         }
 
@@ -5804,6 +6061,29 @@
             document.getElementById('reportDetailsModal').classList.remove('active');
             document.body.style.overflow = 'auto';
             currentReportDetailsId = null;
+            // Reset details visibility
+            const detailsContent = document.getElementById('reportDetailsContent');
+            const toggleIcon = document.getElementById('reportDetailsToggleIcon');
+            const toggleText = document.getElementById('reportDetailsToggleText');
+            if (detailsContent) detailsContent.style.display = 'none';
+            if (toggleIcon) toggleIcon.className = 'fas fa-eye';
+            if (toggleText) toggleText.textContent = 'Show Details';
+        }
+
+        function toggleReportDetails() {
+            const detailsContent = document.getElementById('reportDetailsContent');
+            const toggleIcon = document.getElementById('reportDetailsToggleIcon');
+            const toggleText = document.getElementById('reportDetailsToggleText');
+
+            if (detailsContent.style.display === 'none') {
+                detailsContent.style.display = 'block';
+                toggleIcon.className = 'fas fa-eye-slash';
+                toggleText.textContent = 'Hide Details';
+            } else {
+                detailsContent.style.display = 'none';
+                toggleIcon.className = 'fas fa-eye';
+                toggleText.textContent = 'Show Details';
+            }
         }
 
         function openDiscussionFromReportDetails() {
@@ -5849,7 +6129,7 @@
                                 <span>${escapeHtml(c.full_name || 'User')}</span>
                                 <span class="comment-role ${roleClass}">${escapeHtml(roleLabel)}</span>
                             </span>
-                            <span class="comment-time">${pending ? '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…' : getTimeAgo(c.created_at)}</span>
+                            <span class="comment-time">${pending ? '<i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>' : getTimeAgo(c.created_at)}</span>
                         </div>
                         <div class="comment-text">${escapeHtml(c.message)}</div>
                     </div>
@@ -5861,7 +6141,7 @@
             activeTrackDiscussionReportId = reportId;
             const thread = document.getElementById('trackDiscussionThread');
             document.getElementById('trackDiscussionInput').value = '';
-            thread.innerHTML = '<div class="comments-empty" role="status"><i class="fas fa-spinner fa-spin" aria-hidden="true" style="margin-right:6px;"></i>Loading comments...</div>';
+            thread.innerHTML = '<div class="comments-empty" role="status"><i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i></div>';
             document.getElementById('trackDiscussionModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             await loadReportComments(reportId, 'trackDiscussionThread');
@@ -6248,7 +6528,8 @@
             if (password !== confirm) return alert('⚠️ Passwords do not match.');
             if (!document.getElementById('termsCheckbox').checked) return alert('⚠️ Please agree to the Terms.');
 
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
@@ -6279,6 +6560,7 @@
                 alert('⚠️ Registration failed. Check your connection and try again.');
             } finally {
                 btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
             }
         }
@@ -6408,6 +6690,7 @@
         // ============ PROFILE ============
         async function openProfileModal(role) {
             if (!currentUser) return;
+            clearModalStack();
             updateProfileModalAvatar();
             const name = document.getElementById('profileName');
             const roleEl = document.getElementById('profileRole');
@@ -6415,33 +6698,15 @@
             if (role === 'maintenance') {
                 document.getElementById('profileIcon').className = 'fas fa-hard-hat';
                 name.textContent = currentUser.full_name;
-                roleEl.innerHTML = `<i class="fas fa-hard-hat"></i> ${currentUser.team_name || 'Maintenance Team'}`;
-                const stats = await apiGet('stats');
-                document.getElementById('profileStat1Label').textContent = 'Tasks';
-                document.getElementById('profileStat2Label').textContent = 'Rating';
-                document.getElementById('profileStat1').textContent = stats.total || 0;
-                document.getElementById('profileStat2').textContent = stats.avg_rating && stats.avg_rating !== '—' ? stats.avg_rating + ' ⭐' : '—';
-                document.getElementById('profilePoints').textContent = 0;
+                roleEl.innerHTML = `<i class="fas fa-hard-hat"></i> Maintenance Team`;
             } else if (role === 'admin') {
                 document.getElementById('profileIcon').className = 'fas fa-user-shield';
                 name.textContent = currentUser.full_name;
                 roleEl.innerHTML = '<i class="fas fa-user-shield"></i> Administrator';
-                const stats = await apiGet('stats');
-                document.getElementById('profileStat1Label').textContent = 'Reports';
-                document.getElementById('profileStat2Label').textContent = 'Resolved';
-                document.getElementById('profileStat1').textContent = stats.total || 0;
-                document.getElementById('profileStat2').textContent = stats.completed || 0;
-                document.getElementById('profilePoints').textContent = 0;
             } else {
                 document.getElementById('profileIcon').className = 'fas fa-user';
                 name.textContent = currentUser.full_name;
                 roleEl.innerHTML = '<i class="fas fa-user"></i> Citizen · Member since 2024';
-                const stats = await apiGet('stats');
-                document.getElementById('profileStat1Label').textContent = 'Reports';
-                document.getElementById('profileStat2Label').textContent = 'Resolved';
-                document.getElementById('profileStat1').textContent = stats.total || 0;
-                document.getElementById('profileStat2').textContent = stats.completed || 0;
-                document.getElementById('profilePoints').textContent = stats.points || 0;
             }
 
             document.getElementById('profileModal').classList.add('active');
@@ -6449,11 +6714,11 @@
         }
         function closeProfileModal() {
             document.getElementById('profileModal').classList.remove('active');
+            clearModalStack();
             document.body.style.overflow = 'auto';
         }
 
         function openEditProfileModal() {
-            closeProfileModal();
             if (!currentUser) return;
             selectedProfilePhotoBase64 = null;
             removeProfilePhotoFlag = false;
@@ -6480,16 +6745,11 @@
 
             document.getElementById('editFullName').value = currentUser.full_name;
             document.getElementById('editEmail').value = currentUser.email;
-            document.getElementById('editCurrentPassword').value = '';
-            document.getElementById('editNewPassword').value = '';
-            document.getElementById('editConfirmPassword').value = '';
 
-            document.getElementById('editProfileModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('editProfileModal', 'profileModal');
         }
         function closeEditProfileModal() {
-            document.getElementById('editProfileModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('editProfileModal');
         }
 
         async function openNotifPrefsModal() {
@@ -6517,7 +6777,8 @@
         async function saveNotifPrefs() {
             const btn = document.getElementById('saveNotifPrefsBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            btn.classList.add('btn-loading');
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             try {
                 const payload = {
                     email_on_notifications: document.getElementById('prefEmailNotifications').checked,
@@ -6532,6 +6793,7 @@
                 showToast('Preferences saved', 'Email notification settings updated.');
                 closeNotifPrefsModal();
             } finally {
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-save"></i> Save';
             }
@@ -6541,24 +6803,20 @@
             event.preventDefault();
             const fullName = document.getElementById('editFullName').value.trim();
             const email = document.getElementById('editEmail').value.trim();
-            const currentPassword = document.getElementById('editCurrentPassword').value;
-            const newPassword = document.getElementById('editNewPassword').value;
-            const confirmPassword = document.getElementById('editConfirmPassword').value;
             const btn = document.getElementById('saveProfileBtn');
 
             if (!fullName) return alert('⚠️ Please enter your full name.');
             if (!email || !email.includes('@')) return alert('⚠️ Please enter a valid email.');
 
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
                 const payload = {
                     full_name: fullName,
                     email: email,
-                    current_password: currentPassword,
-                    new_password: newPassword,
-                    confirm_password: confirmPassword
+                    current_password: ''
                 };
                 if (selectedProfilePhotoBase64) {
                     payload.photo_data = selectedProfilePhotoBase64;
@@ -6580,7 +6838,7 @@
                     if (currentUser.role === 'citizen') {
                         document.getElementById('citizenUserName').textContent = fullName;
                     } else if (currentUser.role === 'maintenance') {
-                        document.getElementById('maintenanceUserName').textContent = currentUser.team_name || fullName;
+                        document.getElementById('maintenanceUserName').textContent = fullName;
                     } else if (currentUser.role === 'admin') {
                         document.getElementById('adminUserName').textContent = fullName;
                     }
@@ -6596,6 +6854,7 @@
                 alert('⚠️ Profile update failed. Check your connection and try again.');
             } finally {
                 btn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
             }
         }
@@ -6688,7 +6947,8 @@
             if (!reason) return alert('⚠️ Please provide a reason for rejection.');
 
             const btn = document.getElementById('adminRejectBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Rejecting...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
@@ -6709,6 +6969,7 @@
                 console.error('Report rejection failed:', error);
                 alert('⚠️ Could not reject the report. Check your connection and try again.');
             } finally {
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-ban"></i> Confirm Rejection';
             }
@@ -6735,7 +6996,8 @@
             if (!reason) return alert('⚠️ Please provide a reason for rejection.');
 
             const btn = document.getElementById('maintRejectBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Rejecting...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
@@ -6756,6 +7018,7 @@
                 console.error('Task rejection failed:', error);
                 alert('⚠️ Could not reject the task. Check your connection and try again.');
             } finally {
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-ban"></i> Confirm Rejection';
             }
@@ -6901,7 +7164,7 @@
                     </div>
                     <div class="report-meta">
                         <span class="badge badge-review">Sending</span>
-                        <span class="report-send-state"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…</span>
+                        <span class="report-send-state"><i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i></span>
                     </div>
                 </div>`;
             container?.prepend(item);
@@ -6925,7 +7188,8 @@
             if (description.length < 10) return alert('⚠️ Description must be at least 10 characters.');
 
             const btn = document.getElementById('submitBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
             const pendingReport = addOptimisticReport(categoryText, location);
             closeReportModal();
@@ -6954,6 +7218,7 @@
                 const nearbyPanel = document.getElementById('nearbyPanel');
                 if (nearbyPanel) nearbyPanel.classList.remove('show');
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 const status = result.assigned_team ? 'Assigned' : 'Pending';
                 const statusBadge = pendingReport.item.querySelector('.badge');
@@ -6982,6 +7247,7 @@
                 showToast('Report not submitted', error.message || 'Check your connection and try again.');
             } finally {
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
             }
         }
@@ -7252,7 +7518,7 @@
                 allTasks = result.tasks || [];
                 syncGpsSharing();
                 if (result.team_name) {
-                    document.getElementById('maintenanceUserName').textContent = result.team_name;
+                    document.getElementById('maintenanceUserName').textContent = currentUser.full_name;
                 }
                 updateTaskStats();
                 renderTasks();
@@ -7450,7 +7716,8 @@
         async function confirmStartTask() {
             if (!activeTask) return;
             const btn = document.getElementById('startTaskBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
@@ -7471,6 +7738,7 @@
                 console.error('Starting task failed:', error);
                 alert('⚠️ Could not start the task. Check your connection and try again.');
             } finally {
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-play"></i> Start Task';
             }
@@ -7558,7 +7826,8 @@
             if (!completeAfterDataUrl) return alert('⚠️ Please upload an after photo.');
 
             const btn = document.getElementById('completeBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Completing...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
@@ -7584,6 +7853,7 @@
                 console.error('Completing task failed:', error);
                 alert('⚠️ Could not complete the task. Check your connection and try again.');
             } finally {
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-check-circle"></i> Mark Complete';
             }
@@ -8322,7 +8592,8 @@
             const ratedTeamName = adminActiveTask.team_name;
             const submittedRating = selectedRating;
             const btn = document.getElementById('rateBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
             btn.disabled = true;
 
             try {
@@ -8347,6 +8618,7 @@
                 console.error('Rating submission failed:', error);
                 alert('⚠️ Could not submit the rating. Check your connection and try again.');
             } finally {
+                btn.classList.remove('btn-loading');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-star"></i> Submit Rating';
             }
@@ -8390,11 +8662,39 @@
             });
         }
 
+        // ============ MODAL STACK ============
+        let modalStack = [];
+
+        function openModalWithStack(modalId, parentModalId = null) {
+            if (parentModalId) {
+                modalStack.push(parentModalId);
+            }
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalWithStack(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            
+            if (modalStack.length > 0) {
+                const previousModal = modalStack.pop();
+                document.getElementById(previousModal).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function clearModalStack() {
+            modalStack = [];
+        }
+
         // ============ MISC ============
         function forgotPassword() {
             const email = document.getElementById('email').value.trim();
             document.getElementById('forgotPasswordForm').style.display = 'block';
             document.getElementById('resetPasswordForm').style.display = 'none';
+            document.getElementById('changePasswordForm').style.display = 'none';
             document.getElementById('passwordModalTitle').textContent = 'Reset password';
             document.getElementById('passwordModalSubtitle').textContent = 'Enter your email and we’ll send a reset link if the account exists.';
             document.getElementById('resetRequestEmail').value = email;
@@ -8403,8 +8703,44 @@
         }
 
         function closePasswordModal() {
-            document.getElementById('passwordModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('passwordModal');
+        }
+
+        function openPasswordModal() {
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            document.getElementById('changePasswordForm').style.display = 'block';
+            document.getElementById('passwordModalTitle').textContent = 'Change Password';
+            document.getElementById('passwordModalSubtitle').textContent = 'Enter your current password and choose a new one.';
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmNewPassword').value = '';
+            openModalWithStack('passwordModal', 'profileModal');
+        }
+
+        async function submitChangePassword(event) {
+            event.preventDefault();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            if (newPassword !== confirmNewPassword) {
+                showToast('Passwords do not match', 'Please make sure both passwords are the same.');
+                return;
+            }
+
+            const result = await apiPost('change-password', {
+                current_password: currentPassword,
+                new_password: newPassword
+            });
+
+            if (!result.success) {
+                showToast('Password change failed', result.message || 'Please check your current password and try again.');
+                return;
+            }
+
+            closePasswordModal();
+            showToast('Password updated', 'Your password has been changed successfully.');
         }
 
         async function submitForgotPassword(event) {
@@ -8466,7 +8802,11 @@
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
             modal.querySelector('.chat-modal-box')?.removeAttribute('aria-hidden');
-            modal.dataset.mobileView = selectedChatUserId ? 'thread' : 'contacts';
+            modal.dataset.mobileView = 'contacts';
+            // Reset selected user when opening chat in mobile view
+            if (window.innerWidth <= 768) {
+                selectedChatUserId = null;
+            }
             document.body.style.overflow = 'hidden';
             await loadChatContacts();
             if (!chatPollTimer) {
@@ -8533,12 +8873,16 @@
             renderChatContacts();
             markDataLoaded(list, !listWasLoaded || previousContacts !== JSON.stringify(chatPeople));
 
-            if (!selectedChatUserId && chatPeople.length) {
-                await selectChatUser(chatPeople[0].id, false);
-            } else if (selectedChatUserId) {
-                const existing = chatPeople.find(user => user.id === selectedChatUserId);
-                if (existing) {
-                    await selectChatUser(selectedChatUserId, false);
+            // Only auto-select on desktop, not on mobile
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) {
+                if (!selectedChatUserId && chatPeople.length) {
+                    await selectChatUser(chatPeople[0].id, false);
+                } else if (selectedChatUserId) {
+                    const existing = chatPeople.find(user => user.id === selectedChatUserId);
+                    if (existing) {
+                        await selectChatUser(selectedChatUserId, false);
+                    }
                 }
             }
         }
@@ -8643,7 +8987,7 @@
         }
 
         function updateChatUnreadBadge(count) {
-            ['citizenChatNavUnread', 'maintenanceChatUnread', 'adminChatUnread', 'maintenanceChatNavUnread'].forEach(id => {
+            ['citizenChatNavUnread', 'maintenanceChatNavUnread', 'adminChatNavUnread', 'adminChatNavUnread', 'maintenanceChatNavUnread'].forEach(id => {
                 const badge = document.getElementById(id);
                 if (!badge) return;
                 badge.textContent = count > 99 ? '99+' : String(count || '');
@@ -8688,7 +9032,7 @@
                 ? `<img class="chat-message-photo" src="${escapeHtml(message.image_url)}" alt="Chat attachment" />`
                 : '';
             const time = pending
-                ? '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…'
+                ? '<i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>'
                 : escapeHtml(formatChatTime(message.created_at));
 
             return `
@@ -8856,6 +9200,70 @@
             }
         }
 
+        async function deleteChatConversation() {
+            if (!selectedChatUserId) {
+                showToast('⚠️ No conversation selected', 'Please select a conversation first.');
+                return;
+            }
+
+            // Show the delete confirmation modal
+            const deleteModal = document.getElementById('deleteChatModal');
+            if (deleteModal) {
+                deleteModal.classList.add('active');
+            }
+        }
+
+        function closeDeleteChatModal() {
+            const deleteModal = document.getElementById('deleteChatModal');
+            if (deleteModal) {
+                deleteModal.classList.remove('active');
+            }
+        }
+
+        async function confirmDeleteChat() {
+            closeDeleteChatModal();
+
+            try {
+                const result = await apiPost('chat/delete', { recipient_id: selectedChatUserId });
+                if (!result.success) {
+                    showToast('Delete failed', result.message || 'Could not delete conversation.');
+                    return;
+                }
+
+                // Clear the selected user and go back to contacts
+                selectedChatUserId = null;
+                const modal = document.getElementById('chatModal');
+                if (modal) modal.dataset.mobileView = 'contacts';
+
+                // Clear the chat thread
+                const thread = document.getElementById('chatThread');
+                if (thread) {
+                    thread.innerHTML = `
+                        <div class="chat-empty-state">
+                            <div>
+                                <i class="fas fa-comment-dots" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                                Start a conversation with a citizen or maintenance team.
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Clear current user info
+                const name = document.getElementById('chatCurrentName');
+                const role = document.getElementById('chatCurrentRole');
+                const avatar = document.getElementById('chatCurrentAvatar');
+                if (name) name.textContent = 'Select a chat';
+                if (role) role.textContent = 'online';
+                if (avatar) avatar.textContent = '?';
+
+                // Reload contacts to update the list
+                await loadChatContacts();
+                showToast('Deleted', 'Conversation deleted successfully.');
+            } catch (error) {
+                showToast('Delete failed', 'Could not delete conversation. Please try again.');
+            }
+        }
+
         document.getElementById('chatModal')?.addEventListener('click', e => {
             if (e.target && e.target.id === 'chatModal') {
                 closeChatPanel();
@@ -8897,6 +9305,7 @@
             if (resetToken && resetEmail) {
                 document.getElementById('forgotPasswordForm').style.display = 'none';
                 document.getElementById('resetPasswordForm').style.display = 'block';
+                document.getElementById('changePasswordForm').style.display = 'none';
                 document.getElementById('passwordModalTitle').textContent = 'Choose a new password';
                 document.getElementById('passwordModalSubtitle').textContent = 'Use at least 8 characters for your new password.';
                 document.getElementById('resetToken').value = resetToken;
@@ -8913,7 +9322,7 @@
                     document.getElementById('citizenUserName').textContent = currentUser.full_name;
                     showDashboard('citizen');
                 } else if (currentUser.role === 'maintenance') {
-                    document.getElementById('maintenanceUserName').textContent = currentUser.team_name || currentUser.full_name;
+                    document.getElementById('maintenanceUserName').textContent = currentUser.full_name;
                     showDashboard('maintenance');
                 } else if (currentUser.role === 'admin') {
                     document.getElementById('adminUserName').textContent = currentUser.full_name;

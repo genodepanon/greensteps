@@ -33,6 +33,7 @@ Route::prefix('api')->group(function () {
 
         // Profile
         Route::post('profile', [AuthController::class, 'updateProfile']);
+        Route::post('change-password', [AuthController::class, 'changePassword']);
 
         // Reports
         Route::get ('reports',                     [ReportController::class, 'index']);
@@ -69,6 +70,7 @@ Route::prefix('api')->group(function () {
         Route::get ('chat/conversations',      [ChatController::class, 'conversations']);
         Route::get ('chat/conversations/{conversation}/messages', [ChatController::class, 'messages']);
         Route::post('chat/send',                [ChatController::class, 'send']);
+        Route::post('chat/delete',              [ChatController::class, 'delete']);
 
         // Stats + leaderboard
         Route::get('stats',       [StatsController::class, 'index']);
