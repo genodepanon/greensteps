@@ -17,10 +17,23 @@
         .btn-secondary:hover { background:#475569; }
         .card { background:#123a4f; border-radius:12px; padding:20px; margin-bottom:16px; }
         .login-box { max-width:400px; margin:80px auto; }
+        .login-password-wrap {
+            display:flex; align-items:center; gap:0; width:100%; background:#0b2a3b; border:1px solid #334155; border-radius:10px;
+            overflow:hidden; transition:border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .login-password-wrap:focus-within {
+            border-color:#7dd3fc; box-shadow:0 0 0 3px rgba(125, 211, 252, 0.12);
+        }
+        .login-password-icon {
+            width:42px; text-align:center; color:#94a3b8; font-size:0.96rem; flex-shrink:0;
+        }
         input[type=text], input[type=password], input[type=date], textarea, select {
             padding:10px; border-radius:8px; border:1px solid #334155; background:#0b2a3b; color:#e2e8f0; font-family:inherit; font-size:0.95rem;
         }
         input[type=text], input[type=password], textarea, select { width:100%; }
+        .login-password-wrap input {
+            border:none; background:transparent; width:100%; padding:12px 14px 12px 0; border-radius:0; color:#e2e8f0; font-size:0.95rem; outline:none;
+        }
         label { display:block; margin:12px 0 4px; font-size:0.85rem; color:#94a3b8; font-weight:600; }
         table { width:100%; min-width:760px; border-collapse:collapse; font-size:0.82rem; }
         th, td { padding:8px 10px; text-align:left; border-bottom:1px solid #1e3a4f; vertical-align:top; max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -99,7 +112,10 @@
         <form method="POST" action="/axel/login">
             @csrf
             <label>Password</label>
-            <input type="password" name="password" autofocus required>
+            <div class="login-password-wrap">
+                <span class="login-password-icon">🔒</span>
+                <input type="password" name="password" autofocus required>
+            </div>
             <div style="margin-top:16px;"><button class="btn" type="submit">Enter</button></div>
         </form>
     </div>

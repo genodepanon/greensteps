@@ -1015,11 +1015,15 @@
             .form-group .input-wrapper { position: relative; display: flex; align-items: center; }
             .form-group .input-wrapper i { position: absolute; left: 14px; color: #94a3b8; font-size: 1rem; z-index: 1; pointer-events: none; }
             .form-group .input-wrapper .password-toggle {
-                position: absolute; right: 14px; color: #94a3b8; font-size: 1rem;
-                cursor: pointer; background: none; border: none; padding: 0;
-                transition: color 0.15s ease; z-index: 2; pointer-events: auto;
+                position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+                color: #94a3b8; font-size: 1rem; cursor: pointer; background: transparent; border: none;
+                border-radius: 999px; padding: 0; transition: color 0.15s ease, background 0.15s ease;
+                z-index: 2; pointer-events: auto;
             }
-            .form-group .input-wrapper .password-toggle:hover { color: #2d7a4f; }
+            .form-group .input-wrapper .password-toggle:hover {
+                color: #2d7a4f; background: rgba(45, 122, 79, 0.06);
+            }
             body.dark-mode .form-group .input-wrapper .password-toggle:hover { color: #cbd5e1; }
             .form-group input, .form-group select, .form-group textarea {
                 width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem;
@@ -1029,7 +1033,11 @@
             }
             .form-group input.has-password-toggle { padding-right: 2.8rem; }
             .form-group textarea { padding: 0.8rem 1rem; resize: vertical; min-height: 60px; }
-            .form-group select { padding: 0.8rem 1rem; }
+            .form-group select { padding: 0.8rem 2.8rem 0.8rem 2.8rem; }
+            .form-group .input-wrapper select {
+                padding-left: 2.8rem;
+                padding-right: 2.8rem;
+            }
             .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
                 outline: none; background: white;
             }
@@ -8876,8 +8884,16 @@
         // ============ MISC ============
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
-            const button = input.nextElementSibling;
+            if (!input) return;
+
+            let button = input.nextElementSibling;
+            if (!button || !button.classList.contains('password-toggle')) {
+                button = document.querySelector(`.password-toggle[onclick*="${CSS.escape(inputId)}"]`);
+            }
+            if (!button) return;
+
             const icon = button.querySelector('i');
+            if (!icon) return;
 
             if (input.type === 'password') {
                 input.type = 'text';
@@ -8889,6 +8905,26 @@
                 icon.classList.add('fa-eye');
             }
         }
+
+        function initPasswordToggles() {
+            document.querySelectorAll('.password-toggle').forEach((button) => {
+                button.onclick = null;
+                if (button._greenstepsPasswordHandler) {
+                    button.removeEventListener('click', button._greenstepsPasswordHandler);
+                }
+
+                button._greenstepsPasswordHandler = function(event) {
+                    event.preventDefault();
+                    const input = button.previousElementSibling || button.parentElement?.querySelector('input');
+                    if (!input || !input.id) return;
+                    togglePassword(input.id);
+                };
+
+                button.addEventListener('click', button._greenstepsPasswordHandler);
+            });
+        }
+
+        initPasswordToggles();
 
         function forgotPassword() {
             const email = document.getElementById('email').value.trim();
