@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
                 'role' => 'maintenance',
                 'team_name' => 'Team Alpha',
                 'points' => 0,
+                'is_approved' => true,
             ],
             [
                 'full_name' => 'Team Beta',
@@ -34,6 +35,7 @@ class UserSeeder extends Seeder
                 'role' => 'maintenance',
                 'team_name' => 'Team Beta',
                 'points' => 0,
+                'is_approved' => true,
             ],
             [
                 'full_name' => 'Team Gamma',
@@ -42,6 +44,7 @@ class UserSeeder extends Seeder
                 'role' => 'maintenance',
                 'team_name' => 'Team Gamma',
                 'points' => 0,
+                'is_approved' => true,
             ],
             [
                 'full_name' => 'Sarah K.',

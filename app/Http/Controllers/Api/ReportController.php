@@ -254,6 +254,17 @@ class ReportController extends Controller
             'message'   => "{$report->category} — {$data['team_name']} en route",
         ]);
 
+        // Notify maintenance team members
+        \App\Models\User::where('role', 'maintenance')
+            ->where('team_name', $data['team_name'])
+            ->get()
+            ->each(fn ($member) => UserNotification::create([
+                'user_id' => $member->id,
+                'report_id' => $report->id,
+                'title' => 'New task assigned',
+                'message' => "{$report->category} — {$report->location}",
+            ]));
+
         ActivityLogger::log('ASSIGN_TEAM', "#{$report->id} {$report->category} → {$data['team_name']}");
 
         return response()->json(['success' => true, 'message' => 'Team assigned successfully.']);

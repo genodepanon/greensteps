@@ -569,6 +569,7 @@
             body.dark-mode .role-desc,
             body.dark-mode .role-arrow,
             body.dark-mode .form-group .input-wrapper i,
+            body.dark-mode .form-group .input-wrapper .password-toggle,
             body.dark-mode .report-time,
             body.dark-mode .task-time,
             body.dark-mode .task-item .task-location,
@@ -1012,17 +1013,29 @@
             .form-group label { display: block; font-weight: 500; font-size: 0.85rem; margin-bottom: 6px; color: #1e293b; }
             .form-group label .required { color: #dc2626; margin-left: 2px; }
             .form-group .input-wrapper { position: relative; display: flex; align-items: center; }
-            .form-group .input-wrapper i { position: absolute; left: 14px; color: #94a3b8; font-size: 1rem; }
+            .form-group .input-wrapper i { position: absolute; left: 14px; color: #94a3b8; font-size: 1rem; z-index: 1; pointer-events: none; }
+            .form-group .input-wrapper .password-toggle {
+                position: absolute; right: 14px; color: #94a3b8; font-size: 1rem;
+                cursor: pointer; background: none; border: none; padding: 0;
+                transition: color 0.15s ease; z-index: 2; pointer-events: auto;
+            }
+            .form-group .input-wrapper .password-toggle:hover { color: #2d7a4f; }
+            body.dark-mode .form-group .input-wrapper .password-toggle:hover { color: #cbd5e1; }
             .form-group input, .form-group select, .form-group textarea {
                 width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem;
                 border-radius: 16px; border: none;
                 font-family: inherit; font-size: 0.95rem;
                 transition: 0.15s ease; background: #f8fafc;
             }
+            .form-group input.has-password-toggle { padding-right: 2.8rem; }
             .form-group textarea { padding: 0.8rem 1rem; resize: vertical; min-height: 60px; }
             .form-group select { padding: 0.8rem 1rem; }
             .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
                 outline: none; background: white;
+            }
+            .form-group .input-wrapper input,
+            .form-group .input-wrapper select {
+                position: relative; z-index: 0;
             }
             .form-options { display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0 1.5rem; font-size: 0.85rem; }
             .form-options label { display: flex; align-items: center; gap: 6px; color: #64748b; cursor: pointer; }
@@ -1554,6 +1567,35 @@
                 100% { background-position: 200% 0; }
             }
 
+            @keyframes blue-glow {
+                0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+                50% { box-shadow: 0 0 20px 10px rgba(59, 130, 246, 0.5); }
+                100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+            }
+
+            @keyframes red-glow {
+                0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+                50% { box-shadow: 0 0 20px 10px rgba(239, 68, 68, 0.5); }
+                100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+            }
+
+            @keyframes green-glow {
+                0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+                50% { box-shadow: 0 0 20px 10px rgba(34, 197, 94, 0.5); }
+                100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+            }
+
+            @keyframes violet-glow {
+                0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
+                50% { box-shadow: 0 0 20px 10px rgba(124, 58, 237, 0.5); }
+                100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+            }
+
+            .task-glow-blue { animation: blue-glow 1s ease-out; }
+            .task-glow-red { animation: red-glow 1s ease-out; }
+            .task-glow-green { animation: green-glow 1s ease-out; }
+            .task-glow-violet { animation: violet-glow 1s ease-out; }
+
             .loading-skeleton {
                 background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
                 background-size: 200% 100%;
@@ -1654,6 +1696,7 @@
                 z-index: 1000; justify-content: center; align-items: center; padding: 20px;
             }
             .modal-overlay.active { display: flex; }
+            .modal-overlay.stack-modal { z-index: 1100; }
 
             .modal-box {
                 background: white; max-width: 620px; width: 100%;
@@ -3060,7 +3103,10 @@
                 <label for="password">Password</label>
                 <div class="input-wrapper">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Enter your password" required />
+                    <input type="password" id="password" placeholder="Enter your password" required class="has-password-toggle" />
+                    <button type="button" class="password-toggle" onclick="togglePassword('password')" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
                 </div>
             </div>
             <div class="form-options">
@@ -3107,7 +3153,7 @@
                                 <span></span>
                             </label>
                         </div>
-                        <button type="button" class="header-menu-item" onclick="handleLogout(); this.closest('details').open = false;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        <button type="button" class="header-menu-item" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </div>
                 </details>
             </div>
@@ -3177,6 +3223,7 @@
                 </span>
             </div>
              <div class="header-right" style="display:flex; align-items:center; gap:8px;">
+                     <button type="button" class="btn btn-info" onclick="openNavigateModal()"><i class="fas fa-location-dot"></i> Navigate</button>
                 <button type="button" class="header-icon-btn" onclick="openChatPanel()" title="Chat" aria-label="Open Chat">
                     <i class="fas fa-comments"></i>
                     <span id="maintenanceChatNavUnread" class="header-icon-badge"></span>
@@ -3195,12 +3242,11 @@
                                 <span></span>
                             </label>
                         </div>
-                        <button type="button" class="header-menu-item" onclick="handleLogout(); this.closest('details').open = false;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        <button type="button" class="header-menu-item" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </div>
                 </details>
             </div>
         </header>
-        <button type="button" class="btn btn-info" onclick="openNavigateModal()" style="margin: 8px 0;"><i class="fas fa-location-dot"></i> Navigate</button>
 
         <div id="maintenanceApprovalNotice" class="card" style="display:none; margin-bottom:1rem; border-left:4px solid #f59e0b;">
             <strong><i class="fas fa-clock"></i> Application awaiting approval</strong>
@@ -3310,7 +3356,7 @@
                                 <span></span>
                             </label>
                         </div>
-                        <button type="button" class="header-menu-item" onclick="handleLogout(); this.closest('details').open = false;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        <button type="button" class="header-menu-item" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </div>
                 </details>
             </div>
@@ -3592,6 +3638,18 @@
         </div>
     </div>
 
+    <!-- LOGOUT CONFIRMATION MODAL -->
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 420px;">
+            <h3><i class="fas fa-sign-out-alt" style="color:#dc2626;"></i> Logout</h3>
+            <div class="modal-subtitle">Are you sure you want to logout?</div>
+            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 1.5rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeLogoutModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
     <!-- REGISTER MODAL -->
     <div id="registerModal" class="modal-overlay">
         <div class="modal-box">
@@ -3622,11 +3680,11 @@
                 </div>
                 <div class="form-group">
                     <label for="regPassword">Password <span class="required">*</span></label>
-                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="regPassword" placeholder="At least 8 characters" required minlength="8" /></div>
+                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="regPassword" placeholder="At least 8 characters" required minlength="8" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('regPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
-                    <div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmPassword" placeholder="Confirm password" required /></div>
+                    <div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmPassword" placeholder="Confirm password" required class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone (optional)</label>
@@ -3668,11 +3726,11 @@
                 </div>
                 <div class="form-group">
                     <label for="newResetPassword">New Password</label>
-                    <input type="password" id="newResetPassword" required minlength="8" autocomplete="new-password" />
+                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="newResetPassword" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('newResetPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-group">
                     <label for="confirmResetPassword">Confirm Password</label>
-                    <input type="password" id="confirmResetPassword" required minlength="8" autocomplete="new-password" />
+                    <div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmResetPassword" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('confirmResetPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closePasswordModal()">Cancel</button>
@@ -3682,15 +3740,15 @@
             <form id="changePasswordForm" onsubmit="submitChangePassword(event)" style="display:none;">
                 <div class="form-group">
                     <label for="currentPassword">Current Password</label>
-                    <input type="password" id="currentPassword" required autocomplete="current-password" />
+                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="currentPassword" required autocomplete="current-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('currentPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-group">
                     <label for="newPassword">New Password</label>
-                    <input type="password" id="newPassword" required minlength="8" autocomplete="new-password" />
+                    <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="newPassword" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('newPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-group">
                     <label for="confirmNewPassword">Confirm New Password</label>
-                    <input type="password" id="confirmNewPassword" required minlength="8" autocomplete="new-password" />
+                    <div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmNewPassword" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('confirmNewPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closePasswordModal()">Cancel</button>
@@ -3707,8 +3765,8 @@
             <form id="adminRegisterForm" onsubmit="handleAdminRegister(event)">
                 <div class="form-group"><label for="adminRegisterName">Full Name</label><input id="adminRegisterName" type="text" required maxlength="150" autocomplete="name" /></div>
                 <div class="form-group"><label for="adminRegisterEmail">Email Address</label><input id="adminRegisterEmail" type="email" required autocomplete="email" /></div>
-                <div class="form-group"><label for="adminRegisterPassword">Password</label><input id="adminRegisterPassword" type="password" required minlength="8" autocomplete="new-password" /></div>
-                <div class="form-group"><label for="adminRegisterPasswordConfirm">Confirm Password</label><input id="adminRegisterPasswordConfirm" type="password" required minlength="8" autocomplete="new-password" /></div>
+                <div class="form-group"><label for="adminRegisterPassword">Password</label><div class="input-wrapper"><i class="fas fa-lock"></i><input id="adminRegisterPassword" type="password" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('adminRegisterPassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div></div>
+                <div class="form-group"><label for="adminRegisterPasswordConfirm">Confirm Password</label><div class="input-wrapper"><i class="fas fa-check-circle"></i><input id="adminRegisterPasswordConfirm" type="password" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('adminRegisterPasswordConfirm')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div></div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeAdminRegisterModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Create admin account</button>
@@ -3725,8 +3783,8 @@
                 <div class="form-group"><label for="maintenanceFullName">Full Name</label><input id="maintenanceFullName" type="text" required maxlength="150" /></div>
                 <div class="form-group"><label for="maintenanceEmail">Email Address</label><input id="maintenanceEmail" type="email" required autocomplete="email" /></div>
                 <div class="form-group"><label for="maintenanceTeam">Team Name</label><input id="maintenanceTeam" type="text" required maxlength="150" /></div>
-                <div class="form-group"><label for="maintenancePassword">Temporary Password</label><input id="maintenancePassword" type="password" required minlength="8" autocomplete="new-password" /></div>
-                <div class="form-group"><label for="maintenancePasswordConfirm">Confirm Password</label><input id="maintenancePasswordConfirm" type="password" required minlength="8" autocomplete="new-password" /></div>
+                <div class="form-group"><label for="maintenancePassword">Temporary Password</label><div class="input-wrapper"><i class="fas fa-lock"></i><input id="maintenancePassword" type="password" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('maintenancePassword')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div></div>
+                <div class="form-group"><label for="maintenancePasswordConfirm">Confirm Password</label><div class="input-wrapper"><i class="fas fa-check-circle"></i><input id="maintenancePasswordConfirm" type="password" required minlength="8" autocomplete="new-password" class="has-password-toggle" /><button type="button" class="password-toggle" onclick="togglePassword('maintenancePasswordConfirm')" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button></div></div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeMaintenanceAccountModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Create account</button>
@@ -3750,11 +3808,10 @@
                     <div id="categoryDetection" class="category-detection" aria-live="polite">The icon will match the words you enter.</div>
                 </div>
                 <div class="form-group">
-                    <label for="location">Location <span class="required">*</span></label>
-                    <input type="text" id="location" placeholder="Click on the map or type address" required />
+                    <label>Location <span class="required">*</span></label>
                     <div class="map-container">
                         <div id="reportLocationMap"></div>
-                        <div class="map-hint"><i class="fas fa-mouse-pointer"></i> Click map to pin</div>
+                        <div class="map-hint"><i class="fas fa-location-crosshairs"></i> Detecting your location...</div>
                     </div>
                     <div class="location-coords" id="locationCoords">
                         <i class="fas fa-check-circle"></i>
@@ -3812,6 +3869,11 @@
             <div class="profile-menu-item" onclick="openPasswordModal()">
                 <i class="fas fa-lock"></i>
                 <span class="menu-text">Security</span>
+                <i class="fas fa-chevron-right menu-arrow"></i>
+            </div>
+            <div class="profile-menu-item" onclick="openLogoutModal()" style="color:#dc2626;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">Logout</span>
                 <i class="fas fa-chevron-right menu-arrow"></i>
             </div>
         </div>
@@ -4054,7 +4116,7 @@
             </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary" onclick="closeAssignModal()"><i class="fas fa-times"></i> Cancel</button>
-                <button type="button" class="btn btn-admin" onclick="confirmAssign()"><i class="fas fa-check"></i> Assign Team</button>
+                <button type="button" class="btn btn-admin" id="assignBtn" onclick="confirmAssign()"><i class="fas fa-user-check"></i> Assign Team</button>
             </div>
         </div>
     </div>
@@ -4374,15 +4436,20 @@
                 }
             }
             url += params;
+            console.log('API GET requesting:', url);
             try {
                 const res = await fetchWithTimeout(url, {
                     credentials: 'same-origin',
                     headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
                 }, 15000);
-                return await res.json();
+                console.log('API GET response status:', res.status, res.statusText);
+                const data = await res.json();
+                console.log('API GET response data:', data);
+                return data;
             } catch (e) {
                 console.error('API GET error:', action, e);
-                return { success: false, message: e.name === 'AbortError' ? 'The server took too long to respond. Please try again.' : 'Server request failed.' };
+                console.error('Error details:', e.name, e.message, e.stack);
+                return { success: false, message: e.name === 'AbortError' ? 'The server took too long to respond. Please try again.' : 'Server request failed: ' + e.message };
             }
         }
 
@@ -5634,7 +5701,7 @@
         }
 
         async function initLiveTrackMap(reportId, report) {
-            const el = document.getElementById('liveTrackMap-' + reportId);
+            document.getElementById('liveTrackMap-' + reportId);
             if (!el) return false;
 
             try {
@@ -5907,6 +5974,7 @@
         }
 
         async function openRejectionReasonModal(reportId) {
+            clearModalStack();
             const result = await apiGet('tracking', '&report_id=' + reportId);
             if (!result.success) return;
             const report = result.report;
@@ -5923,11 +5991,11 @@
         }
 
         function closeRejectionReasonModal() {
-            document.getElementById('rejectionReasonModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('rejectionReasonModal');
         }
 
         async function openCompletionInfoModal(reportId) {
+            clearModalStack();
             const result = await apiGet('completion-info', '&report_id=' + reportId);
             if (!result.success) return;
             const data = result.data;
@@ -5967,8 +6035,7 @@
         }
 
         function closeCompletionInfoModal() {
-            document.getElementById('completionInfoModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('completionInfoModal');
         }
 
         async function openReportDetailsModal(reportId) {
@@ -6005,8 +6072,15 @@
 
             currentReportDetailsId = reportId;
 
-            document.getElementById('reportDetailsModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            // Check if actionModal is open, if not clear the stack
+            const actionModal = document.getElementById('actionModal');
+            if (actionModal && actionModal.classList.contains('active')) {
+                openModalWithStack('reportDetailsModal', 'actionModal');
+            } else {
+                clearModalStack();
+                document.getElementById('reportDetailsModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
             requestAnimationFrame(() => initReportDetailsMap(report));
         }
 
@@ -6058,8 +6132,7 @@
         }
 
         function closeReportDetailsModal() {
-            document.getElementById('reportDetailsModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('reportDetailsModal');
             currentReportDetailsId = null;
             // Reset details visibility
             const detailsContent = document.getElementById('reportDetailsContent');
@@ -6068,6 +6141,12 @@
             if (detailsContent) detailsContent.style.display = 'none';
             if (toggleIcon) toggleIcon.className = 'fas fa-eye';
             if (toggleText) toggleText.textContent = 'Show Details';
+
+            // If we came from notifications tab (admin), switch back to it
+            if (window.cameFromNotifications && currentUser?.role === 'admin') {
+                window.cameFromNotifications = false;
+                switchAdminTab('notifications');
+            }
         }
 
         function toggleReportDetails() {
@@ -6089,8 +6168,7 @@
         function openDiscussionFromReportDetails() {
             if (!currentReportDetailsId) return;
             const rid = currentReportDetailsId;
-            closeReportDetailsModal();
-            openTrackDiscussionModal(rid);
+            openTrackDiscussionModal(rid, 'reportDetailsModal');
         }
 
         // ============ REPORT COMMENTS ============
@@ -6137,20 +6215,24 @@
             }).join('');
         }
 
-        async function openTrackDiscussionModal(reportId) {
+        async function openTrackDiscussionModal(reportId, parentModalId = null) {
             activeTrackDiscussionReportId = reportId;
             const thread = document.getElementById('trackDiscussionThread');
             document.getElementById('trackDiscussionInput').value = '';
             thread.innerHTML = '<div class="comments-empty" role="status"><i class="fas fa-circle-notch" aria-hidden="true" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i></div>';
-            document.getElementById('trackDiscussionModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (parentModalId) {
+                openModalWithStack('trackDiscussionModal', parentModalId);
+            } else {
+                clearModalStack();
+                document.getElementById('trackDiscussionModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
             await loadReportComments(reportId, 'trackDiscussionThread');
         }
 
         function closeTrackDiscussionModal() {
-            document.getElementById('trackDiscussionModal').classList.remove('active');
+            closeModalWithStack('trackDiscussionModal');
             activeTrackDiscussionReportId = null;
-            document.body.style.overflow = 'auto';
         }
 
         async function submitTrackDiscussionComment() {
@@ -6312,14 +6394,20 @@
             // Redirect to the related report and highlight it for 1s
             if (reportId) {
                 const rid = parseInt(reportId, 10);
+                // Store that we came from notifications tab (for admin)
+                if (currentUser?.role === 'admin') {
+                    const activeTab = document.querySelector('.admin-header-nav-item.active');
+                    if (activeTab && activeTab.dataset.tab === 'notifications') {
+                        window.cameFromNotifications = true;
+                    }
+                }
                 await focusReport(rid);
             }
         }
 
         async function focusReport(reportId) {
-            // Close any open overlays first
-            document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
-            document.body.style.overflow = 'auto';
+            // Clear modal stack before opening report details
+            clearModalStack();
 
             // Make sure the right dashboard list is visible
             await openReportDetailsModal(reportId);
@@ -6346,6 +6434,7 @@
         }
 
         async function openStatisticsModal() {
+            clearModalStack();
             const result = await apiGet('stats');
             if (!result.success) return;
 
@@ -6465,8 +6554,7 @@
         }
 
         function closeStatisticsModal() {
-            document.getElementById('statisticsModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('statisticsModal');
         }
 
         function formatDateTime(date) {
@@ -6488,6 +6576,7 @@
 
         // ============ REGISTER ============
         function openRegisterModal() {
+            clearModalStack();
             document.getElementById('registerModal').classList.add('active');
             document.getElementById('registerForm').reset();
             document.getElementById('regRole').value = 'citizen';
@@ -6507,8 +6596,7 @@
                 : 'Create a citizen account to help your community';
         }
         function closeRegisterModal() {
-            document.getElementById('registerModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('registerModal');
         }
         async function handleRegister(event) {
             event.preventDefault();
@@ -6566,14 +6654,14 @@
         }
 
         function openAdminRegisterModal() {
+            clearModalStack();
             document.getElementById('adminRegisterForm').reset();
             document.getElementById('adminRegisterModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeAdminRegisterModal() {
-            document.getElementById('adminRegisterModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('adminRegisterModal');
         }
 
         async function handleAdminRegister(event) {
@@ -6713,9 +6801,8 @@
             document.body.style.overflow = 'hidden';
         }
         function closeProfileModal() {
-            document.getElementById('profileModal').classList.remove('active');
+            closeModalWithStack('profileModal');
             clearModalStack();
-            document.body.style.overflow = 'auto';
         }
 
         function openEditProfileModal() {
@@ -6753,7 +6840,6 @@
         }
 
         async function openNotifPrefsModal() {
-            closeProfileModal();
             if (!currentUser) return;
 
             const result = await apiGet('notification-preferences');
@@ -6765,13 +6851,11 @@
             document.getElementById('prefEmailNotifications').checked = !!prefs.email_on_notifications;
             document.getElementById('prefEmailStatus').checked = !!prefs.email_on_status;
 
-            document.getElementById('notifPrefsModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('notifPrefsModal', 'profileModal');
         }
 
         function closeNotifPrefsModal() {
-            document.getElementById('notifPrefsModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('notifPrefsModal');
         }
 
         async function saveNotifPrefs() {
@@ -6876,16 +6960,16 @@
                 document.getElementById('actionModalStatus').innerHTML = `<span class="badge badge-${badge}">${task.status}</span>`;
 
                 const buttons = [];
-                buttons.push(`<button class="btn btn-info" onclick="closeActionModal(); openReportDetailsModal(${task.report_id})"><i class="fas fa-eye"></i> View Details</button>`);
+                buttons.push(`<button class="btn btn-info" onclick="openReportDetailsModal(${task.report_id})"><i class="fas fa-eye"></i> View Details</button>`);
 
                 if (task.status === 'Assigned') {
-                    buttons.push(`<button class="btn btn-primary" onclick="closeActionModal(); openStartModal(${task.id})"><i class="fas fa-play"></i> Start Task</button>`);
-                    buttons.push(`<button class="btn btn-danger" onclick="closeActionModal(); openMaintRejectModal(${task.id})"><i class="fas fa-ban"></i> Reject Task</button>`);
+                    buttons.push(`<button class="btn btn-primary" onclick="openStartModal(${task.id})"><i class="fas fa-play"></i> Start Task</button>`);
+                    buttons.push(`<button class="btn btn-danger" onclick="openMaintRejectModal(${task.id})"><i class="fas fa-ban"></i> Reject Task</button>`);
                 } else if (task.status === 'In Progress') {
-                    buttons.push(`<button class="btn btn-success" onclick="closeActionModal(); openCompleteModal(${task.id})"><i class="fas fa-check"></i> Complete Task</button>`);
-                    buttons.push(`<button class="btn btn-danger" onclick="closeActionModal(); openMaintRejectModal(${task.id})"><i class="fas fa-ban"></i> Reject Task</button>`);
+                    buttons.push(`<button class="btn btn-success" onclick="openCompleteModal(${task.id})"><i class="fas fa-check"></i> Complete Task</button>`);
+                    buttons.push(`<button class="btn btn-danger" onclick="openMaintRejectModal(${task.id})"><i class="fas fa-ban"></i> Reject Task</button>`);
                 } else if (task.status === 'Completed') {
-                    buttons.push(`<button class="btn btn-info" onclick="closeActionModal(); openPhotoModal(${task.id})"><i class="fas fa-images"></i> View Photos</button>`);
+                    buttons.push(`<button class="btn btn-info" onclick="openPhotoModal(${task.id})"><i class="fas fa-images"></i> View Photos</button>`);
                 } else if (task.status === 'Rejected') {
                     buttons.push(`<div style="text-align:center; padding:0.5rem; font-size:0.85rem; color:#991b1b;"><i class="fas fa-ban"></i> Task already rejected</div>`);
                 }
@@ -6903,11 +6987,11 @@
                 document.getElementById('actionModalStatus').innerHTML = `<span class="badge badge-${badge}">${report.status}</span>`;
 
                 const buttons = [];
-                buttons.push(`<button class="btn btn-info" onclick="closeActionModal(); openReportDetailsModal(${report.id})"><i class="fas fa-eye"></i> View Details</button>`);
+                buttons.push(`<button class="btn btn-info" onclick="openReportDetailsModal(${report.id})"><i class="fas fa-eye"></i> View Details</button>`);
 
                 if (report.status === 'Pending') {
-                    buttons.push(`<button class="btn btn-admin" onclick="closeActionModal(); openAssignModal(${report.id})"><i class="fas fa-user-check"></i> Assign Team</button>`);
-                    buttons.push(`<button class="btn btn-danger" onclick="closeActionModal(); openAdminRejectModal(${report.id})"><i class="fas fa-ban"></i> Reject Report</button>`);
+                    buttons.push(`<button class="btn btn-admin" onclick="openAssignModal(${report.id})"><i class="fas fa-user-check"></i> Assign Team</button>`);
+                    buttons.push(`<button class="btn btn-danger" onclick="openAdminRejectModal(${report.id})"><i class="fas fa-ban"></i> Reject Report</button>`);
                 } else if (report.status === 'Completed') {
                     buttons.push(`<div style="text-align:center; padding:0.5rem; font-size:0.85rem; color:#166534;"><i class="fas fa-circle-check"></i> Rated by the citizen after completion</div>`);
                 } else if (report.status === 'Rejected') {
@@ -6916,13 +7000,11 @@
                 document.getElementById('actionModalButtons').innerHTML = buttons.join('');
             }
 
-            document.getElementById('actionModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('actionModal');
         }
 
         function closeActionModal() {
-            document.getElementById('actionModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('actionModal');
             actionModalData = null;
         }
 
@@ -6934,12 +7016,10 @@
             document.getElementById('adminRejectTitle').textContent = report.category;
             document.getElementById('adminRejectLocation').textContent = report.location;
             document.getElementById('adminRejectReason').value = '';
-            document.getElementById('adminRejectModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('adminRejectModal', 'actionModal');
         }
         function closeAdminRejectModal() {
-            document.getElementById('adminRejectModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('adminRejectModal');
         }
         async function confirmAdminReject() {
             if (!adminActiveReport) return;
@@ -6955,7 +7035,10 @@
                 const result = await apiPost('reports/' + adminActiveReport.id + '/reject', { report_id: adminActiveReport.id, reason: reason });
 
                 if (result.success) {
+                    const reportId = adminActiveReport.id;
                     closeAdminRejectModal();
+                    closeActionModal();
+                    glowReportItem(reportId, 'red');
                     showToast('❌ Report Rejected', 'The citizen has been notified with the reason.');
                     try {
                         await loadAdminData();
@@ -6983,12 +7066,10 @@
             document.getElementById('maintRejectTitle').textContent = task.title;
             document.getElementById('maintRejectLocation').textContent = task.location;
             document.getElementById('maintRejectReason').value = '';
-            document.getElementById('maintRejectModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('maintRejectModal', 'actionModal');
         }
         function closeMaintRejectModal() {
-            document.getElementById('maintRejectModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('maintRejectModal');
         }
         async function confirmMaintReject() {
             if (!maintRejectActiveTask) return;
@@ -7004,7 +7085,10 @@
                 const result = await apiPost('tasks/' + maintRejectActiveTask.id + '/reject', { task_id: maintRejectActiveTask.id, reason: reason });
 
                 if (result.success) {
+                    const taskId = maintRejectActiveTask.id;
                     closeMaintRejectModal();
+                    closeActionModal();
+                    glowTaskItem(taskId, 'red');
                     showToast('❌ Task Rejected', 'The citizen has been notified with the reason.');
                     try {
                         await loadMaintenanceData();
@@ -7026,6 +7110,7 @@
 
         // ============ REPORT MODAL ============
         function openReportModal() {
+            clearModalStack();
             document.getElementById('reportModal').classList.add('active');
             document.getElementById('reportForm').reset();
             document.getElementById('photoPreview').classList.remove('show');
@@ -7076,8 +7161,7 @@
         }
 
         function closeReportModal() {
-            document.getElementById('reportModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('reportModal');
         }
         function getCategoryIcon(value) {
             const text = String(value || '').toLowerCase();
@@ -7180,25 +7264,25 @@
             event.preventDefault();
             const cat = document.getElementById('category');
             const categoryText = cat.value.trim();
-            const location = document.getElementById('location').value.trim();
             const description = document.getElementById('description').value.trim();
 
             if (!categoryText) return alert('Please enter a category.');
-            if (!location) return alert('⚠️ Please pin a location.');
+            if (!selectedLocation) return alert('⚠️ Please wait for location detection.');
             if (description.length < 10) return alert('⚠️ Description must be at least 10 characters.');
 
             const btn = document.getElementById('submitBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
-            const pendingReport = addOptimisticReport(categoryText, location);
+            const locationText = document.getElementById('coordsText').textContent;
+            const pendingReport = addOptimisticReport(categoryText, locationText);
             closeReportModal();
             showToast('Sending report', 'Your report is appearing while we finish saving it.');
             try {
                 const result = await apiPost('reports', {
                     category: categoryText,
                     description: description,
-                    location: location,
+                    location: locationText,
                     latitude: selectedLocation ? selectedLocation.lat : null,
                     longitude: selectedLocation ? selectedLocation.lng : null,
                     photo_data: selectedFileDataUrl
@@ -7268,7 +7352,6 @@
         function updateLocation(latLng) {
             selectedLocation = { lat: latLng.lat, lng: latLng.lng };
             const coords = `${latLng.lat.toFixed(5)}° N, ${latLng.lng.toFixed(5)}° E`;
-            document.getElementById('location').value = coords;
             document.getElementById('coordsText').textContent = 'Pinned: ' + coords;
             document.getElementById('locationCoords').classList.add('show');
             reverseGeocode(latLng.lat, latLng.lng);
@@ -7280,7 +7363,6 @@
                 .then(r => r.json())
                 .then(d => {
                     if (d && d.display_name) {
-                        document.getElementById('location').value = d.display_name;
                         document.getElementById('coordsText').textContent = d.display_name;
                     }
                 })
@@ -7289,7 +7371,7 @@
 
         function detectCurrentLocation() {
             if (!navigator.geolocation) {
-                showToast('Location unavailable', 'Your browser does not support location detection. Enter an address or pin the map.');
+                showToast('Location unavailable', 'Your browser does not support location detection.');
                 return;
             }
             navigator.geolocation.getCurrentPosition(
@@ -7301,12 +7383,16 @@
                         map.setView([p.lat, p.lng], 16);
                         placeMarker(L.latLng(p.lat, p.lng));
                     }
+                    const hint = document.querySelector('.map-hint');
+                    if (hint) hint.innerHTML = '<i class="fas fa-check-circle"></i> Location detected!';
                 },
                 err => {
                     let msg = 'Unable to get location.';
                     if (err.code === 1) msg = 'Location permission denied.';
                     if (err.code === 3) msg = 'Location request timed out.';
-                    showToast('Location unavailable', msg + ' Enter an address or pin the map.');
+                    showToast('Location unavailable', msg);
+                    const hint = document.querySelector('.map-hint');
+                    if (hint) hint.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + msg;
                 },
                 { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
             );
@@ -7513,29 +7599,44 @@
             showMetricLoading(['maintAssigned', 'maintInProgress', 'maintCompleted', 'maintAvgRating']);
             showDataLoading('maintTasksList', 'Loading assigned tasks...');
             showDataLoading('maintNotifList', 'Loading notifications...');
-            const result = await apiGet('tasks');
-            if (result.success) {
-                allTasks = result.tasks || [];
-                syncGpsSharing();
-                if (result.team_name) {
-                    document.getElementById('maintenanceUserName').textContent = currentUser.full_name;
+            console.log('Current user:', currentUser);
+            try {
+                const result = await apiGet('tasks');
+                console.log('Tasks API result:', result);
+                if (result.success) {
+                    allTasks = result.tasks || [];
+                    console.log('Loaded tasks:', allTasks.length);
+                    syncGpsSharing();
+                    if (result.team_name) {
+                        document.getElementById('maintenanceUserName').textContent = currentUser.full_name;
+                    }
+                    updateTaskStats();
+                    renderTasks();
+                    updateMaintMap();
+                    updateMaintRating();
+                } else {
+                    console.error('Tasks API failed:', result.message);
+                    ['maintAssigned', 'maintInProgress', 'maintCompleted'].forEach(id => setMetricValue(id, '—', true));
+                    showDataLoadError('maintTasksList', result.message || 'Could not load assigned tasks.', () => loadMaintenanceData());
                 }
-                updateTaskStats();
-                renderTasks();
-                updateMaintMap();
-                updateMaintRating();
-            } else {
+            } catch (error) {
+                console.error('Tasks API error:', error);
                 ['maintAssigned', 'maintInProgress', 'maintCompleted'].forEach(id => setMetricValue(id, '—', true));
-                showDataLoadError('maintTasksList', 'Could not load assigned tasks.', () => loadMaintenanceData());
+                showDataLoadError('maintTasksList', 'Network error loading tasks: ' + (error.message || 'Unknown error'), () => loadMaintenanceData());
             }
-            const notifsResult = await apiGet('notifications');
-            if (notifsResult.success) {
-                notifsResult.notifications.forEach(n => {
-                    if (n.id > lastKnownNotificationId) lastKnownNotificationId = n.id;
-                });
-                renderNotificationsList('maintNotifList', notifsResult.notifications);
-            } else {
-                showDataLoadError('maintNotifList', 'Could not load notifications.', () => loadMaintenanceData());
+            try {
+                const notifsResult = await apiGet('notifications');
+                if (notifsResult.success) {
+                    notifsResult.notifications.forEach(n => {
+                        if (n.id > lastKnownNotificationId) lastKnownNotificationId = n.id;
+                    });
+                    renderNotificationsList('maintNotifList', notifsResult.notifications);
+                } else {
+                    showDataLoadError('maintNotifList', notifsResult.message || 'Could not load notifications.', () => loadMaintenanceData());
+                }
+            } catch (error) {
+                console.error('Notifications API error:', error);
+                showDataLoadError('maintNotifList', 'Network error loading notifications.', () => loadMaintenanceData());
             }
             animateDashboardData();
         }
@@ -7605,7 +7706,7 @@
                             t.status === 'Rejected' ? 'rejected' : 'pending';
                 const ratingBadge = t.rating ? `<span class="badge badge-rated" style="font-size:0.65rem;">⭐ ${t.rating.rating}/5</span>` : '';
                 return `
-                    <div class="task-item">
+                    <div class="task-item" data-task-id="${t.id}">
                         <div class="task-info">
                             <i class="fas fa-map-pin" style="color:#b45309;"></i>
                             <div>
@@ -7624,6 +7725,55 @@
                 `;
             }).join('');
             updateListExpansion(list, '.task-item');
+            markDataLoaded(list, false);
+        }
+
+        function glowTaskItem(taskId, glowType) {
+            const taskItem = document.querySelector(`.task-item[data-task-id="${taskId}"]`);
+            if (!taskItem) return;
+
+            // Remove any existing glow classes
+            taskItem.classList.remove('task-glow-blue', 'task-glow-red', 'task-glow-green', 'task-glow-violet');
+
+            // Add the requested glow class
+            if (glowType === 'blue') {
+                taskItem.classList.add('task-glow-blue');
+            } else if (glowType === 'red') {
+                taskItem.classList.add('task-glow-red');
+            } else if (glowType === 'green') {
+                taskItem.classList.add('task-glow-green');
+            } else if (glowType === 'violet') {
+                taskItem.classList.add('task-glow-violet');
+            }
+
+            // Remove the class after animation completes (1 second)
+            setTimeout(() => {
+                taskItem.classList.remove('task-glow-blue', 'task-glow-red', 'task-glow-green', 'task-glow-violet');
+            }, 1000);
+        }
+
+        function glowReportItem(reportId, glowType) {
+            const reportItem = document.querySelector(`.report-item[data-report-id="${reportId}"]`);
+            if (!reportItem) return;
+
+            // Remove any existing glow classes
+            reportItem.classList.remove('task-glow-blue', 'task-glow-red', 'task-glow-green', 'task-glow-violet');
+
+            // Add the requested glow class
+            if (glowType === 'blue') {
+                reportItem.classList.add('task-glow-blue');
+            } else if (glowType === 'red') {
+                reportItem.classList.add('task-glow-red');
+            } else if (glowType === 'green') {
+                reportItem.classList.add('task-glow-green');
+            } else if (glowType === 'violet') {
+                reportItem.classList.add('task-glow-violet');
+            }
+
+            // Remove the class after animation completes (1 second)
+            setTimeout(() => {
+                reportItem.classList.remove('task-glow-blue', 'task-glow-red', 'task-glow-green', 'task-glow-violet');
+            }, 1000);
         }
 
         async function initMaintMap() {
@@ -7704,13 +7854,11 @@
             document.getElementById('startTaskReporter').textContent = task.citizen_name || 'Citizen';
             document.getElementById('startTaskPhone').textContent = task.citizen_phone || 'N/A';
             document.getElementById('startNotes').value = '';
-            document.getElementById('startModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('startModal', 'actionModal');
         }
 
         function closeStartModal() {
-            document.getElementById('startModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('startModal');
         }
 
         async function confirmStartTask() {
@@ -7724,7 +7872,10 @@
                 const result = await apiPost('tasks/' + activeTask.id + '/start', { task_id: activeTask.id });
 
                 if (result.success) {
+                    const taskId = activeTask.id;
                     closeStartModal();
+                    closeActionModal();
+                    glowTaskItem(taskId, 'blue');
                     showToast('✅ Task Started!', 'Status changed to In Progress');
                     try {
                         await loadMaintenanceData();
@@ -7762,13 +7913,11 @@
             document.getElementById('completeAfterThumb').style.display = 'none';
             completeBeforeDataUrl = null;
             completeAfterDataUrl = null;
-            document.getElementById('completeModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('completeModal', 'actionModal');
         }
 
         function closeCompleteModal() {
-            document.getElementById('completeModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('completeModal');
         }
 
         function chooseCompletePhoto(inputId) {
@@ -7839,7 +7988,10 @@
                 });
 
                 if (result.success) {
+                    const taskId = activeTask.id;
                     closeCompleteModal();
+                    closeActionModal();
+                    glowTaskItem(taskId, 'green');
                     showToast('✅ Task Completed!', 'Great work! Photos saved.');
                     try {
                         await loadMaintenanceData();
@@ -7880,25 +8032,23 @@
                 afterImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150"><rect width="200" height="150" fill="%23dcfce7"/><text x="50%" y="50%" font-family="Inter" font-size="12" fill="%23166534" text-anchor="middle" dy=".3em">No after photo</text></svg>';
             }
 
-            document.getElementById('photoModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('photoModal', 'actionModal');
         }
 
         function closePhotoModal() {
-            document.getElementById('photoModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('photoModal');
         }
 
         // ============ ADMIN ============
         function openMaintenanceAccountModal() {
+            clearModalStack();
             document.getElementById('maintenanceAccountForm').reset();
             document.getElementById('maintenanceAccountModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeMaintenanceAccountModal() {
-            document.getElementById('maintenanceAccountModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('maintenanceAccountModal');
         }
 
         async function createMaintenanceAccount(event) {
@@ -8147,6 +8297,7 @@
         }
 
         function openAutoAssignModal(rule) {
+            clearModalStack();
             populateAutoAssignTeamDropdown();
             const isNew = !rule;
             document.getElementById('autoAssignModalTitle').textContent = isNew ? 'New Rule' : 'Edit Rule';
@@ -8164,10 +8315,12 @@
                 document.getElementById('autoAssignActive').checked = true;
             }
             document.getElementById('autoAssignModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
         function closeAutoAssignModal() {
             document.getElementById('autoAssignModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
         async function saveAutoAssign(event) {
@@ -8213,6 +8366,7 @@
         }
 
         function openNavigateModal(taskId = null) {
+            clearModalStack();
             const activeTasks = getActiveGpsTasks();
             if (!activeTasks.length) {
                 showToast('No active tasks', 'There are no assigned tasks to navigate to.');
@@ -8275,8 +8429,7 @@
         }
 
         function closeNavigateModal() {
-            document.getElementById('navigateModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('navigateModal');
         }
 
         function startNavigation() {
@@ -8314,7 +8467,7 @@
                         <div class="empty-state">
                             <i class="fas fa-user-circle"></i>
                             <div class="empty-title">No citizens yet</div>
-                            <div class="empty-desc">Leaderboard will appear once citizens earn points</div>
+                            <div class="empty-desc">Leaderboard will appear once citizens submit reports</div>
                         </div>`;
                 } else {
                     citizenList.innerHTML = citizens.map((c, i) => {
@@ -8332,7 +8485,7 @@
                                         <div class="task-location">${c.reports || 0} report${(c.reports || 0) !== 1 ? 's' : ''}</div>
                                     </div>
                                 </div>
-                                <span class="badge badge-rated">⭐ ${c.points || 0} pts</span>
+                                <span class="badge badge-assigned">${c.reports || 0}</span>
                             </div>
                         `;
                     }).join('');
@@ -8349,22 +8502,22 @@
                         <div class="empty-state">
                             <i class="fas fa-hard-hat"></i>
                             <div class="empty-title">No teams yet</div>
-                            <div class="empty-desc">Teams will be ranked by citizen ratings</div>
+                            <div class="empty-desc">Teams will be ranked by jobs solved and total stars</div>
                         </div>`;
                 } else {
                     teamList.innerHTML = teams.map((t, i) => {
                         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span style="font-weight:700;color:#d1d5db;">#${i + 1}</span>`;
-                        const rating = Number(t.jobs) > 0 ? `${t.avg_rating}⭐` : '—';
+                        const totalStars = t.total_rating ? t.total_rating.toFixed(1) : '0';
                         return `
                             <div class="task-item">
                                 <div class="task-info">
                                     <span style="width:26px; text-align:center; font-size:1rem;">${medal}</span>
                                     <div>
                                         <div class="task-title">${escapeHtml(t.team_name)}</div>
-                                        <div class="task-location">${t.jobs || 0} rated job${(t.jobs || 0) !== 1 ? 's' : ''} · avg ${rating}</div>
+                                        <div class="task-location">${t.jobs || 0} job${(t.jobs || 0) !== 1 ? 's' : ''} solved</div>
                                     </div>
                                 </div>
-                                <span class="badge badge-completed">⭐ ${t.total_points || 0} pts</span>
+                                <span class="badge badge-completed">⭐ ${totalStars}</span>
                             </div>
                         `;
                     }).join('');
@@ -8486,13 +8639,11 @@
 
             document.getElementById('assignReportTitle').textContent = report.category;
             document.getElementById('assignReportLocation').textContent = report.location;
-            document.getElementById('assignModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModalWithStack('assignModal', 'actionModal');
         }
 
         function closeAssignModal() {
-            document.getElementById('assignModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('assignModal');
         }
 
         async function confirmAssign() {
@@ -8500,17 +8651,34 @@
             const team = document.getElementById('assignTeamSelect').value;
             if (!team) return alert('⚠️ Please select a team.');
 
-            const result = await apiPost('reports/' + adminActiveReport.id + '/assign', {
-                report_id: adminActiveReport.id,
-                team_name: team
-            });
+            const btn = document.getElementById('assignBtn');
+            btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
+            btn.classList.add('btn-loading');
+            btn.disabled = true;
 
-            if (result.success) {
-                showToast('✅ Team Assigned!', `${team} assigned to ${adminActiveReport.category}`);
-                closeAssignModal();
-                await loadAdminData();
-            } else {
-                alert('⚠️ ' + result.message);
+            try {
+                const result = await apiPost('reports/' + adminActiveReport.id + '/assign', {
+                    report_id: adminActiveReport.id,
+                    team_name: team
+                });
+
+                if (result.success) {
+                    const reportId = adminActiveReport.id;
+                    closeAssignModal();
+                    closeActionModal();
+                    glowReportItem(reportId, 'violet');
+                    showToast('✅ Team Assigned!', `${team} assigned to ${adminActiveReport.category}`);
+                    await loadAdminData();
+                } else {
+                    alert('⚠️ ' + result.message);
+                }
+            } catch (error) {
+                console.error('Assigning team failed:', error);
+                alert('⚠️ Could not assign team. Check your connection and try again.');
+            } finally {
+                btn.classList.remove('btn-loading');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-check"></i> Assign Team';
             }
         }
 
@@ -8539,6 +8707,7 @@
         }
 
         async function openCitizenRating(reportId) {
+            clearModalStack();
             const report = cachedReports.find(r => r.id === reportId);
             if (!report) return;
             if (!report.task_id) {
@@ -8563,8 +8732,7 @@
         }
 
         function closeRatingModal() {
-            document.getElementById('ratingModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeModalWithStack('ratingModal');
             adminActiveTask = null;
             selectedRating = null;
         }
@@ -8625,20 +8793,33 @@
         }
 
         // ============ LOGOUT ============
+        function openLogoutModal() {
+            clearModalStack();
+            document.getElementById('logoutModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLogoutModal() {
+            closeModalWithStack('logoutModal');
+        }
+
+        async function confirmLogout() {
+            closeLogoutModal();
+            stopAllLiveTracking();
+            stopGlobalPolling();
+            await apiGet('logout');
+            closeProfileModal();
+            closeEditProfileModal();
+            closeStatisticsModal();
+            closeCompletionInfoModal();
+            closeRejectionReasonModal();
+            closeReportDetailsModal();
+            showToast('👋 Logged Out', 'Returning to login page...');
+            setTimeout(() => showLogin(), 800);
+        }
+
         async function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                stopAllLiveTracking();
-                stopGlobalPolling();
-                await apiGet('logout');
-                closeProfileModal();
-                closeEditProfileModal();
-                closeStatisticsModal();
-                closeCompletionInfoModal();
-                closeRejectionReasonModal();
-                closeReportDetailsModal();
-                showToast('👋 Logged Out', 'Returning to login page...');
-                setTimeout(() => showLogin(), 800);
-            }
+            openLogoutModal();
         }
 
          // ============ THEME TOGGLE ============
@@ -8668,13 +8849,16 @@
         function openModalWithStack(modalId, parentModalId = null) {
             if (parentModalId) {
                 modalStack.push(parentModalId);
+                document.getElementById(modalId).classList.add('stack-modal');
             }
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModalWithStack(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            modal.classList.remove('stack-modal');
             
             if (modalStack.length > 0) {
                 const previousModal = modalStack.pop();
@@ -8690,6 +8874,22 @@
         }
 
         // ============ MISC ============
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
         function forgotPassword() {
             const email = document.getElementById('email').value.trim();
             document.getElementById('forgotPasswordForm').style.display = 'block';
@@ -8796,6 +8996,7 @@
         }
 
         async function openChatPanel() {
+            clearModalStack();
             const modal = document.getElementById('chatModal');
             if (!modal) return;
             modal.classList.remove('minimized');
@@ -8845,7 +9046,15 @@
             modal.classList.remove('active', 'minimized');
             modal.setAttribute('aria-hidden', 'true');
             modal.querySelector('.chat-modal-box')?.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = 'auto';
+            
+            if (modalStack.length > 0) {
+                const previousModal = modalStack.pop();
+                document.getElementById(previousModal).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+            
             if (chatPollTimer) {
                 clearInterval(chatPollTimer);
                 chatPollTimer = null;
@@ -8873,15 +9082,17 @@
             renderChatContacts();
             markDataLoaded(list, !listWasLoaded || previousContacts !== JSON.stringify(chatPeople));
 
-            // Only auto-select on desktop, not on mobile
+            // Only auto-select (highlight) on desktop, not on mobile
             const isMobile = window.innerWidth <= 768;
             if (!isMobile) {
                 if (!selectedChatUserId && chatPeople.length) {
-                    await selectChatUser(chatPeople[0].id, false);
+                    selectedChatUserId = chatPeople[0].id;
+                    renderChatContacts();
                 } else if (selectedChatUserId) {
                     const existing = chatPeople.find(user => user.id === selectedChatUserId);
                     if (existing) {
-                        await selectChatUser(selectedChatUserId, false);
+                        selectedChatUserId = existing.id;
+                        renderChatContacts();
                     }
                 }
             }
@@ -8938,13 +9149,27 @@
             markDataLoaded(list, false);
         }
 
-        async function selectChatUser(userId, animate = true) {
+        async function selectChatUser(userId, animate = true, forceOpen = false) {
             const user = chatPeople.find(person => person.id === userId);
             if (!user) return;
 
+            // If same user is selected and not forced, open conversation
+            if (selectedChatUserId === userId && !forceOpen) {
+                const modal = document.getElementById('chatModal');
+                const isMobile = window.innerWidth <= 768;
+                if (modal && isMobile) modal.dataset.mobileView = 'thread';
+                // Continue to load conversation
+            } else if (!forceOpen) {
+                // First tap - just select/highlight
+                selectedChatUserId = userId;
+                renderChatContacts();
+                return;
+            }
+
             selectedChatUserId = userId;
             const modal = document.getElementById('chatModal');
-            if (modal) modal.dataset.mobileView = 'thread';
+            const isMobile = window.innerWidth <= 768;
+            if (modal && !isMobile) modal.dataset.mobileView = 'thread';
             renderChatContacts();
 
             const avatar = document.getElementById('chatCurrentAvatar');
@@ -9209,15 +9434,12 @@
             // Show the delete confirmation modal
             const deleteModal = document.getElementById('deleteChatModal');
             if (deleteModal) {
-                deleteModal.classList.add('active');
+                openModalWithStack('deleteChatModal', 'chatModal');
             }
         }
 
         function closeDeleteChatModal() {
-            const deleteModal = document.getElementById('deleteChatModal');
-            if (deleteModal) {
-                deleteModal.classList.remove('active');
-            }
+            closeModalWithStack('deleteChatModal');
         }
 
         async function confirmDeleteChat() {
@@ -9270,29 +9492,31 @@
             }
         });
 
-        ['adminRegisterModal','maintenanceAccountModal','passwordModal','chatModal','registerModal','reportModal','profileModal','editProfileModal','notifPrefsModal','startModal','completeModal','photoModal','assignModal','ratingModal','trackModal','trackDiscussionModal','actionModal','completionInfoModal','statisticsModal','rejectionReasonModal','adminRejectModal','maintRejectModal','reportDetailsModal'].forEach(id => {
+        ['adminRegisterModal','maintenanceAccountModal','passwordModal','chatModal','registerModal','reportModal','profileModal','editProfileModal','notifPrefsModal','startModal','completeModal','photoModal','assignModal','ratingModal','trackModal','trackDiscussionModal','actionModal','completionInfoModal','statisticsModal','rejectionReasonModal','adminRejectModal','maintRejectModal','reportDetailsModal','deleteChatModal','logoutModal'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('click', e => {
                 if (e.target === el) {
-                    if (id === 'trackDiscussionModal') {
-                        closeTrackDiscussionModal();
-                    } else {
-                        el.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    }
+                    closeModalWithStack(id);
                 }
             });
         });
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
-                if (document.getElementById('trackDiscussionModal')?.classList.contains('active')) {
-                    closeTrackDiscussionModal();
+                // Close autoAssignModal specially since it uses style.display
+                if (document.getElementById('autoAssignModal')?.style.display === 'flex') {
+                    closeAutoAssignModal();
+                    return;
                 }
-                ['adminRegisterModal','maintenanceAccountModal','passwordModal','chatModal','registerModal','reportModal','profileModal','editProfileModal','notifPrefsModal','startModal','completeModal','photoModal','assignModal','ratingModal','trackModal','trackDiscussionModal','actionModal','completionInfoModal','statisticsModal','rejectionReasonModal','adminRejectModal','maintRejectModal','reportDetailsModal'].forEach(id => {
-                    document.getElementById(id)?.classList.remove('active');
-                });
-                document.body.style.overflow = 'auto';
+                // Close only the topmost active modal
+                const modalIds = ['adminRegisterModal','maintenanceAccountModal','passwordModal','chatModal','registerModal','reportModal','profileModal','editProfileModal','notifPrefsModal','startModal','completeModal','photoModal','assignModal','ratingModal','trackModal','trackDiscussionModal','actionModal','completionInfoModal','statisticsModal','rejectionReasonModal','adminRejectModal','maintRejectModal','reportDetailsModal','deleteChatModal','logoutModal'];
+                for (const id of modalIds) {
+                    const el = document.getElementById(id);
+                    if (el?.classList.contains('active')) {
+                        closeModalWithStack(id);
+                        break; // Only close one modal at a time
+                    }
+                }
             }
         });
 
