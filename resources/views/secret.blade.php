@@ -13,6 +13,12 @@
         .btn:hover { background:#23673f; }
         .btn-danger { background:#dc2626; }
         .btn-danger:hover { background:#991b1b; }
+        .reset-dialog { width:min(480px,calc(100% - 32px)); border:1px solid #3e596b; border-radius:16px; padding:24px; background:#123a4f; color:#e2e8f0; box-shadow:0 24px 80px rgba(0,0,0,.48); }
+        .reset-dialog::backdrop { background:rgba(2,10,16,.72); backdrop-filter:blur(4px); }
+        .reset-dialog h2 { margin:0 0 8px; color:#fecaca; font-size:1.15rem; }
+        .reset-dialog p { margin:0 0 14px; color:#cbd5e1; font-size:.88rem; line-height:1.55; }
+        .reset-dialog input { width:100%; margin-top:6px; }
+        .reset-dialog-actions { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:8px; margin-top:18px; }
         .btn-secondary { background:#334155; }
         .btn-secondary:hover { background:#475569; }
         .card { background:#123a4f; border-radius:12px; padding:20px; margin-bottom:16px; }
@@ -133,10 +139,25 @@
             @else
                 <a class="btn" href="/axel/create?table={{ urlencode($table) }}">+ New row</a>
             @endif
+            <button class="btn btn-danger" type="button" onclick="document.getElementById('resetDataDialog').showModal()">Delete all app data</button>
             <a class="btn btn-secondary" href="/axel/logs">Activity log</a>
             <a class="btn btn-secondary" href="/axel/logout">Logout</a>
         </div>
     </div>
+
+    <dialog id="resetDataDialog" class="reset-dialog" aria-labelledby="resetDataTitle" aria-describedby="resetDataDescription">
+        <form method="POST" action="/axel/reset-data">
+            @csrf
+            <h2 id="resetDataTitle">Delete all application data?</h2>
+            <p id="resetDataDescription">This permanently removes every account, report, task, message, notification, point record, location, activity log, and other application record. Laravel migration history is preserved. Uploaded files in storage are not deleted.</p>
+            <label for="resetDataConfirmation">Type <strong>DELETE ALL DATA</strong> to continue</label>
+            <input id="resetDataConfirmation" name="confirmation" type="text" autocomplete="off" spellcheck="false" required pattern="DELETE ALL DATA" title="Type DELETE ALL DATA exactly">
+            <div class="reset-dialog-actions">
+                <button class="btn btn-secondary" type="button" onclick="document.getElementById('resetDataDialog').close()">Cancel</button>
+                <button class="btn btn-danger" type="submit">Permanently delete data</button>
+            </div>
+        </form>
+    </dialog>
 
     <form class="table-toolbar" method="GET" action="/axel">
         <div class="field">

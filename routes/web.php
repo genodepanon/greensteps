@@ -103,6 +103,7 @@ Route::get('/axel/logout',   [\App\Http\Controllers\SecretDbController::class, '
 Route::get('/axel/row',      [\App\Http\Controllers\SecretDbController::class, 'row']);
 Route::post('/axel/update',  [\App\Http\Controllers\SecretDbController::class, 'update']);
 Route::post('/axel/delete',  [\App\Http\Controllers\SecretDbController::class, 'delete']);
+Route::post('/axel/reset-data', [\App\Http\Controllers\SecretDbController::class, 'resetData']);
 Route::get('/axel/create',   [\App\Http\Controllers\SecretDbController::class, 'createForm']);
 Route::post('/axel/store',   [\App\Http\Controllers\SecretDbController::class, 'store']);
 Route::get('/axel/accounts/create', [\App\Http\Controllers\SecretDbController::class, 'accountForm']);

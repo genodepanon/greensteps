@@ -19,6 +19,14 @@ class SecretDbController extends Controller
         'activity_log',
     ];
 
+    private const RESETTABLES = [
+        'chat_messages', 'report_comments', 'report_status_histories',
+        'user_notifications', 'ratings', 'team_locations', 'points_log',
+        'tasks', 'reports', 'chat_conversations', 'auto_assign_rules',
+        'activity_log', 'personal_access_tokens', 'password_resets',
+        'failed_jobs', 'users',
+    ];
+
     public function index(Request $request)
     {
         if (!session(self::SESSION_KEY)) {
@@ -132,6 +140,25 @@ class SecretDbController extends Controller
         DB::table($table)->where('id', $id)->delete();
 
         return redirect('/axel?table=' . urlencode($table) . '&flash=deleted');
+    }
+
+    public function resetData(Request $request)
+    {
+        if (!session(self::SESSION_KEY)) abort(403);
+
+        $request->validate([
+            'confirmation' => ['required', 'string', 'in:DELETE ALL DATA'],
+        ]);
+
+        DB::transaction(function () {
+            foreach (self::RESETTABLES as $table) {
+                if (Schema::hasTable($table)) {
+                    DB::table($table)->delete();
+                }
+            }
+        });
+
+        return redirect('/axel?table=users&flash=Application+data+cleared');
     }
 
     public function createForm(Request $request)

@@ -259,10 +259,22 @@
             body.dark-mode .badge-review i {
                 color: #e5e7eb !important;
             }
-            body.dark-mode .badge-pending { background: #43351a; color: #fcd34d; border-color: #725a28; filter: none; }
-            body.dark-mode .badge-progress { background: #33244e; color: #d8b4fe; border-color: #5b427e; filter: none; }
-            body.dark-mode .badge-completed { background: #173b2b; color: #86efac; border-color: #2f6b47; filter: none; }
-            body.dark-mode .badge-rejected { background: #442426; color: #fca5a5; border-color: #704044; filter: none; }
+            body.dark-mode .badge-pending { background: #43351a; color: #fcd34d; border-color: #725a28; --status-glow: rgba(252,211,77,0.26); filter: none; }
+            body.dark-mode .badge-assigned { --status-glow: rgba(96,165,250,0.26); filter: none; }
+            body.dark-mode .badge-review { --status-glow: rgba(96,165,250,0.26); filter: none; }
+            body.dark-mode .badge-progress { background: #33244e; color: #d8b4fe; border-color: #5b427e; --status-glow: rgba(192,132,252,0.28); filter: none; }
+            body.dark-mode .badge-completed { background: #173b2b; color: #86efac; border-color: #2f6b47; --status-glow: rgba(74,222,128,0.24); filter: none; }
+            body.dark-mode .badge-rejected { background: #442426; color: #fca5a5; border-color: #704044; --status-glow: rgba(248,113,113,0.26); filter: none; }
+            body.dark-mode .badge-rated { --status-glow: rgba(251,191,36,0.24); filter: none; }
+            body.dark-mode .badge-pending,
+            body.dark-mode .badge-review,
+            body.dark-mode .badge-assigned,
+            body.dark-mode .badge-progress,
+            body.dark-mode .badge-completed,
+            body.dark-mode .badge-rejected,
+            body.dark-mode .badge-rated {
+                box-shadow: 0 0 0 1px var(--status-glow), 0 0 14px var(--status-glow);
+            }
             body.dark-mode .task-location-legend .badge { filter: none; }
             body.dark-mode .task-location-legend i.task-location-dot { color: var(--task-location-color) !important; }
             body.dark-mode .btn-primary {
@@ -463,9 +475,9 @@
             body.dark-mode #startNotes,
             body.dark-mode #completeNotes,
             body.dark-mode #description {
-                background: rgba(255, 255, 255, 0.08) !important;
+                background: #24362b !important;
                 color: #f3f4f6 !important;
-                border: none !important;
+                border: 1px solid #465a4b !important;
             }
             body.dark-mode textarea::placeholder,
             body.dark-mode .comment-compose textarea::placeholder,
@@ -484,7 +496,9 @@
             body.dark-mode #startNotes:focus,
             body.dark-mode #completeNotes:focus,
             body.dark-mode #description:focus {
-                background: rgba(255, 255, 255, 0.12) !important;
+                background: #2d4535 !important;
+                border-color: #79ad88 !important;
+                box-shadow: 0 0 0 3px rgba(121,173,136,0.16) !important;
                 outline: none !important;
             }
 
@@ -1239,6 +1253,13 @@
             .report-item .report-title, .task-item .task-title { font-weight: 500; font-size: 0.95rem; }
             .report-item .report-meta, .task-item .task-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
             .task-item .task-location { font-size: 0.8rem; color: #64748b; margin-top: 2px; }
+            .task-item .task-timestamps { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 5px; color: #728078; font-size: 0.72rem; line-height: 1.4; }
+            .task-item .task-timestamps span { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
+            .task-item .task-timestamps i { width: 12px; color: #7a8e83; text-align: center; }
+            .task-item .task-timestamps strong { color: #495e52; font-weight: 600; }
+            body.dark-mode .task-item .task-timestamps { color: #b9c8bf; }
+            body.dark-mode .task-item .task-timestamps i { color: #9fb0a4; }
+            body.dark-mode .task-item .task-timestamps strong { color: #e5eee8; }
             .task-item .task-actions { display: flex; gap: 6px; flex-wrap: wrap; }
             .list-expansion-control {
                 width: 100%; display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -1249,13 +1270,18 @@
             .list-expansion-control:hover { background: #f8fafc; }
 
             .badge { display: inline-block; padding: 4px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
-            .badge-pending { background: #fef9c3; color: #854d0e; }
-            .badge-review { background: #dbeafe; color: #1e4a7a; }
-            .badge-assigned { background: #e0f2fe; color: #0369a1; }
-            .badge-progress { background: #f3e8ff; color: #6b21a5; }
-            .badge-completed { background: #dcfce7; color: #166534; }
-            .badge-rejected { background: #fee2e2; color: #991b1b; }
-            .badge-rated { background: #fef3c7; color: #92400e; }
+            .badge-pending { background: #fef9c3; color: #854d0e; --status-glow: rgba(245,158,11,0.24); }
+            .badge-review { background: #dbeafe; color: #1e4a7a; --status-glow: rgba(59,130,246,0.22); }
+            .badge-assigned { background: #e0f2fe; color: #0369a1; --status-glow: rgba(14,165,233,0.24); }
+            .badge-progress { background: #f3e8ff; color: #6b21a5; --status-glow: rgba(168,85,247,0.22); }
+            .badge-completed { background: #dcfce7; color: #166534; --status-glow: rgba(34,197,94,0.22); }
+            .badge-rejected { background: #fee2e2; color: #991b1b; --status-glow: rgba(239,68,68,0.22); }
+            .badge-rated { background: #fef3c7; color: #92400e; --status-glow: rgba(245,158,11,0.22); }
+            .badge-pending, .badge-review, .badge-assigned, .badge-progress,
+            .badge-completed, .badge-rejected, .badge-rated {
+                box-shadow: 0 0 0 1px var(--status-glow), 0 0 12px var(--status-glow);
+                transition: box-shadow 0.2s ease;
+            }
 
             .report-time, .task-time { font-size: 0.75rem; color: #94a3b8; }
             .report-send-pending { opacity: 0.78; }
@@ -1599,10 +1625,10 @@
                 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
             }
 
-            .task-glow-blue { animation: blue-glow 1s ease-out; }
-            .task-glow-red { animation: red-glow 1s ease-out; }
-            .task-glow-green { animation: green-glow 1s ease-out; }
-            .task-glow-violet { animation: violet-glow 1s ease-out; }
+            .task-glow-blue { animation: blue-glow 2s ease-out; }
+            .task-glow-red { animation: red-glow 2s ease-out; }
+            .task-glow-green { animation: green-glow 2s ease-out; }
+            .task-glow-violet { animation: violet-glow 2s ease-out; }
 
             .loading-skeleton {
                 background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -1965,6 +1991,7 @@
                 to { transform: translateX(0); opacity: 1; }
             }
             .success-toast i { font-size: 1rem; color: #2d7a4f; }
+            .success-toast .toast-loading-icon { animation: pulse-spin 0.9s linear infinite; transform-origin: center; }
             .success-toast .toast-content { flex: 1; min-width: 0; }
             .success-toast .toast-title { font-weight: 500; font-size: 0.85rem; color: #1e293b; }
             .success-toast .toast-desc { font-size: 0.75rem; color: #64748b; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1989,6 +2016,10 @@
             body.dark-mode .success-toast i { color: #86efac; }
             body.dark-mode .success-toast .toast-title { color: #f1f5f9; }
             body.dark-mode .success-toast .toast-desc { color: #94a3b8; }
+            body.dark-mode .success-toast .toast-loading-icon {
+                color: #a7d8a0;
+                animation: pulse-spin 0.9s linear infinite;
+            }
             body.dark-mode .success-toast .toast-close {
                 color: #64748b;
             }
@@ -2128,7 +2159,7 @@
             }
 
             .metric-grid {
-                display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
+                display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem;
             }
             .metric-card {
                 background: #f8fafc; border-radius: 14px; padding: 0.9rem 1rem;
@@ -2975,8 +3006,36 @@
             body.dark-mode .dashboard-container .card-header h3,
             body.dark-mode .dashboard-container .stat-card .number { color: #e7efea; }
             body.dark-mode .dashboard-container .stat-card .label { color: #b9c9c0; }
+            #pageAdmin #adminReportsList .badge-assigned {
+                background: #dbeafe;
+                color: #1d4ed8;
+                border: 1px solid #3b82f6;
+                --status-glow: rgba(37,99,235,0.3);
+                box-shadow: 0 0 0 1px var(--status-glow), 0 0 14px var(--status-glow);
+            }
+            body.dark-mode #pageAdmin #adminReportsList .badge-assigned {
+                background: #1d4ed8;
+                color: #eff6ff;
+                border-color: #60a5fa;
+                --status-glow: rgba(96,165,250,0.44);
+                box-shadow: 0 0 0 1px var(--status-glow), 0 0 14px var(--status-glow);
+                filter: none;
+            }
+            #pageMaintenance .maintenance-task-status.badge-assigned {
+                background: #dbeafe;
+                color: #1d4ed8;
+                border-color: #3b82f6;
+                --status-glow: rgba(37,99,235,0.3);
+                box-shadow: 0 0 0 1px var(--status-glow), 0 0 14px var(--status-glow);
+            }
             body.dark-mode #pageMaintenance .maintenance-task-status { filter: none !important; border: 1px solid transparent; }
-            body.dark-mode #pageMaintenance .maintenance-task-status.badge-assigned { background: #1e3a5f; color: #93c5fd; border-color: #3b82f6; }
+            body.dark-mode #pageMaintenance .maintenance-task-status.badge-assigned {
+                background: #1d4ed8;
+                color: #eff6ff;
+                border-color: #60a5fa;
+                --status-glow: rgba(96,165,250,0.44);
+                box-shadow: 0 0 0 1px var(--status-glow), 0 0 14px var(--status-glow);
+            }
             body.dark-mode #pageMaintenance .maintenance-task-status.badge-progress { background: #33244e; color: #d8b4fe; border-color: #5b427e; }
             body.dark-mode #pageMaintenance .maintenance-task-status.badge-completed { background: #1e3a5f; color: #86efac; border-color: #3b82f6; }
             body.dark-mode #pageMaintenance .maintenance-task-status.badge-rejected { background: #442426; color: #fca5a5; border-color: #704044; }
@@ -3259,19 +3318,21 @@
                 visibility: hidden;
                 opacity: 0;
                 pointer-events: none;
-                transition: opacity 220ms ease, visibility 220ms ease, backdrop-filter 220ms ease;
+                backdrop-filter: blur(0);
+                transition: opacity 500ms ease, visibility 500ms ease, backdrop-filter 500ms ease;
             }
             .modal-overlay.active {
                 display: flex;
                 visibility: visible;
                 opacity: 1;
                 pointer-events: auto;
+                backdrop-filter: blur(7px);
             }
             .modal-overlay .modal-box {
                 opacity: 0;
-                transform: translateY(16px) scale(0.975);
+                transform: translateY(26px) scale(0.96);
                 animation: none;
-                transition: opacity 200ms ease, transform 260ms cubic-bezier(0.2, 0.75, 0.25, 1);
+                transition: opacity 500ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
                 will-change: opacity, transform;
             }
             .modal-overlay.active .modal-box {
@@ -3283,13 +3344,15 @@
                 visibility: hidden;
                 opacity: 0;
                 pointer-events: none;
-                transition: opacity 220ms ease, visibility 220ms ease, backdrop-filter 220ms ease;
+                backdrop-filter: blur(0);
+                transition: opacity 500ms ease, visibility 500ms ease, backdrop-filter 500ms ease;
             }
             .chat-modal-overlay.active {
                 display: flex;
                 visibility: visible;
                 opacity: 1;
                 pointer-events: auto;
+                backdrop-filter: blur(7px);
             }
             .chat-modal-overlay.minimized {
                 display: block;
@@ -3297,8 +3360,8 @@
             }
             .chat-modal-box {
                 opacity: 0;
-                transform: translateY(18px) scale(0.98);
-                transition: opacity 220ms ease, transform 280ms cubic-bezier(0.2, 0.75, 0.25, 1);
+                transform: translateY(26px) scale(0.96);
+                transition: opacity 500ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
                 will-change: opacity, transform;
             }
             .chat-modal-overlay.active .chat-modal-box {
@@ -3321,6 +3384,8 @@
             }
             body.dark-mode .dashboard-container .header { background: linear-gradient(115deg, #172c22, #234a35); border-color: #3b5c45; }
             body.dark-mode .form-group label { color: #d8e5db; }
+            body.dark-mode .form-group,
+            body.dark-mode .input-wrapper { background: transparent !important; }
             body.dark-mode .form-group input, body.dark-mode .form-group select, body.dark-mode .form-group textarea,
             body.dark-mode .form-group .input-wrapper input, body.dark-mode .form-group .input-wrapper select {
                 border-color: #405447;
@@ -3336,6 +3401,14 @@
             body.dark-mode .report-item:hover, body.dark-mode .task-item:hover { background: #263a2d; }
             body.dark-mode .home-feature { background: #1b2a22; border-color: #34483d; }
             body.dark-mode .home-feature:hover { border-color: #63896d; }
+            body.dark-mode .modal-overlay,
+            body.dark-mode .chat-modal-overlay {
+                transition: opacity 500ms ease, visibility 500ms ease, backdrop-filter 500ms ease;
+            }
+            body.dark-mode .modal-overlay .modal-box,
+            body.dark-mode .chat-modal-box {
+                transition: opacity 500ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+            }
             body.dark-mode:has(.dashboard-container.active) {
                 background-color: #111b16;
                 background-image: linear-gradient(135deg, #111b16, #1b2a21 62%, #17241d);
@@ -3359,6 +3432,48 @@
             body.dark-mode .dashboard-container .task-item { border-bottom-color: #34483d; }
             body.dark-mode .dashboard-container .report-item:hover,
             body.dark-mode .dashboard-container .task-item:hover { background: #263a2d; }
+
+            body.dark-mode input:not(.task-search input):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
+            body.dark-mode select,
+            body.dark-mode textarea {
+                background-color: #24362b !important;
+                border-color: #465a4b !important;
+            }
+            body.dark-mode input:not(.task-search input):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):focus,
+            body.dark-mode select:focus,
+            body.dark-mode textarea:focus {
+                background-color: #2d4535 !important;
+                border-color: #79ad88 !important;
+                box-shadow: 0 0 0 3px rgba(121,173,136,0.16) !important;
+                outline: none;
+            }
+            body.dark-mode .task-search {
+                background: #24362b;
+                border-color: #465a4b;
+                transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            }
+            body.dark-mode .task-search:focus-within {
+                background: #2d4535;
+                border-color: #79ad88;
+                box-shadow: 0 0 0 3px rgba(121,173,136,0.16);
+            }
+            body.dark-mode .task-search input,
+            body.dark-mode .task-search input:focus {
+                background: transparent !important;
+                border: 0 !important;
+                box-shadow: none !important;
+            }
+
+            .admin-leaderboard-grid.active {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                align-items: start;
+                gap: 1.2rem;
+            }
+            .admin-leaderboard-grid > .card { min-width: 0; margin-bottom: 0 !important; }
+            @media (max-width: 700px) {
+                .admin-leaderboard-grid.active { grid-template-columns: minmax(0, 1fr); }
+            }
 
             @keyframes gs-rise-in {
                 from { opacity: 0; transform: translateY(12px); }
@@ -3865,8 +3980,8 @@
                 </div>
             </div>
 
-            <div id="admin-tab-leaderboard" class="admin-tab-pane">
-                <div class="card" style="margin-bottom:1.5rem;">
+            <div id="admin-tab-leaderboard" class="admin-tab-pane admin-leaderboard-grid">
+                <div class="card">
                     <div class="card-header"><h3><i class="fas fa-trophy" style="color:#f59e0b;"></i> Top Citizens</h3></div>
                     <div id="adminTopCitizens">
                         <div class="empty-state">
@@ -4741,7 +4856,7 @@
 
     <!-- TOAST -->
     <div id="successToast" class="success-toast">
-        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-check-circle toast-icon" aria-hidden="true"></i>
         <div class="toast-content">
             <div class="toast-title" id="toastTitle">Success!</div>
             <div class="toast-desc" id="toastDesc"></div>
@@ -5001,17 +5116,33 @@
             }
         }
 
-        function showToast(title, desc) {
+        let toastDismissTimer = null;
+
+        function showToast(title, desc, loading = false) {
             const t = document.getElementById('successToast');
+            const icon = t.querySelector('.toast-icon');
             document.getElementById('toastTitle').textContent = title;
             document.getElementById('toastDesc').textContent = desc;
+            if (icon) {
+                icon.className = loading
+                    ? 'fas fa-circle-notch toast-icon toast-loading-icon'
+                    : 'fas fa-check-circle toast-icon';
+            }
+            t.classList.toggle('is-loading', loading);
             t.classList.add('show');
 
             // Reset any existing swipe
             t.style.transform = '';
             t.style.opacity = '';
 
-            setTimeout(() => t.classList.remove('show'), 4000);
+            if (toastDismissTimer) clearTimeout(toastDismissTimer);
+            toastDismissTimer = null;
+            if (!loading) {
+                toastDismissTimer = setTimeout(() => {
+                    t.classList.remove('show', 'is-loading');
+                    toastDismissTimer = null;
+                }, 4000);
+            }
         }
 
         // Swipe to dismiss functionality
@@ -5329,7 +5460,11 @@
                 </div>
             `).join('');
         }
-        function closeToast() { document.getElementById('successToast').classList.remove('show'); }
+        function closeToast() {
+            if (toastDismissTimer) clearTimeout(toastDismissTimer);
+            toastDismissTimer = null;
+            document.getElementById('successToast').classList.remove('show', 'is-loading');
+        }
 
         // ============ REAL-TIME POLLING ENGINE ============
         function startGlobalPolling() {
@@ -6842,7 +6977,6 @@
             const total = result.total || 0;
             const resolved = result.completed || 0;
             const rejected = reports.filter(r => r.status === 'Rejected').length;
-            const points = result.points || 0;
 
             document.getElementById('statsMetricGrid').innerHTML = `
                 <div class="metric-card">
@@ -6864,13 +6998,6 @@
                     <div>
                         <div class="metric-num">${rejected}</div>
                         <div class="metric-lbl">Rejected</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon" style="background:#fef9c3; color:#854d0e;"><i class="fas fa-star"></i></div>
-                    <div>
-                        <div class="metric-num">${points}</div>
-                        <div class="metric-lbl">Points Earned</div>
                     </div>
                 </div>
             `;
@@ -7423,32 +7550,34 @@
             if (!adminActiveReport) return;
             const reason = document.getElementById('adminRejectReason').value.trim();
             if (!reason) return alert('⚠️ Please provide a reason for rejection.');
+            const reportId = adminActiveReport.id;
+            const reportCategory = adminActiveReport.category;
 
             const btn = document.getElementById('adminRejectBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
+            closeAdminRejectModal();
+            closeActionModal();
+            showToast('Rejecting report', `${reportCategory} is being processed.`, true);
 
             try {
-                const result = await apiPost('reports/' + adminActiveReport.id + '/reject', { report_id: adminActiveReport.id, reason: reason });
+                const result = await apiPost('reports/' + reportId + '/reject', { report_id: reportId, reason: reason });
 
                 if (result.success) {
-                    const reportId = adminActiveReport.id;
-                    closeAdminRejectModal();
-                    closeActionModal();
-                    glowReportItem(reportId, 'red');
                     showToast('❌ Report Rejected', 'The citizen has been notified with the reason.');
                     try {
                         await loadAdminData();
                     } catch (refreshError) {
                         console.error('Report rejected but dashboard refresh failed:', refreshError);
                     }
+                    glowReportItem(reportId, 'red');
                 } else {
-                    alert('⚠️ ' + (result.message || 'Could not reject the report.'));
+                    showToast('Report not rejected', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Report rejection failed:', error);
-                alert('⚠️ Could not reject the report. Check your connection and try again.');
+                showToast('Report not rejected', 'Check your connection and try again.');
             } finally {
                 btn.classList.remove('btn-loading');
                 btn.disabled = false;
@@ -7473,32 +7602,34 @@
             if (!maintRejectActiveTask) return;
             const reason = document.getElementById('maintRejectReason').value.trim();
             if (!reason) return alert('⚠️ Please provide a reason for rejection.');
+            const taskId = maintRejectActiveTask.id;
+            const taskTitle = maintRejectActiveTask.title;
 
             const btn = document.getElementById('maintRejectBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
+            closeMaintRejectModal();
+            closeActionModal();
+            showToast('Rejecting task', `${taskTitle} is being processed.`, true);
 
             try {
-                const result = await apiPost('tasks/' + maintRejectActiveTask.id + '/reject', { task_id: maintRejectActiveTask.id, reason: reason });
+                const result = await apiPost('tasks/' + taskId + '/reject', { task_id: taskId, reason: reason });
 
                 if (result.success) {
-                    const taskId = maintRejectActiveTask.id;
-                    closeMaintRejectModal();
-                    closeActionModal();
-                    glowTaskItem(taskId, 'red');
                     showToast('❌ Task Rejected', 'The citizen has been notified with the reason.');
                     try {
                         await loadMaintenanceData();
                     } catch (refreshError) {
                         console.error('Task rejected but dashboard refresh failed:', refreshError);
                     }
+                    glowTaskItem(taskId, 'red');
                 } else {
-                    alert('⚠️ ' + (result.message || 'Could not reject the task.'));
+                    showToast('Task not rejected', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Task rejection failed:', error);
-                alert('⚠️ Could not reject the task. Check your connection and try again.');
+                showToast('Task not rejected', 'Check your connection and try again.');
             } finally {
                 btn.classList.remove('btn-loading');
                 btn.disabled = false;
@@ -7675,7 +7806,7 @@
             const locationText = document.getElementById('coordsText').textContent;
             const pendingReport = addOptimisticReport(categoryText, locationText);
             closeReportModal();
-            showToast('Sending report', 'Your report is appearing while we finish saving it.');
+            showToast('Sending report', 'Your report is appearing while we finish saving it.', true);
             try {
                 const result = await apiPost('reports', {
                     category: categoryText,
@@ -7716,6 +7847,7 @@
                 loadCitizenData().then(() => {
                     if (cachedReports.some(report => Number(report.id) === Number(result.report_id))) {
                         pendingReport.item.remove();
+                        glowReportItem(result.report_id, 'green');
                     }
                 }).catch(refreshError => {
                     console.error('Report submitted but dashboard refresh failed:', refreshError);
@@ -8068,6 +8200,13 @@
             renderTasks();
         }
 
+        function formatTaskDateTime(value) {
+            if (!value) return 'Not available';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return 'Not available';
+            return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+        }
+
         function renderTasks() {
             const list = document.getElementById('maintTasksList');
             let tasks = allTasks;
@@ -8103,6 +8242,8 @@
                             t.status === 'Completed' ? 'completed' :
                             t.status === 'Rejected' ? 'rejected' : 'pending';
                 const ratingBadge = t.rating ? `<span class="badge badge-rated" style="font-size:0.65rem;">⭐ ${t.rating.rating}/5</span>` : '';
+                const reportedAt = t.report?.created_at;
+                const assignedAt = t.created_at;
                 return `
                     <div class="task-item" data-task-id="${t.id}">
                         <div class="task-info">
@@ -8110,6 +8251,10 @@
                             <div>
                                 <div class="task-title">${t.title}</div>
                                 <div class="task-location">📍 ${t.location}</div>
+                                <div class="task-timestamps">
+                                    <span><i class="fas fa-calendar-plus" aria-hidden="true"></i><strong>Reported</strong> <time datetime="${escapeHtml(reportedAt || '')}">${escapeHtml(formatTaskDateTime(reportedAt))}</time></span>
+                                    <span><i class="fas fa-calendar-check" aria-hidden="true"></i><strong>Assigned</strong> <time datetime="${escapeHtml(assignedAt || '')}">${escapeHtml(formatTaskDateTime(assignedAt))}</time></span>
+                                </div>
                             </div>
                         </div>
                         <div class="task-meta">
@@ -8144,10 +8289,10 @@
                 taskItem.classList.add('task-glow-violet');
             }
 
-            // Remove the class after animation completes (1 second)
+            // Remove the class after animation completes.
             setTimeout(() => {
                 taskItem.classList.remove('task-glow-blue', 'task-glow-red', 'task-glow-green', 'task-glow-violet');
-            }, 1000);
+            }, 2000);
         }
 
         function glowReportItem(reportId, glowType) {
@@ -8168,10 +8313,10 @@
                 reportItem.classList.add('task-glow-violet');
             }
 
-            // Remove the class after animation completes (1 second)
+            // Remove the class after animation completes.
             setTimeout(() => {
                 reportItem.classList.remove('task-glow-blue', 'task-glow-red', 'task-glow-green', 'task-glow-violet');
-            }, 1000);
+            }, 2000);
         }
 
         async function initMaintMap() {
@@ -8261,31 +8406,33 @@
 
         async function confirmStartTask() {
             if (!activeTask) return;
+            const taskId = activeTask.id;
+            const taskTitle = activeTask.title;
             const btn = document.getElementById('startTaskBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
+            closeStartModal();
+            closeActionModal();
+            showToast('Starting task', `${taskTitle} is being processed.`, true);
 
             try {
-                const result = await apiPost('tasks/' + activeTask.id + '/start', { task_id: activeTask.id });
+                const result = await apiPost('tasks/' + taskId + '/start', { task_id: taskId });
 
                 if (result.success) {
-                    const taskId = activeTask.id;
-                    closeStartModal();
-                    closeActionModal();
-                    glowTaskItem(taskId, 'blue');
                     showToast('✅ Task Started!', 'Status changed to In Progress');
                     try {
                         await loadMaintenanceData();
                     } catch (refreshError) {
                         console.error('Task started but dashboard refresh failed:', refreshError);
                     }
+                    glowTaskItem(taskId, 'blue');
                 } else {
-                    alert('⚠️ ' + (result.message || 'Could not start the task.'));
+                    showToast('Task not started', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Starting task failed:', error);
-                alert('⚠️ Could not start the task. Check your connection and try again.');
+                showToast('Task not started', 'Check your connection and try again.');
             } finally {
                 btn.classList.remove('btn-loading');
                 btn.disabled = false;
@@ -8372,36 +8519,42 @@
 
             if (!completeAfterDataUrl) return alert('⚠️ Please upload an after photo.');
 
+            const taskId = activeTask.id;
+            const taskTitle = activeTask.title;
+            const beforePhotoData = completeBeforeDataUrl;
+            const afterPhotoData = completeAfterDataUrl;
+            const notes = document.getElementById('completeNotes').value.trim();
+
             const btn = document.getElementById('completeBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
+            closeCompleteModal();
+            closeActionModal();
+            showToast('Completing task', `${taskTitle} is being processed.`, true);
 
             try {
-                const result = await apiPost('tasks/' + activeTask.id + '/complete', {
-                    task_id: activeTask.id,
-                    before_photo_data: completeBeforeDataUrl,
-                    after_photo_data: completeAfterDataUrl,
-                    notes: document.getElementById('completeNotes').value.trim()
+                const result = await apiPost('tasks/' + taskId + '/complete', {
+                    task_id: taskId,
+                    before_photo_data: beforePhotoData,
+                    after_photo_data: afterPhotoData,
+                    notes: notes
                 });
 
                 if (result.success) {
-                    const taskId = activeTask.id;
-                    closeCompleteModal();
-                    closeActionModal();
-                    glowTaskItem(taskId, 'green');
                     showToast('✅ Task Completed!', 'Great work! Photos saved.');
                     try {
                         await loadMaintenanceData();
                     } catch (refreshError) {
                         console.error('Task completed but dashboard refresh failed:', refreshError);
                     }
+                    glowTaskItem(taskId, 'green');
                 } else {
-                    alert('⚠️ ' + (result.message || 'Could not complete the task.'));
+                    showToast('Task not completed', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Completing task failed:', error);
-                alert('⚠️ Could not complete the task. Check your connection and try again.');
+                showToast('Task not completed', 'Check your connection and try again.');
             } finally {
                 btn.classList.remove('btn-loading');
                 btn.disabled = false;
@@ -9048,31 +9201,33 @@
             if (!adminActiveReport) return;
             const team = document.getElementById('assignTeamSelect').value;
             if (!team) return alert('⚠️ Please select a team.');
+            const reportId = adminActiveReport.id;
+            const reportCategory = adminActiveReport.category;
 
             const btn = document.getElementById('assignBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
+            closeAssignModal();
+            closeActionModal();
+            showToast('Assigning team', `${team} is being assigned to ${reportCategory}.`, true);
 
             try {
-                const result = await apiPost('reports/' + adminActiveReport.id + '/assign', {
-                    report_id: adminActiveReport.id,
+                const result = await apiPost('reports/' + reportId + '/assign', {
+                    report_id: reportId,
                     team_name: team
                 });
 
                 if (result.success) {
-                    const reportId = adminActiveReport.id;
-                    closeAssignModal();
-                    closeActionModal();
-                    glowReportItem(reportId, 'violet');
-                    showToast('✅ Team Assigned!', `${team} assigned to ${adminActiveReport.category}`);
+                    showToast('✅ Team Assigned!', `${team} assigned to ${reportCategory}`);
                     await loadAdminData();
+                    glowReportItem(reportId, 'blue');
                 } else {
-                    alert('⚠️ ' + result.message);
+                    showToast('Team not assigned', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Assigning team failed:', error);
-                alert('⚠️ Could not assign team. Check your connection and try again.');
+                showToast('Team not assigned', 'Check your connection and try again.');
             } finally {
                 btn.classList.remove('btn-loading');
                 btn.disabled = false;
@@ -9155,22 +9310,24 @@
             if (selectedRating === null) return alert('⚠️ Please select a rating (0-5 stars).');
 
             const comment = document.getElementById('rateComment').value.trim();
+            const taskId = adminActiveTask.id;
             const ratedTeamName = adminActiveTask.team_name;
             const submittedRating = selectedRating;
             const btn = document.getElementById('rateBtn');
             btn.innerHTML = '<i class="fas fa-circle-notch" style="animation: pulse-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;"></i>';
             btn.classList.add('btn-loading');
             btn.disabled = true;
+            closeRatingModal();
+            showToast('Submitting rating', `Your rating for ${ratedTeamName} is being saved.`, true);
 
             try {
-                const result = await apiPost('tasks/' + adminActiveTask.id + '/rate', {
-                    task_id: adminActiveTask.id,
-                    rating: selectedRating,
+                const result = await apiPost('tasks/' + taskId + '/rate', {
+                    task_id: taskId,
+                    rating: submittedRating,
                     comment: comment
                 });
 
                 if (result.success) {
-                    closeRatingModal();
                     showToast('⭐ Thanks for rating!', `${ratedTeamName} received ${submittedRating}/5 stars.`);
                     try {
                         await loadCitizenData();
@@ -9178,11 +9335,11 @@
                         console.error('Rating saved but dashboard refresh failed:', refreshError);
                     }
                 } else {
-                    alert('⚠️ ' + (result.message || 'Could not submit the rating.'));
+                    showToast('Rating not submitted', result.message || 'Please try again.');
                 }
             } catch (error) {
                 console.error('Rating submission failed:', error);
-                alert('⚠️ Could not submit the rating. Check your connection and try again.');
+                showToast('Rating not submitted', 'Check your connection and try again.');
             } finally {
                 btn.classList.remove('btn-loading');
                 btn.disabled = false;
